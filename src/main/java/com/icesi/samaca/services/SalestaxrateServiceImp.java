@@ -2,17 +2,20 @@ package com.icesi.samaca.services;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
+
 import com.icesi.samaca.model.sales.Salestaxrate;
 import com.icesi.samaca.repositories.SalestaxrateRepository;
 import com.icesi.samaca.repositories.StateprovinceRepository;
 
-public class SalestaxrateImp implements SalestaxrateService{
+@Service
+public class SalestaxrateServiceImp implements SalestaxrateService{
 
 	SalestaxrateRepository salesTRRepo;
 	StateprovinceRepository stateprovinceRepo;
 
 
-	public SalestaxrateImp(SalestaxrateRepository salTRRepo, StateprovinceRepository stateprovinceRepository )
+	public SalestaxrateServiceImp(SalestaxrateRepository salTRRepo, StateprovinceRepository stateprovinceRepository )
 	{
 		salesTRRepo = salTRRepo;
 		stateprovinceRepo = stateprovinceRepository;
@@ -36,6 +39,7 @@ public class SalestaxrateImp implements SalestaxrateService{
 			}
 		}catch (IllegalArgumentException e) {
 			// TODO: handle exception
+			System.out.println("Algo en la creación salió mal, por favor revise los parametros");
 		}
 		return salesTR;
 	}
@@ -65,6 +69,7 @@ public class SalestaxrateImp implements SalestaxrateService{
 			}
 		}catch (IllegalArgumentException e) {
 			// TODO: handle exception
+			System.out.println("Algo en la edición salió mal, por favor revise los parametros");
 		}
 		return result;
 	}

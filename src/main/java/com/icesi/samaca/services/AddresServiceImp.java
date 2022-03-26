@@ -1,8 +1,11 @@
 package com.icesi.samaca.services;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.icesi.samaca.model.person.Address;
+import com.icesi.samaca.model.person.Stateprovince;
 import com.icesi.samaca.repositories.AddressRepository;
 import com.icesi.samaca.repositories.StateprovinceRepository;
 
@@ -15,8 +18,6 @@ public class AddresServiceImp implements AddressService {
 
 
 	public AddresServiceImp(AddressRepository aRepo, StateprovinceRepository staRepos) {
-
-
 		addrRepos = aRepo;
 		staprovRepos = staRepos;
 	}
@@ -25,13 +26,14 @@ public class AddresServiceImp implements AddressService {
 
 
 	@Override
-	public Address saveAddress(Address addr) {
-
+	public Address saveAddress(Address addr, Integer id) {
 		try {
-			if ((addr.getAddressline1() !=null) && (addr.getCity().length()>=3) && 
-					(addr.getPostalcode().length()==6)&& 
-					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())) 
+			if ((addr.getAddressline1() !=null && !addr.getAddressline1().isBlank()) && 
+					(addr.getCity().length()>=3) && 
+					(addr.getPostalcode().length()==6))
+//					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())) 
 			{	
+				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
 				addr.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
 				addrRepos.save(addr);
 
@@ -49,8 +51,8 @@ public class AddresServiceImp implements AddressService {
 	}
 
 	@Override
-	public boolean editAddres(Address addr) {
-		boolean result = false;
+	public Address editAddres(Address addr, Integer id) {
+		Address aux= null;
 		
 		try {
 			if ((addr.getAddressline1() !=null) && (addr.getCity().length()>=3) && 
@@ -67,6 +69,7 @@ public class AddresServiceImp implements AddressService {
 				toEdit.setRowguid(addr.getRowguid());
 				toEdit.setSpatiallocation(addr.getSpatiallocation());
 				addrRepos.save(toEdit);
+				aux = toEdit;
 			}
 			
 			
@@ -76,7 +79,7 @@ public class AddresServiceImp implements AddressService {
 
 		}
 		
-		return result;
+		return aux;
 	}
 
 }
