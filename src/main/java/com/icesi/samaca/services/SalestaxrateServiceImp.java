@@ -45,15 +45,15 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 	}
 
 	@Override
-	public boolean editSalesTR(Salestaxrate salesTR) {
+	public Salestaxrate editSalesTR(Salestaxrate salesTR) {
 		
-		boolean result = false;
+		Salestaxrate result = null;
 		try {
 			if((salesTR.getTaxrate().compareTo(BigDecimal.ZERO))>=0 &&  
 					(salesTR.getName().length()>=5) &&
 					(stateprovinceRepo.findById(salesTR.getStateprovinceid()).isPresent()))
 			{	
-				result = true;
+				
 				Salestaxrate toChange = salesTRRepo.getById(salesTR.getSalestaxrateid());
 				toChange.setModifieddate(salesTR.getModifieddate());
 				toChange.setName(salesTR.getName());
@@ -61,7 +61,9 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 				toChange.setStateprovinceid(salesTR.getStateprovinceid());
 				toChange.setTaxrate(salesTR.getTaxrate());
 				toChange.setTaxtype(salesTR.getTaxtype());
+				result = toChange;
 				salesTRRepo.save(toChange);
+				
 			}
 			else 
 			{

@@ -7,5 +7,5 @@ public interface SalestaxrateService {
 	
 	
 	public Salestaxrate saveSalesTR(Salestaxrate salesTR) ;
-	public boolean editSalesTR(Salestaxrate salesTR);
+	public Salestaxrate editSalesTR(Salestaxrate salesTR);
 }

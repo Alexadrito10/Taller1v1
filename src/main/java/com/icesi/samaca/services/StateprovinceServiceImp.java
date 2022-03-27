@@ -1,12 +1,30 @@
 package com.icesi.samaca.services;
 
 import com.icesi.samaca.model.person.Stateprovince;
+import com.icesi.samaca.repositories.CountryregionRepository;
+
 
 public class StateprovinceServiceImp implements StateprovinceService {
+	
+	CountryregionRepository countryregionRepository;
+	
+	
+	public StateprovinceServiceImp(CountryregionRepository crR) {
+		
+		countryregionRepository = crR;
+		
+	}
+	
 
 	@Override
 	public Stateprovince saveStateprov(Stateprovince sP) {
 		try {
+			
+			if(sP != null && (!sP.getStateprovinceid().toString().isBlank() )){
+				
+				
+			}
+			
 
 
 		}catch (IllegalArgumentException e) {
@@ -18,9 +36,9 @@ public class StateprovinceServiceImp implements StateprovinceService {
 	}
 
 	@Override
-	public boolean editStateproV(Stateprovince sP) {
+	public Stateprovince editStateproV(Stateprovince sP) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }
