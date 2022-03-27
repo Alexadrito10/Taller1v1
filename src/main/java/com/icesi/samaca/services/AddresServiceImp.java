@@ -31,17 +31,18 @@ public class AddresServiceImp implements AddressService {
 			if ((addr.getAddressline1() !=null && !addr.getAddressline1().isBlank()) && 
 					(addr.getCity().length()>=3) && 
 					(addr.getPostalcode().length()==6))
-//					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())) 
 			{	
 				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
-				addr.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
-				addrRepos.save(addr);
 
+				if(stateProvinceChecker.isPresent()) {
+					addr.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
+					addrRepos.save(addr);
+				}
 
 			}else {
 				throw new IllegalArgumentException();
 			}
-			
+
 		}catch (IllegalArgumentException e) {
 			System.out.println("Hubo un error en la creacion, revise los datos");
 
@@ -53,32 +54,44 @@ public class AddresServiceImp implements AddressService {
 	@Override
 	public Address editAddres(Address addr, Integer id) {
 		Address aux= null;
-		
+
 		try {
 			if ((addr.getAddressline1() !=null) && (addr.getCity().length()>=3) && 
 					(addr.getPostalcode().length()==6)&& 
-					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())) 
-			{
-				Address toEdit = addrRepos.getById(addr.getAddressid());
-				toEdit.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
-				toEdit.setAddressline1(addr.getAddressline1());
-				toEdit.setAddressline2(addr.getAddressline2());
-				toEdit.setCity(addr.getCity());
-				toEdit.setModifieddate(addr.getModifieddate());
-				toEdit.setPostalcode(addr.getPostalcode());
-				toEdit.setRowguid(addr.getRowguid());
-				toEdit.setSpatiallocation(addr.getSpatiallocation());
-				addrRepos.save(toEdit);
-				aux = toEdit;
+					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())
+					&& addrRepos.findById(addr.getAddressid()).isPresent()) 
+			{	
+
+				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
+
+				if(stateProvinceChecker.isPresent()) {
+					Address toEdit = addrRepos.getById(addr.getAddressid());
+					toEdit.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
+					toEdit.setAddressline1(addr.getAddressline1());
+					toEdit.setAddressline2(addr.getAddressline2());
+					toEdit.setCity(addr.getCity());
+					toEdit.setModifieddate(addr.getModifieddate());
+					toEdit.setPostalcode(addr.getPostalcode());
+					toEdit.setRowguid(addr.getRowguid());
+					toEdit.setSpatiallocation(addr.getSpatiallocation());
+					addrRepos.save(toEdit);
+					aux = toEdit;
+
+				}else {
+					throw new IllegalArgumentException();
+				}
+
+			}else {
+				throw new IllegalArgumentException();
 			}
-			
-			
-			
+
+
+
 		}catch (IllegalArgumentException e) {
-			System.out.println("Hubo un error en la creacion, revise los datos");
+			System.out.println("Hubo un error en la edición, revise los datos");
 
 		}
-		
+
 		return aux;
 	}
 

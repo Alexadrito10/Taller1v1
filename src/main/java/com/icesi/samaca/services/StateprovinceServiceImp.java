@@ -1,44 +1,134 @@
 package com.icesi.samaca.services;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.icesi.samaca.model.person.Countryregion;
 import com.icesi.samaca.model.person.Stateprovince;
+import com.icesi.samaca.model.sales.Salesterritory;
 import com.icesi.samaca.repositories.CountryregionRepository;
+import com.icesi.samaca.repositories.SalesterritoryRepository;
+import com.icesi.samaca.repositories.StateprovinceRepository;
 
 
+@Service
 public class StateprovinceServiceImp implements StateprovinceService {
-	
+
+
+	StateprovinceRepository stateProvinceRepo;
 	CountryregionRepository countryregionRepository;
-	
-	
-	public StateprovinceServiceImp(CountryregionRepository crR) {
-		
+	SalesterritoryRepository salesterritoryRepo;
+
+
+	@Autowired
+	public StateprovinceServiceImp(CountryregionRepository crR, StateprovinceRepository staPRepo, SalesterritoryRepository stRepo) {
+
+		stateProvinceRepo = staPRepo;
 		countryregionRepository = crR;
-		
+		salesterritoryRepo = stRepo;
+
 	}
-	
+
 
 	@Override
-	public Stateprovince saveStateprov(Stateprovince sP) {
+	public Stateprovince saveStateprov(Stateprovince sP, String countryRegionId,Integer territoryId) {
 		try {
-			
-			if(sP != null && (!sP.getStateprovinceid().toString().isBlank() )){
-				
-				
+
+
+
+			if(sP != null  
+					&&(!sP.getStateprovinceid().toString().isBlank() && sP.getStateprovinceid().toString().length() == 5)  
+					&& (!sP.getIsonlystateprovinceflag().isBlank() && (sP.getIsonlystateprovinceflag().equals("Y") || sP.getIsonlystateprovinceflag().equals("N")))  
+					){
+
+				Optional<Countryregion> optional = this.countryregionRepository.findById(countryRegionId);
+				Optional<Salesterritory> optional1 = this.salesterritoryRepo.findById(territoryId);
+				if(optional.isPresent() && optional1.isPresent()) {
+					stateProvinceRepo.save(sP);
+
+				}
+
+
 			}
-			
+			else 
+			{
+				throw new IllegalArgumentException();
+			}
+
 
 
 		}catch (IllegalArgumentException e) {
 			// TODO: handle exception
 			System.out.println("Algo en la creación salió mal, por favor revise los parametros");
 		}
-		
-		return null;
+
+		return sP;
 	}
 
 	@Override
-	public Stateprovince editStateproV(Stateprovince sP) {
-		// TODO Auto-generated method stub
-		return null;
+	public Stateprovince editStateproV(Stateprovince sP,String countryRegionId,Integer territoryId) {
+
+		Stateprovince result = null;
+		try {
+
+			if(sP != null && !sP.getStateprovinceid().toString().isEmpty()) {
+				Optional<Stateprovince> checkIfExist = this.stateProvinceRepo.findById(sP.getStateprovinceid());
+
+
+				if(checkIfExist.isPresent()
+						&&(sP.getStateprovinceid().toString().length() == 5)  
+						&& (!sP.getIsonlystateprovinceflag().isBlank() 
+								&& (sP.getIsonlystateprovinceflag().equals("Y") 
+										|| sP.getIsonlystateprovinceflag().equals("N")))){
+
+					Optional<Countryregion> optional = this.countryregionRepository.findById(countryRegionId);
+					Optional<Salesterritory> optional1 = this.salesterritoryRepo.findById(territoryId);
+					if(optional.isPresent() && optional1.isPresent()) {
+						Stateprovince toEdit = stateProvinceRepo.getById(sP.getStateprovinceid());
+						toEdit.setIsonlystateprovinceflag(sP.getIsonlystateprovinceflag());
+						toEdit.setModifieddate(sP.getModifieddate());
+						toEdit.setName(sP.getName());
+						toEdit.setStateprovincecode(sP.getStateprovincecode());
+						toEdit.setTerritoryid(territoryId);
+						toEdit.setCountryregion(optional.get());
+						
+						
+						
+						
+						
+						
+
+					}
+					else 
+					{
+						throw new IllegalArgumentException();
+					}
+
+
+
+				}
+				else 
+				{
+					throw new IllegalArgumentException();
+				}
+
+			}
+			else 
+			{
+				throw new IllegalArgumentException();
+			}
+
+
+
+		}catch (IllegalArgumentException e) {
+			// TODO: handle exception
+			System.out.println("Algo en la edición salió mal, por favor revise los parametros");
+		}
+
+		return result;
+
 	}
 
 }
