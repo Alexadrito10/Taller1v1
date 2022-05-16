@@ -2,6 +2,7 @@ package com.icesi.samaca.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.icesi.samaca.model.person.Address;
@@ -16,7 +17,7 @@ public class AddresServiceImp implements AddressService {
 	StateprovinceRepository staprovRepos;
 
 
-
+	@Autowired
 	public AddresServiceImp(AddressRepository aRepo, StateprovinceRepository staRepos) {
 		addrRepos = aRepo;
 		staprovRepos = staRepos;
@@ -26,72 +27,51 @@ public class AddresServiceImp implements AddressService {
 
 
 	@Override
-	public Address saveAddress(Address addr, Integer id) {
-		try {
-			if ((addr.getAddressline1() !=null && !addr.getAddressline1().isBlank()) && 
-					(addr.getCity().length()>=3) && 
-					(addr.getPostalcode().length()==6))
-			{	
-				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
+	public Address saveAddress(Address addr, Integer id) throws IllegalArgumentException {
 
-				if(stateProvinceChecker.isPresent()) {
-					addr.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
-					addrRepos.save(addr);
-				}
+		if (addr != null && (addr.getAddressline1() !=null && !addr.getAddressline1().isBlank()) && 
+				(!addr.getCity().isBlank() && addr.getCity()!=null && (addr.getCity().length()>=3)) && 
+				(addr.getPostalcode().length()==6))
+		{	
+			Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
 
+			if(stateProvinceChecker.isPresent()) {
+				addr.setStateprovince(stateProvinceChecker.get());
+				addrRepos.save(addr);
 			}else {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
+
 			}
-
-		}catch (IllegalArgumentException e) {
-			System.out.println("Hubo un error en la creacion, revise los datos");
-
+		}else {
+			throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
 		}
+
+
 
 		return addr;
 	}
 
 	@Override
-	public Address editAddres(Address addr, Integer id) {
+	public Address editAddres(Address addr, Integer id) throws IllegalArgumentException{
 		Address aux= null;
-
-		try {
-			if ((addr.getAddressline1() !=null) && (addr.getCity().length()>=3) && 
-					(addr.getPostalcode().length()==6)&& 
-					(staprovRepos.findById(addr.getStateprovince().getStateprovinceid()).isPresent())
-					&& addrRepos.findById(addr.getAddressid()).isPresent()) 
-			{	
 
 				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
 
 				if(stateProvinceChecker.isPresent()) {
-					Address toEdit = addrRepos.getById(addr.getAddressid());
-					toEdit.setStateprovince(staprovRepos.getById(addr.getStateprovince().getStateprovinceid()));
-					toEdit.setAddressline1(addr.getAddressline1());
-					toEdit.setAddressline2(addr.getAddressline2());
-					toEdit.setCity(addr.getCity());
-					toEdit.setModifieddate(addr.getModifieddate());
-					toEdit.setPostalcode(addr.getPostalcode());
-					toEdit.setRowguid(addr.getRowguid());
-					toEdit.setSpatiallocation(addr.getSpatiallocation());
-					addrRepos.save(toEdit);
-					aux = toEdit;
+//					Address toEdit = addrRepos.getById(addr.getAddressid());
+//					//toEdit.setStateprovince(addr.getStateprovince());
+//					toEdit.setAddressline1(addr.getAddressline1());
+//					toEdit.setAddressline2(addr.getAddressline2());
+//					toEdit.setCity(addr.getCity());
+//					toEdit.setModifieddate(addr.getModifieddate());
+//					toEdit.setPostalcode(addr.getPostalcode());
+//					toEdit.setRowguid(addr.getRowguid());
+//					toEdit.setSpatiallocation(addr.getSpatiallocation());
+					aux= saveAddress(addr, id);
 
 				}else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Hubo un error en la edición, revise los datos");
 				}
-
-			}else {
-				throw new IllegalArgumentException();
-			}
-
-
-
-		}catch (IllegalArgumentException e) {
-			System.out.println("Hubo un error en la edición, revise los datos");
-
-		}
-
 		return aux;
 	}
 

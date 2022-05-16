@@ -2,6 +2,11 @@ package com.icesi.samaca.services;
 
 
 
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.icesi.samaca.model.person.Countryregion;
@@ -12,57 +17,86 @@ public class CountryregionServiceImp implements CountryregionService {
 
 	CountryregionRepository cRRepo;
 
+	@Autowired
 	public CountryregionServiceImp (CountryregionRepository cRRep) {
 
+		
 		cRRepo = cRRep;
+		
+		
 	} 
 
 	@Override
-	public Countryregion saveCr(Countryregion cR) {
-		try {
-			if ((cR.getCountryregioncode() != null) && (cR.getCountryregioncode().length()>=1 && 
-					cR.getCountryregioncode().length()<=4) && (cR.getName().length()>=5)) {
+	@Transactional
+	public Countryregion saveCr(Countryregion cR) throws IllegalArgumentException {
 
-				cRRepo.save(cR);
+		Countryregion result = null;
 
 
-			}
-			else {
 
-				throw new IllegalArgumentException();
-			}
-		}catch (IllegalArgumentException e) {
-			System.out.println("Hubo un error en la creacion, revise los datos");
+
+		if ((cR.getCountryregioncode() != null) && cR.getCountryregioncode().length()>=1 && 
+				cR.getCountryregioncode().length()<=4 && (cR.getName().length()>=5)) {
+		
+//		boolean cRNotNull = cR.getCountryregioncode().isEmpty();
+//		if (!cRNotNull) {
+//			
+
+			result = this.cRRepo.save(cR);
+
+
 		}
-		return cR;
+		else {
+
+			throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
+		}
+
+
+
+		return result;
+
 
 	}
 
 	@Override
-	public boolean editCr(Countryregion cR) {
-		boolean result = false;
+	@Transactional
+	public Countryregion editCr(Countryregion cR) throws IllegalArgumentException {
+		Countryregion result = null;
 
-		try {
 
-			if ((cR.getCountryregioncode() != null) && (cR.getCountryregioncode().length()>=1 && 
-				cR.getCountryregioncode().length()<=4) && (cR.getName().length()>=5)) {
-				
+
+		if (cR.getCountryregioncode() != null ) {
+			
+			Optional<Countryregion> optional = cRRepo.findById(cR.getCountryregioncode());
+
+			if(optional.isPresent() &&(cR.getCountryregioncode().length()>=1 && 
+					cR.getCountryregioncode().length()<=4) && (cR.getName().length()>=5)) {
+
 				Countryregion toChange = cRRepo.getById(cR.getCountryregioncode());
-				
+
 				toChange.setModifieddate(cR.getModifieddate());
 				toChange.setName(cR.getName());
 				toChange.setStateprovinces(cR.getStateprovinces());
 				cRRepo.save(toChange);
-				
-				result = true;
-			}else {
 
-				throw new IllegalArgumentException();
+				result = toChange;
+
 			}
-		}catch(IllegalArgumentException c) {
-			System.out.println("Hubo un error editando, revise los datos");
+			else {
+				
+				throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
+				
+			}
+		}else {
+
+			throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
 		}
+
 		return result;
+	}
+	
+	public Iterable<Countryregion> findAll(){
+		return cRRepo.findAll();
 	}
 
 }

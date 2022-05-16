@@ -33,19 +33,19 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 
 	@Override
-	public Stateprovince saveStateprov(Stateprovince sP, String countryRegionId,Integer territoryId) {
-		try {
-
+	public Stateprovince saveStateprov(Stateprovince sP, String countryRegionId,Integer territoryId) throws IllegalArgumentException {
+		
 
 
 			if(sP != null  
-					&&(!sP.getStateprovinceid().toString().isBlank() && sP.getStateprovinceid().toString().length() == 5)  
+					&&(!sP.getStateprovinceid().toString().isBlank() && sP.getStateprovincecode().length() == 5)  
 					&& (!sP.getIsonlystateprovinceflag().isBlank() && (sP.getIsonlystateprovinceflag().equals("Y") || sP.getIsonlystateprovinceflag().equals("N")))  
 					){
 
 				Optional<Countryregion> optional = this.countryregionRepository.findById(countryRegionId);
-				Optional<Salesterritory> optional1 = this.salesterritoryRepo.findById(territoryId);
-				if(optional.isPresent() && optional1.isPresent()) {
+				if(optional.isPresent()) {
+					sP.setCountryregion(optional.get());
+					
 					stateProvinceRepo.save(sP);
 
 				}
@@ -54,21 +54,18 @@ public class StateprovinceServiceImp implements StateprovinceService {
 			}
 			else 
 			{
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Algo en la creaci�n sali� mal, por favor revise los parametros");
 			}
 
 
 
-		}catch (IllegalArgumentException e) {
-			// TODO: handle exception
-			System.out.println("Algo en la creación salió mal, por favor revise los parametros");
-		}
+		
 
 		return sP;
-	}
+	}	
 
 	@Override
-	public Stateprovince editStateproV(Stateprovince sP,String countryRegionId,Integer territoryId) {
+	public Stateprovince editStateproV(Stateprovince sP,String countryRegionId,Integer territoryId) throws IllegalArgumentException {
 
 		Stateprovince result = null;
 		try {
@@ -78,7 +75,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 
 				if(checkIfExist.isPresent()
-						&&(sP.getStateprovinceid().toString().length() == 5)  
+						&&(sP.getStateprovincecode().length() == 5)  
 						&& (!sP.getIsonlystateprovinceflag().isBlank() 
 								&& (sP.getIsonlystateprovinceflag().equals("Y") 
 										|| sP.getIsonlystateprovinceflag().equals("N")))){
@@ -103,7 +100,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 					}
 					else 
 					{
-						throw new IllegalArgumentException();
+						throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 					}
 
 
@@ -111,13 +108,13 @@ public class StateprovinceServiceImp implements StateprovinceService {
 				}
 				else 
 				{
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 				}
 
 			}
 			else 
 			{
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 			}
 
 

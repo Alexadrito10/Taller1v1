@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Salestaxrate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">	
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body>
+	<div th:switch="${salestaxrate}" class="container my-5">
+		<div class="row">
+			<div class="col-md-6">
+				<h2 th:case="null">No hay tasas impositivas de ventas</h2>
+				<div th:case="*">
+					<h2 class="my-5">Salestaxrate</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>id de la Tasa impositiva de ventas </th>
+								<th>Fecha modificada de la  tasa</th>
+								<th> Nombre de la tasa impositiva de ventas</th>
+								<th> Id del estado provincia </th>
+								<th>Ratio de la tasa</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="salestaxrate : ${salestaxrate}">
+								<td th:text="${salestaxrate.salestaxrateid}"></td>
+								<td th:text="${salestaxrate.modifieddate}"></td>
+								<td th:text="${salestaxrate.name"></td>
+								<td th:text="${salestaxrate.stateprovinceid}"></td>
+								<td th:text="${salestaxrate.taxrate}"></td>
+							
+								<td><a th:href="@{/salestaxrate/update/{id}(id=${salestaxrate.salestaxrateid})}"
+									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>
+					<a href="/salestaxrate/add" class="btn btn-primary"><i
+						class="fas fa-user-plus ml-2"></i> Añadir una tasa impositva de ventas</a>
+				</p>
+				<p>
+					<a href="/admin/"><i class="fas fa-user ml-2"></i>Ir al menu de administrador </a>
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
