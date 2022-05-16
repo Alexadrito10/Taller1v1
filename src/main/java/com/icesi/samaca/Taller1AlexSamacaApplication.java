@@ -27,6 +27,13 @@ public class Taller1AlexSamacaApplication {
 			userAdmin.setType(UserType.admin);
 			
 			userRepository.save(userAdmin);
+			
+			UserApp userOperator= new UserApp();
+			userOperator.setUsername("Operator");
+			userOperator.setPassword("{noop}Operator123");
+			userOperator.setType(UserType.operator);
+			
+			userRepository.save(userOperator);
 		});
 	}
 

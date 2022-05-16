@@ -7,8 +7,8 @@ public interface AddressService {
 	
 	
 	
-	public Address saveAddress(Address addr, Integer id) ;
-	public Address editAddres(Address addr, Integer id);
+	public Address saveAddress(Address addr) ;
+	public Address editAddres(Address addr);
 	
 	
 	

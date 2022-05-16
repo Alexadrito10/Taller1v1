@@ -19,7 +19,7 @@ import com.icesi.samaca.validation.CountryRegionValidation;
 import com.icesi.samaca.validation.SalesTaxRateValidation;
 
 @Controller
-public class adminControllerImp implements adminController{
+public class adminControllerImp{
 
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
@@ -56,6 +56,7 @@ public class adminControllerImp implements adminController{
 			return "redirect:/countryregion/";
 		}
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("countryregion", countryregion);
 			return"/admin/add-countryregion";
 			
 		}else {
@@ -113,6 +114,7 @@ public class adminControllerImp implements adminController{
 			
 		}
 		if(bindingResult.hasErrors()){
+			model.addAttribute("salestaxrate", salestaxrate);
 			return "admin/add-salestaxrate";
 			
 		}else {

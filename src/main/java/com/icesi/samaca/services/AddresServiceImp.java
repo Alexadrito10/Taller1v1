@@ -27,13 +27,13 @@ public class AddresServiceImp implements AddressService {
 
 
 	@Override
-	public Address saveAddress(Address addr, Integer id) throws IllegalArgumentException {
+	public Address saveAddress(Address addr) throws IllegalArgumentException {
 
 		if (addr != null && (addr.getAddressline1() !=null && !addr.getAddressline1().isBlank()) && 
 				(!addr.getCity().isBlank() && addr.getCity()!=null && (addr.getCity().length()>=3)) && 
 				(addr.getPostalcode().length()==6))
 		{	
-			Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
+			Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(addr.getStateprovince().getStateprovinceid());
 
 			if(stateProvinceChecker.isPresent()) {
 				addr.setStateprovince(stateProvinceChecker.get());
@@ -52,27 +52,31 @@ public class AddresServiceImp implements AddressService {
 	}
 
 	@Override
-	public Address editAddres(Address addr, Integer id) throws IllegalArgumentException{
+	public Address editAddres(Address addr) throws IllegalArgumentException{
 		Address aux= null;
 
-				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(id);
+				Optional<Address> stateProvinceChecker = this.addrRepos.findById(addr.getAddressid());
 
 				if(stateProvinceChecker.isPresent()) {
-//					Address toEdit = addrRepos.getById(addr.getAddressid());
-//					//toEdit.setStateprovince(addr.getStateprovince());
-//					toEdit.setAddressline1(addr.getAddressline1());
-//					toEdit.setAddressline2(addr.getAddressline2());
-//					toEdit.setCity(addr.getCity());
-//					toEdit.setModifieddate(addr.getModifieddate());
-//					toEdit.setPostalcode(addr.getPostalcode());
-//					toEdit.setRowguid(addr.getRowguid());
-//					toEdit.setSpatiallocation(addr.getSpatiallocation());
-					aux= saveAddress(addr, id);
+					aux= saveAddress(addr);
 
 				}else {
 					throw new IllegalArgumentException("Hubo un error en la edición, revise los datos");
 				}
 		return aux;
 	}
+	
+	public Optional<Address> findById(Integer id){
+		return addrRepos.findById(id);
+	}
+	
+	public Iterable<Address> findAll(){
+		return addrRepos.findAll();
+	}
+	
+	public Iterable<Stateprovince> findAllStateProvinces(){
+		return staprovRepos.findAll();
+	}
+	
 
 }

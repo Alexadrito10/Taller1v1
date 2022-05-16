@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Add Address</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body>
+	<div class="container my-5">
+		<h2 class="mb-5">Añadir dirección</h2>
+		<div class="row">
+			<div class="col-md-6">
+				<form action="#" th:action="@{/address/add}"
+					th:object="${address}" method="post">
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="addressid" class="col-form-label">Id de la dirección</label> <input
+								type="text" th:field="*{addressid}" class="form-control" id="addressid"
+								placeholder="id de la dirección"> <span
+								th:if="${#fields.hasErrors('addressid')}" th:errors="*{addressid}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="addressline1" class="col-form-label">Dirección 1</label> <input
+								type="text" th:field="*{addressline1}" class="form-control" id="addressline1"
+								placeholder="id de la dirección 1"> <span
+								th:if="${#fields.hasErrors('addressline1')}" th:errors="*{addressline1}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="addressline2" class="col-form-label">Dirección 2</label> <input
+								type="text" th:field="*{addressline2}" class="form-control" id="addressline2"
+								placeholder="id de la dirección 2"> <span
+								th:if="${#fields.hasErrors('addressline2')}" th:errors="*{addressline2}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="city" class="col-form-label">Ciudad</label> <input
+								type="text" th:field="*{city}" class="form-control" id="city"
+								placeholder="Ciudad"> <span
+								th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="modifieddate" class="col-form-label">Fecha de la modificación</label> <input
+								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
+								placeholder="Coloque la fecha"> <span
+								th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="postalcode" class="col-form-label">Codigo postal</label> <input
+								type="text" th:field="*{postalcode}" class="form-control" id="postalcode"
+								placeholder="codigo postal"> <span
+								th:if="${#fields.hasErrors('postalcode')}" th:errors="*{postalcode}"
+								class="text-danger"></span>
+						</div>
+
+						<!--  stateprovince -->
+						<div class="form-group col-md-6">
+							<label for="stateprovince" class="col-form-label">Estado provincia </label> <select class="form-control-range"
+                                th:field="*{stateprovince}"> <option th:each="state: ${stateprovinces}"
+                                th:value="${state.stateprovinceid}" th:text="${state.name}"
+                                th:selected="${address.stateprovince=state}"></option></select>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-md-4 mt-3">
+							<input type="submit" name="action" class="btn btn-primary"
+								value="Add Address">
+						</div>
+						<div class="col-md-3 mt-3">
+							<input type="reset" class="btn btn-secondary" value="Clear">
+						</div>
+						<div class="col-md-3 mt-3">
+							<input type="submit" name="action" class="btn btn-secondary"
+								value="Cancel">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
