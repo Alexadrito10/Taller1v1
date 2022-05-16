@@ -25,6 +25,7 @@
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
+								<th>Country Region Id </th>
 								<th>Country Region Code</th>
 								<th>Modified Date</th>
 								<th>Country Region Name</th>
@@ -32,12 +33,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="person : ${countryregion}">
-								<td th:text="${person.countryregioncode}"></td>
-								<td th:text="${person.modifieddate}"></td>
-								<td th:text="${person.name}"></td>
+							<tr th:each="country : ${countryregion}">
+								<td th:text="${country.countryregionid}"></td>
+								<td th:text="${country.countryregioncode}"></td>
+								<td th:text="${country.modifieddate}"></td>
+								<td th:text="${country.name}"></td>
 							
-								<td><a th:href="@{/countryregion/update/{id}(id=${person.countryregioncode})}"
+								<td><a th:href="@{/countryregion/update/{id}(id=${country.countryregionid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 							</tr>
 						</tbody>

@@ -30,18 +30,19 @@
 								<th> Nombre de la tasa impositiva de ventas</th>
 								<th> Id del estado provincia </th>
 								<th>Ratio de la tasa</th>
+								<th> Editar </th>
 								
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="salestaxrate : ${salestaxrate}">
-								<td th:text="${salestaxrate.salestaxrateid}"></td>
-								<td th:text="${salestaxrate.modifieddate}"></td>
-								<td th:text="${salestaxrate.name"></td>
-								<td th:text="${salestaxrate.stateprovinceid}"></td>
-								<td th:text="${salestaxrate.taxrate}"></td>
+							<tr th:each="sales : ${salestaxrate}">
+								<td th:text="${sales.salestaxrateid}"></td>
+								<td th:text="${sales.modifieddate}"></td>
+								<td th:text="${sales.name"></td>
+								<td th:text="${sales.stateprovinceid}"></td>
+								<td th:text="${sales.taxrate}"></td>
 							
-								<td><a th:href="@{/salestaxrate/update/{id}(id=${salestaxrate.salestaxrateid})}"
+								<td><a th:href="@{/salestaxrate/update/{id}(id=${sales.salestaxrateid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 							</tr>
 						</tbody>

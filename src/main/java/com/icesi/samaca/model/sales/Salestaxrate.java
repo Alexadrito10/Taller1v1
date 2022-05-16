@@ -3,6 +3,7 @@ package com.icesi.samaca.model.sales;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the salestaxrate database table.
@@ -25,7 +28,8 @@ public class Salestaxrate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SALESTAXRATE_SALESTAXRATEID_GENERATOR")
 	private Integer salestaxrateid;
 
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -40,7 +44,7 @@ public class Salestaxrate implements Serializable {
 	public Salestaxrate() {
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -68,7 +72,7 @@ public class Salestaxrate implements Serializable {
 		return this.taxtype;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

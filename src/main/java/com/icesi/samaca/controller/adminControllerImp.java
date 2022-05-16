@@ -7,13 +7,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import java.util.Optional;
 import com.icesi.samaca.model.person.Countryregion;
+import com.icesi.samaca.model.sales.Salestaxrate;
 import com.icesi.samaca.services.CountryregionServiceImp;
 import com.icesi.samaca.services.SalestaxrateServiceImp;
 import com.icesi.samaca.validation.CountryRegionValidation;
+import com.icesi.samaca.validation.SalesTaxRateValidation;
 
 @Controller
 public class adminControllerImp implements adminController{
@@ -53,7 +56,7 @@ public class adminControllerImp implements adminController{
 			return "redirect:/countryregion/";
 		}
 		if(bindingResult.hasErrors()) {
-			return"/admin/add_countryregion";
+			return"/admin/add-countryregion";
 			
 		}else {
 			countryRegionService.saveCr(countryregion);
@@ -61,10 +64,89 @@ public class adminControllerImp implements adminController{
 		}
 	} 
 	
+	@GetMapping("/countryregion/update/{id}")
+	public String updateCountryRegion(@PathVariable("id")Integer id, Model model){
+		Optional<Countryregion> country =  countryRegionService.findById(id);
+		if(country.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		
+		model.addAttribute("countryregion", country.get());
+		return "admin/update-countryregion";
+	}
+	
+	@PostMapping("/countryregion/update/{id}")
+	public String updateCountryRegion(@PathVariable("id")Integer id, @Validated(CountryRegionValidation.class)Countryregion countryregion,
+			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("countryregion", countryRegionService.findById(id).get());
+				return "admin/update-countryregion";
+			}
+			countryregion.setCountryregionid(id);
+			countryRegionService.editCr(countryregion);
+		}
+		return "redirect:/countryregion";
+	}
 	
 	@GetMapping("/salestaxrate")
 	public String salestaxrate(Model model) {
+		model.addAttribute("salestaxrate", salestaxrateService.findAll());
 		return "admin/salestaxrate";
+	}
+	
+	@GetMapping("/salestaxrate/add")
+	public String saveSalestaxrate(Model model){
+		model.addAttribute("salestaxrate", new Salestaxrate());
+		
+
+		return "admin/add-salestaxrate";
+	}
+	
+	//All Salestaxrate can't be proved 'till it's fixed.
+	//needs to be fixed since it has an implicit join here.
+	@PostMapping("/salestaxrate/add")
+	public String saveSalestaxrate(@Validated(SalesTaxRateValidation.class) @ModelAttribute Salestaxrate salestaxrate, BindingResult bindingResult,
+			Model model, @RequestParam(value = "action",required = true) String action) {
+		if(action.equals("Cancel")){
+			return "redirect:/salestaxrate/";
+			
+		}
+		if(bindingResult.hasErrors()){
+			return "admin/add-salestaxrate";
+			
+		}else {
+			salestaxrateService.saveSalesTR(salestaxrate);
+			return "redirect:/salestaxrate/";
+		}
+		
+	}
+	
+	@GetMapping("/salestaxrate/update/{id}")
+	public String updateSalestaxrate(@PathVariable("id")Integer id, Model model){
+		Optional<Salestaxrate> tax= salestaxrateService.findById(id);
+		if(tax.isEmpty()) {
+			throw new IllegalArgumentException();
+		
+		}
+		
+		model.addAttribute("salestaxrate", tax.get());
+		return "admin/update-salestaxrate";
+	}
+	
+	@PostMapping("/salestaxrate/update/{id}")
+	public String updateSalestaxrate(@PathVariable("id")Integer id, @Validated(SalesTaxRateValidation.class)Salestaxrate salestaxrate, BindingResult bindingResult,
+			Model model, @RequestParam(value="action", required= true) String action){
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()){
+				model.addAttribute("salestaxrate", salestaxrateService.findById(id).get());
+				return "admin/update-salestaxrate";
+			}
+			salestaxrate.setSalestaxrateid(id);
+			salestaxrateService.editSalesTR(salestaxrate);
+		}
+		return "redirect:/salestaxrate";
+		
 	}
 	
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.icesi.samaca.model.person.Countryregion;
 
 @Repository
-public interface CountryregionRepository extends JpaRepository<Countryregion, String> {
+public interface CountryregionRepository extends JpaRepository<Countryregion, Integer> {
 
 }

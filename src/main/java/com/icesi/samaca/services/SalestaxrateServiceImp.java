@@ -73,6 +73,14 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 		return result;
 	}
 
+	public Iterable<Salestaxrate> findAll(){
+		return salesTRRepo.findAll();
+	}
+	
+	public Optional<Salestaxrate> findById(Integer id){
+		return salesTRRepo.findById(id);
+	}
+	
 
 
 }

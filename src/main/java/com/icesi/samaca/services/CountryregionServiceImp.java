@@ -35,8 +35,7 @@ public class CountryregionServiceImp implements CountryregionService {
 
 
 
-		if ((cR.getCountryregioncode() != null) && cR.getCountryregioncode().length()>=1 && 
-				cR.getCountryregioncode().length()<=4 && (cR.getName().length()>=5)) {
+		if ((cR.getCountryregioncode() != null) && (cR.getName().length()>=5)) {
 		
 //		boolean cRNotNull = cR.getCountryregioncode().isEmpty();
 //		if (!cRNotNull) {
@@ -67,12 +66,12 @@ public class CountryregionServiceImp implements CountryregionService {
 
 		if (cR.getCountryregioncode() != null ) {
 			
-			Optional<Countryregion> optional = cRRepo.findById(cR.getCountryregioncode());
+			Optional<Countryregion> optional = cRRepo.findById(cR.getCountryregionid());
 
 			if(optional.isPresent() &&(cR.getCountryregioncode().length()>=1 && 
 					cR.getCountryregioncode().length()<=4) && (cR.getName().length()>=5)) {
 
-				Countryregion toChange = cRRepo.getById(cR.getCountryregioncode());
+				Countryregion toChange = cRRepo.getById(cR.getCountryregionid());
 
 				toChange.setModifieddate(cR.getModifieddate());
 				toChange.setName(cR.getName());
@@ -97,6 +96,11 @@ public class CountryregionServiceImp implements CountryregionService {
 	
 	public Iterable<Countryregion> findAll(){
 		return cRRepo.findAll();
+	}
+	
+	
+	public Optional<Countryregion> findById(Integer id){
+		return cRRepo.findById(id);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.icesi.samaca.model.person;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.icesi.samaca.validation.InfoValidation;
 
 /**
  * The persistent class for the countryregion database table.
@@ -24,9 +30,21 @@ public class Countryregion implements Serializable {
 	@Id
 	@SequenceGenerator(name = "COUNTRYREGION_COUNTRYREGIONCODE_GENERATOR", allocationSize = 1, sequenceName = "COUNTRYREGION_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUNTRYREGION_COUNTRYREGIONCODE_GENERATOR")
+	private Integer countryregionid;
+	
+	@Size(min=1, max=4,groups= InfoValidation.class)
 	private String countryregioncode;
 
-	private Timestamp modifieddate;
+	public String getCountryregioncode() {
+		return countryregioncode;
+	}
+
+	public void setCountryregioncode(String countryregioncode) {
+		this.countryregioncode = countryregioncode;
+	}
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -44,11 +62,7 @@ public class Countryregion implements Serializable {
 		return stateprovince;
 	}
 
-	public String getCountryregioncode() {
-		return this.countryregioncode;
-	}
-
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -67,11 +81,8 @@ public class Countryregion implements Serializable {
 		return stateprovince;
 	}
 
-	public void setCountryregioncode(String countryregioncode) {
-		this.countryregioncode = countryregioncode;
-	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -81,6 +92,14 @@ public class Countryregion implements Serializable {
 
 	public void setStateprovinces(List<Stateprovince> stateprovinces) {
 		this.stateprovinces = stateprovinces;
+	}
+	
+	public Integer getCountryregionid() {
+		return countryregionid;
+	}
+
+	public void setCountryregionid(Integer countryregionid) {
+		this.countryregionid = countryregionid;
 	}
 
 }

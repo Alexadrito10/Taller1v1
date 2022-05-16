@@ -24,24 +24,35 @@
 					th:object="${countryregion}" method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
-							<label for="countryregioncode" class="col-form-label">CountryRegion Code</label> <input
-								type="text" th:field="*{countryregioncode}" class="form-control" id="countryregioncode"
+							<label for="countryregionid" class="col-form-label">CountryRegion Id</label>
+							<input type="text" th:field="*{countryregionid}"
+								class="form-control" id="countryregionid"
+								placeholder="countryregion Id"> <span
+								th:if="${#fields.hasErrors('countryregionid')}"
+								th:errors="*{countryregionid}" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="countryregioncode" class="col-form-label">CountryRegion
+								Code</label> <input type="text" th:field="*{countryregioncode}"
+								class="form-control" id="countryregioncode"
 								placeholder="countryregioncode"> <span
-								th:if="${#fields.hasErrors('countryregioncode')}" th:errors="*{countryregioncode}"
-								class="text-danger"></span>
+								th:if="${#fields.hasErrors('countryregioncode')}"
+								th:errors="*{countryregioncode}" class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="modifieddate" class="col-form-label">Modified Date</label> <input
-								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
+							<label for="modifieddate" class="col-form-label">Modified
+								Date</label> <input type="date" th:field="*{modifieddate}"
+								class="form-control" id="modifieddate"
 								placeholder="Coloque la fecha"> <span
-								th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
-								class="text-danger"></span>
+								th:if="${#fields.hasErrors('modifieddate')}"
+								th:errors="*{modifieddate}" class="text-danger"></span>
 						</div>
-						
+
 						<div class="form-group col-md-6">
-							<label for="name" class="col-form-label">Nombre del Pais Región</label> <input
-								type="text" th:field="*{name}" class="form-control"
-								id="name" placeholder="Nombre del Pais Región"> <span
+							<label for="name" class="col-form-label">Nombre del Pais
+								Región</label> <input type="text" th:field="*{name}"
+								class="form-control" id="name"
+								placeholder="Nombre del Pais Región"> <span
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="text-danger"></span>
 						</div>

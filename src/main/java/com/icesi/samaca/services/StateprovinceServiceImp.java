@@ -33,7 +33,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 
 	@Override
-	public Stateprovince saveStateprov(Stateprovince sP, String countryRegionId,Integer territoryId) throws IllegalArgumentException {
+	public Stateprovince saveStateprov(Stateprovince sP, Integer countryRegionId,Integer territoryId) throws IllegalArgumentException {
 		
 
 
@@ -54,7 +54,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 			}
 			else 
 			{
-				throw new IllegalArgumentException("Algo en la creación salió mal, por favor revise los parametros");
+				throw new IllegalArgumentException("Algo en la creaciï¿½n saliï¿½ mal, por favor revise los parametros");
 			}
 
 
@@ -65,7 +65,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 	}	
 
 	@Override
-	public Stateprovince editStateproV(Stateprovince sP,String countryRegionId,Integer territoryId) throws IllegalArgumentException {
+	public Stateprovince editStateproV(Stateprovince sP,Integer countryRegionId,Integer territoryId) throws IllegalArgumentException {
 
 		Stateprovince result = null;
 		try {
