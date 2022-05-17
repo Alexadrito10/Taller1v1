@@ -9,10 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.icesi.samaca.model.person.Stateprovince;
 
 /**
  * The persistent class for the salestaxrate database table.
@@ -35,7 +39,9 @@ public class Salestaxrate implements Serializable {
 
 	private Integer rowguid;
 
-	private Integer stateprovinceid;
+	@ManyToOne
+	@JoinColumn(name = "stateprovinceid")
+	private Stateprovince stateprovince;
 
 	private BigDecimal taxrate;
 
@@ -58,10 +64,6 @@ public class Salestaxrate implements Serializable {
 
 	public Integer getSalestaxrateid() {
 		return this.salestaxrateid;
-	}
-
-	public Integer getStateprovinceid() {
-		return this.stateprovinceid;
 	}
 
 	public BigDecimal getTaxrate() {
@@ -88,16 +90,20 @@ public class Salestaxrate implements Serializable {
 		this.salestaxrateid = salestaxrateid;
 	}
 
-	public void setStateprovinceid(Integer stateprovinceid) {
-		this.stateprovinceid = stateprovinceid;
-	}
-
 	public void setTaxrate(BigDecimal taxrate) {
 		this.taxrate = taxrate;
 	}
 
 	public void setTaxtype(Integer taxtype) {
 		this.taxtype = taxtype;
+	}
+
+	public Stateprovince getStateprovince() {
+		return stateprovince;
+	}
+
+	public void setStateprovince(Stateprovince stateprovince) {
+		this.stateprovince = stateprovince;
 	}
 
 }

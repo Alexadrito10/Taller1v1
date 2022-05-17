@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 import com.icesi.samaca.model.person.Countryregion;
 import com.icesi.samaca.model.sales.Salestaxrate;
+import com.icesi.samaca.repositories.StateprovinceRepository;
 import com.icesi.samaca.services.CountryregionServiceImp;
 import com.icesi.samaca.services.SalestaxrateServiceImp;
 import com.icesi.samaca.validation.CountryRegionValidation;
@@ -23,6 +24,7 @@ public class adminControllerImp{
 
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
+	private StateprovinceRepository stateprovinceService;
 	
 	@Autowired
 	public adminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService) {	
@@ -99,8 +101,9 @@ public class adminControllerImp{
 	@GetMapping("/salestaxrate/add")
 	public String saveSalestaxrate(Model model){
 		model.addAttribute("salestaxrate", new Salestaxrate());
-		
-
+		System.out.println("taX: "+ salestaxrateService.findAll());
+		System.out.println("state: " +stateprovinceService.findAll());
+		model.addAttribute("stateprovinces", stateprovinceService.findAll());
 		return "admin/add-salestaxrate";
 	}
 	
@@ -115,10 +118,11 @@ public class adminControllerImp{
 		}
 		if(bindingResult.hasErrors()){
 			model.addAttribute("salestaxrate", salestaxrate);
+			model.addAttribute("stateprovince");
 			return "admin/add-salestaxrate";
 			
 		}else {
-			salestaxrateService.saveSalesTR(salestaxrate);
+			salestaxrateService.saveSalesTR(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
 			return "redirect:/salestaxrate/";
 		}
 		
@@ -129,10 +133,10 @@ public class adminControllerImp{
 		Optional<Salestaxrate> tax= salestaxrateService.findById(id);
 		if(tax.isEmpty()) {
 			throw new IllegalArgumentException();
-		
 		}
 		
 		model.addAttribute("salestaxrate", tax.get());
+		model.addAttribute("stateprovinces", salestaxrateService.findAll());
 		return "admin/update-salestaxrate";
 	}
 	
@@ -145,7 +149,7 @@ public class adminControllerImp{
 				return "admin/update-salestaxrate";
 			}
 			salestaxrate.setSalestaxrateid(id);
-			salestaxrateService.editSalesTR(salestaxrate);
+			salestaxrateService.editSalesTR(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
 		}
 		return "redirect:/salestaxrate";
 		

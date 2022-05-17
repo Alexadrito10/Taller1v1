@@ -45,7 +45,14 @@
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="text-danger"></span>
 						</div>
-                        
+						
+                        <div class="form-group col-md-6">
+							<label for="stateprovince" class="col-form-label">Sales Territory</label> <select class="form-control-range"
+                                th:field="*{stateprovince}"> <option th:each="provinces: ${stateprovinces}"
+                                th:value="${provinces.stateprovinceid}" th:text="${provinces.name}"
+                                th:selected="${stateprovince.stateprovince=provinces}"></option></select>
+						</div>
+						
                         <div class="form-group col-md-6">
 							<label for="stateprovinceid" class="col-form-label">Id del estado provincia</label> <input
 								type="text" th:field="*{stateprovinceid}" class="form-control"

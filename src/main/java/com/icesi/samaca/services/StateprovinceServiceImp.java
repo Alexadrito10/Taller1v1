@@ -127,5 +127,22 @@ public class StateprovinceServiceImp implements StateprovinceService {
 		return result;
 
 	}
+	
+	
+	public Iterable<Stateprovince> findAll(){
+		return stateProvinceRepo.findAll();
+	}
+	
+	public Optional<Stateprovince> findById(Integer id){
+		return stateProvinceRepo.findById(id);
+	}
+	
+	public Iterable<Countryregion> findAllCountries(Integer id){
+		return countryregionRepository.findAll();
+	}
+	
+	public Iterable<Salesterritory> findAllTerritories(Integer id){
+		return salesterritoryRepo.findAll();
+	}
 
 }

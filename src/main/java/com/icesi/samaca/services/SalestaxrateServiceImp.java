@@ -28,12 +28,17 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 
 
 	@Override
-	public Salestaxrate saveSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
-		Salestaxrate aux= null; 
+	public Salestaxrate saveSalesTR(Salestaxrate salesTR, Integer id) throws IllegalArgumentException {
+		Salestaxrate aux= null;
 		if((salesTR.getTaxrate().compareTo(BigDecimal.ZERO))>=0 &&  
-				(salesTR.getName().length()>=5) && stateprovinceRepo.findById(salesTR.getStateprovinceid()).isPresent())
+				(salesTR.getName().length()>=5))
 		{
+			Optional<Stateprovince> state= this.stateprovinceRepo.findById(id);
+			if(state.isPresent()) {
+				salesTR.setStateprovince(state.get());
 				aux= this.salesTRRepo.save(salesTR);
+			}
+				
 		}
 		else 
 		{
@@ -44,29 +49,15 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 	}
 
 	@Override
-	public Salestaxrate editSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
-
+	public Salestaxrate editSalesTR(Salestaxrate salesTR, Integer id) throws IllegalArgumentException {
 		Salestaxrate result = null;
 
-		if((salesTR.getTaxrate().compareTo(BigDecimal.ZERO))>=0 &&  
-				(salesTR.getName().length()>=5) &&
-				(stateprovinceRepo.findById(salesTR.getStateprovinceid()).isPresent()))
-		{	
-
-//			Salestaxrate toChange = salesTRRepo.getById(salesTR.getSalestaxrateid());
-//			//toChange.setModifieddate(salesTR.getModifieddate());
-//			toChange.setName(salesTR.getName());
-//			toChange.setRowguid(salesTR.getRowguid());
-//			toChange.setStateprovinceid(salesTR.getStateprovinceid());
-//			toChange.setTaxrate(salesTR.getTaxrate());
-//			toChange.setTaxtype(salesTR.getTaxtype());
-//			result = toChange;
-			salesTRRepo.save(salesTR);
-			result = salesTR;
-
-		}
-		else 
-		{
+		if(salesTR.getSalestaxrateid()!= null){
+			Optional<Salestaxrate> stateOp= salesTRRepo.findById(salesTR.getSalestaxrateid());
+			if(stateOp.isPresent()){
+				result= saveSalesTR(salesTR, id);
+			}
+		}else{
 			throw new IllegalArgumentException();
 		}
 
@@ -79,6 +70,10 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 	
 	public Optional<Salestaxrate> findById(Integer id){
 		return salesTRRepo.findById(id);
+	}
+	
+	public Iterable<Stateprovince> findAllStateProvinces(){
+		return stateprovinceRepo.findAll();
 	}
 	
 

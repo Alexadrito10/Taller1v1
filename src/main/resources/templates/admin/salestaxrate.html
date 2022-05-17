@@ -39,7 +39,7 @@
 								<td th:text="${sales.salestaxrateid}"></td>
 								<td th:text="${sales.modifieddate}"></td>
 								<td th:text="${sales.name"></td>
-								<td th:text="${sales.stateprovinceid}"></td>
+								<td th:text="${sales.stateprovince.name}"></td>
 								<td th:text="${sales.taxrate}"></td>
 							
 								<td><a th:href="@{/salestaxrate/update/{id}(id=${sales.salestaxrateid})}"
