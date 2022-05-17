@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.icesi.samaca.model.person.Address;
+import com.icesi.samaca.model.person.Stateprovince;
 import com.icesi.samaca.services.AddresServiceImp;
 import com.icesi.samaca.services.CountryregionServiceImp;
 import com.icesi.samaca.services.StateprovinceServiceImp;
 import com.icesi.samaca.validation.AddressValidation;
+import com.icesi.samaca.validation.StateProvinceValidation;
 
 @Controller
 public class operatorControllerImp{
@@ -96,9 +98,58 @@ public class operatorControllerImp{
 	@GetMapping("/stateprovince")
 	public String stateprovince(Model model){
 		model.addAttribute("stateprovince", stateprovinceService.findAll());
-		
 		return "operator/stateprovince";
 	}
+	
+	@GetMapping("/stateprovince/add")
+	public String saveStateprovince(Model model){
+		model.addAttribute("stateprovince", new Stateprovince());
+		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
+		return "operator/add-stateprovince";
+	}
+	
+	@PostMapping("/stateprovince/add")
+	public String saveStateprovince(@Validated(StateProvinceValidation.class) @ModelAttribute Stateprovince stateprovince, BindingResult bindingResult,
+			Model model, @RequestParam(value="action", required= true)String action) {
+		if(action.equals("Cancel")) {
+			return "redirect:/stateprovince";
+		}
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("stateprovince", stateprovince);
+			model.addAttribute("countryregion");
+			return "operator/add-stateprovince";
+		}else {
+			stateprovinceService.saveStateprov(stateprovince);
+			return "redirect:/stateprovince";
+		}
+	}
+
+	@GetMapping("/stateprovince/update/{id}")
+	public String updateStateProvince(@PathVariable("id")Integer id, Model model) {
+		Optional<Stateprovince> province= stateprovinceService.findById(id);
+		if(province.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		model.addAttribute("stateprovince", province.get());
+		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
+		return "operator/update-stateprovince";
+	}
+	
+	@PostMapping("/stateprovince/update/{id}")
+	public String updateStateProvince(@PathVariable("id")Integer id, @Validated(StateProvinceValidation.class)Stateprovince stateprovince, BindingResult bindingResult,
+			Model model, @RequestParam(value="action", required= true)String action) {
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("stateprovince", stateprovinceService.findById(id).get());
+				model.addAttribute("countryregion", stateprovinceService.findAllCountries());
+				return "operator/update-stateprovince";
+			}
+			stateprovince.setStateprovinceid(id);
+			stateprovinceService.editStateproV(stateprovince);
+		}
+		return "redirect:/stateprovince";
+	}
+	
 	
 	
 

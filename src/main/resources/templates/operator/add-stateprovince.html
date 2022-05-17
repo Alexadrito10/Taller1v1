@@ -47,21 +47,20 @@
 						</div>
 						
 						<div class="form-group col-md-6">
-							<label for="name" class="col-form-label">Nombre del estado provincia</label> <input
-								type="text" th:field="*{name}" class="form-control"
-								id="name" placeholder="Nombre del Estado provincia"> <span
-								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-								class="text-danger"></span>
-						</div>
-
-						<div class="form-group col-md-6">
 							<label for="stateprovincecode" class="col-form-label">Codigo del estado provincia</label> <input
 								type="text" th:field="*{stateprovincecode}" class="form-control"
 								id="name" placeholder="Codigo del Estado Prov"> <span
 								th:if="${#fields.hasErrors('stateprovincecode')}" th:errors="*{stateprovincecode}"
 								class="text-danger"></span>
 						</div>
-
+						
+						<div class="form-group col-md-6">
+							<label for="countryregion" class="col-form-label">País-Region</label> <select class="form-control-range"
+                                th:field="*{countryregion}"> <option th:each="country: ${countryregions}"
+                                th:value="${country.countryregionid}" th:text="${country.name}"
+                                th:selected="${stateprovince.countryregion= country}"></option></select>
+						</div>
+						
 						<div class="form-group col-md-6">
 							<label for="territoryid" class="col-form-label">Id del territorio</label> <input
 								type="text" th:field="*{territoryid}" class="form-control"

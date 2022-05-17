@@ -107,8 +107,6 @@ public class adminControllerImp{
 		return "admin/add-salestaxrate";
 	}
 	
-	//All Salestaxrate can't be proved 'till it's fixed.
-	//needs to be fixed since it has an implicit join here.
 	@PostMapping("/salestaxrate/add")
 	public String saveSalestaxrate(@Validated(SalesTaxRateValidation.class) @ModelAttribute Salestaxrate salestaxrate, BindingResult bindingResult,
 			Model model, @RequestParam(value = "action",required = true) String action) {
