@@ -20,14 +20,14 @@ import com.icesi.samaca.validation.CountryRegionValidation;
 import com.icesi.samaca.validation.SalesTaxRateValidation;
 
 @Controller
-public class adminControllerImp{
+public class AdminControllerImp{
 
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
 	private StateprovinceRepository stateprovinceService;
 	
 	@Autowired
-	public adminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService) {	
+	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService) {	
 	this.countryRegionService = countryregionService;
 	this.salestaxrateService = salestaxrateService;
 	}

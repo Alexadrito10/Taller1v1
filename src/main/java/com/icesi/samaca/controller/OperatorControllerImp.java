@@ -22,14 +22,14 @@ import com.icesi.samaca.validation.AddressValidation;
 import com.icesi.samaca.validation.StateProvinceValidation;
 
 @Controller
-public class operatorControllerImp{
+public class OperatorControllerImp{
 	
 	private AddresServiceImp addressService;
 	private StateprovinceServiceImp stateprovinceService;
 	private CountryregionServiceImp countryRegionService;
 	
 	@Autowired
-	public operatorControllerImp(AddresServiceImp addressService, StateprovinceServiceImp stateprovinceService ) {
+	public OperatorControllerImp(AddresServiceImp addressService, StateprovinceServiceImp stateprovinceService ) {
 		this.addressService= addressService;
 		this.stateprovinceService= stateprovinceService;
 	}
