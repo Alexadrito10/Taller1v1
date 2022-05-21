@@ -74,7 +74,7 @@ public class OperatorControllerImp{
 	public String updateAddress(@PathVariable("id")Integer id, Model model){
 		Optional<Address> address= addressService.findById(id);
 		if(address.isEmpty()){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("No hay una dirección creada con este id");
 		}
 		model.addAttribute("address", address.get());
 		model.addAttribute("statesprovinces", addressService.findAllStateProvinces());
@@ -129,30 +129,25 @@ public class OperatorControllerImp{
 	public String updateStateProvince(@PathVariable("id")Integer id, Model model) {
 		Optional<Stateprovince> province= stateprovinceService.findById(id);
 		if(province.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("No hay un estado provincia creado con este id");
 		}
 		model.addAttribute("stateprovince", province.get());
-		model.addAttribute("countryregions", countryRegionService.findAll());
+		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
 		return "operator/update-stateprovince";
 	}
 	
 	@PostMapping("/stateprovince/update/{id}")
 	public String updateStateProvince(@PathVariable("id")Integer id, @Validated(StateProvinceValidation.class)Stateprovince stateprovince, BindingResult bindingResult,
 			Model model, @RequestParam(value="action", required= true)String action) {
-		if(!action.equals("Cancel")) {
-			if(bindingResult.hasErrors()) {
+		if(!action.equals("Cancel")){
+			if(bindingResult.hasErrors()){
 				model.addAttribute("stateprovince", stateprovinceService.findById(id).get());
-				model.addAttribute("countryregions", countryRegionService.findAll());
+				model.addAttribute("countryregion", stateprovinceService.findAllCountries());
 				return "operator/update-stateprovince";
 			}
 			stateprovince.setStateprovinceid(id);
 			stateprovinceService.editStateproV(stateprovince, stateprovince.getCountryregion().getCountryregionid());
-			model.addAttribute("stateprovince", stateprovinceService.findAll());
 		}
 		return "redirect:/stateprovince";
 	}
-	
-	
-	
-
 }

@@ -20,16 +20,9 @@
 		<h2 class="mb-5">New State province</h2>
 		<div class="row">
 			<div class="col-md-6">
-				<form action="#" th:action="@{/stateprovince/update/{id}(id=${state.stateprovinceid})}"
+				<form action="#" th:action="@{/stateprovince/update/{id}(id=${stateprovince.stateprovinceid})}"
 					th:object="${stateprovince}" method="post">
 					<div class="row">
-						<div class="form-group col-md-6">
-							<label for="stateprovinceid" class="col-form-label">Id del estado provincia</label> <input
-								type="text" th:field="*{stateprovinceid}" class="form-control" id="stateprovinceid"
-								placeholder="id del estado provincia"> <span
-								th:if="${#fields.hasErrors('stateprovinceid')}" th:errors="*{stateprovinceid}"
-								class="text-danger"></span>
-						</div>
 						<div class="form-group col-md-6">
 							<label for="modifieddate" class="col-form-label">Fecha de la modificación</label> <input
 								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
@@ -49,11 +42,17 @@
 						<div class="form-group col-md-6">
 							<label for="stateprovincecode" class="col-form-label">Codigo del estado provincia</label> <input
 								type="text" th:field="*{stateprovincecode}" class="form-control"
-								id="name" placeholder="Codigo del Estado Prov"> <span
+								id="stateprovincecode" placeholder="Codigo del Estado Prov"> <span
 								th:if="${#fields.hasErrors('stateprovincecode')}" th:errors="*{stateprovincecode}"
 								class="text-danger"></span>
 						</div>
-						
+						<div class="form-group col-md-6">
+							<label for="name" class="col-form-label">Nombre del estado provincia</label> <input
+								type="text" th:field="*{name}" class="form-control"
+								id="name" placeholder="Nombre"> <span
+								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="text-danger"></span>
+						</div>
 						<div class="form-group col-md-6">
 							<label for="countryregion" class="col-form-label">País-Region</label> <select class="form-control-range"
                                 th:field="*{countryregion}"> <option th:each="country: ${countryregions}"

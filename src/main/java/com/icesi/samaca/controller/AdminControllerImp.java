@@ -27,9 +27,10 @@ public class AdminControllerImp{
 	private StateprovinceRepository stateprovinceService;
 	
 	@Autowired
-	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService) {	
+	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService,StateprovinceRepository stateprovinceService) {	
 	this.countryRegionService = countryregionService;
 	this.salestaxrateService = salestaxrateService;
+	this.stateprovinceService = stateprovinceService;
 	}
 	
 	@GetMapping("/admin")
