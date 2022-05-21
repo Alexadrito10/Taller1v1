@@ -14,7 +14,7 @@ import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.sales.Salestaxrate;
 
 @Repository
-@Scope("Singleton")
+@Scope("singleton")
 public class SalesTaxRateDaoImp implements SalesTaxRateDAO {
 	
 	@PersistenceContext

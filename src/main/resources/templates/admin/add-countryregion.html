@@ -24,14 +24,6 @@
 					th:object="${countryregion}" method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
-							<label for="countryregionid" class="col-form-label">CountryRegion Id</label>
-							<input type="text" th:field="*{countryregionid}"
-								class="form-control" id="countryregionid"
-								placeholder="countryregion Id"> <span
-								th:if="${#fields.hasErrors('countryregionid')}"
-								th:errors="*{countryregionid}" class="text-danger"></span>
-						</div>
-						<div class="form-group col-md-6">
 							<label for="countryregioncode" class="col-form-label">CountryRegion
 								Code</label> <input type="text" th:field="*{countryregioncode}"
 								class="form-control" id="countryregioncode"

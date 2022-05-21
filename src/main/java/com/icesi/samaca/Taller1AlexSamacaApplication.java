@@ -36,8 +36,4 @@ public class Taller1AlexSamacaApplication {
 			userRepository.save(userOperator);
 		});
 	}
-
-
-
-
 }

@@ -15,7 +15,7 @@ import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.sales.Salestaxrate;
 
 @Repository
-@Scope("Singleton")
+@Scope("singleton")
 public class AddressDaoImp implements AddresDAO {
 	
 	@PersistenceContext
@@ -73,7 +73,13 @@ public class AddressDaoImp implements AddresDAO {
 		
 		
 	}
+	@Override
+	@Transactional
+	public List<Address> getListAddressByAtLeastTwoBySalesHeader() {
+		String jpql = "Select a from Address a"
+				+ " WHERE (SELECT COUNT(sOH) FROM Salesorderheader sOH WHERE sOH MEMBER OF a.salesorderheaders) >= 2";
+		return entityManager.createQuery(jpql,Address.class).getResultList();
 	
-	
+	}
 
 }

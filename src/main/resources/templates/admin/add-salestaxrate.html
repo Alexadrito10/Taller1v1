@@ -24,13 +24,6 @@
 					th:object="${salestaxrate}" method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
-							<label for="salestaxrate" class="col-form-label">ID Sales taxrate</label> <input
-								type="text" th:field="*{salestaxrateid}" class="form-control" id="salestaxrateid"
-								placeholder="Colocar aqui el id para el salestaxrate"> <span
-								th:if="${#fields.hasErrors('salestaxrateid')}" th:errors="*{salestaxrateid}"
-								class="text-danger"></span>
-						</div>
-						<div class="form-group col-md-6">
 							<label for="modifieddate" class="col-form-label">Modified Date</label> <input
 								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
 								placeholder="Coloque la fecha"> <span

@@ -23,13 +23,7 @@
 				<form action="#" th:action="@{/address/add}"
 					th:object="${address}" method="post">
 					<div class="row">
-						<div class="form-group col-md-6">
-							<label for="addressid" class="col-form-label">Id de la dirección</label> <input
-								type="text" th:field="*{addressid}" class="form-control" id="addressid"
-								placeholder="id de la dirección"> <span
-								th:if="${#fields.hasErrors('addressid')}" th:errors="*{addressid}"
-								class="text-danger"></span>
-						</div>
+						
 						<div class="form-group col-md-6">
 							<label for="addressline1" class="col-form-label">Dirección 1</label> <input
 								type="text" th:field="*{addressline1}" class="form-control" id="addressline1"

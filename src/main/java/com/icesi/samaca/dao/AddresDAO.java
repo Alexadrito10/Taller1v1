@@ -15,5 +15,6 @@ public interface AddresDAO {
 	public Address findById(Integer sTId);
 	public List<Address> findByStateProv(Integer stPId);
 	public List<Address> findByCity(String city);
+	public List<Address> getListAddressByAtLeastTwoBySalesHeader() ;
 
 }

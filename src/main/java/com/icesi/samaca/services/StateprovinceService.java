@@ -5,7 +5,7 @@ import com.icesi.samaca.model.person.Stateprovince;
 
 public interface StateprovinceService {
 	
-	public Stateprovince saveStateprov(Stateprovince sP) ;
-	public Stateprovince editStateproV(Stateprovince sP);
+	public Stateprovince saveStateprov(Stateprovince sP, Integer countryregionId) ;
+	public Stateprovince editStateproV(Stateprovince sP, Integer countryregionId);
 
 }

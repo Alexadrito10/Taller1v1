@@ -26,6 +26,7 @@
 						<thead>
 							<tr>
 								<th>Id Estado provincia</th>
+								<th> Nombre </th>
 								<th>Flag</th>
 								<th>Codigo estado provincia</th>
 								<th>Fecha de modificación</th>
@@ -37,6 +38,7 @@
 						<tbody>
 							<tr th:each="state : ${stateprovince}">
 								<td th:text="${state.stateprovinceid}"></td>
+								<td th:text="${state.name}"></td>
 								<td th:text="${state.isonlystateprovinceflag}"></td>
 								<td th:text="${state.stateprovincecode}"></td>
 								<td th:text="${state.modifieddate}"></td>

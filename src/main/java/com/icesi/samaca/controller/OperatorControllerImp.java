@@ -29,9 +29,10 @@ public class OperatorControllerImp{
 	private CountryregionServiceImp countryRegionService;
 	
 	@Autowired
-	public OperatorControllerImp(AddresServiceImp addressService, StateprovinceServiceImp stateprovinceService ) {
+	public OperatorControllerImp(AddresServiceImp addressService, StateprovinceServiceImp stateprovinceService,CountryregionServiceImp countryRegionService ) {
 		this.addressService= addressService;
 		this.stateprovinceService= stateprovinceService;
+		this.countryRegionService =countryRegionService;
 	}
 	
 	@GetMapping("/operator")
@@ -104,7 +105,7 @@ public class OperatorControllerImp{
 	@GetMapping("/stateprovince/add")
 	public String saveStateprovince(Model model){
 		model.addAttribute("stateprovince", new Stateprovince());
-		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
+		model.addAttribute("countryregions", countryRegionService.findAll());
 		return "operator/add-stateprovince";
 	}
 	
@@ -119,7 +120,7 @@ public class OperatorControllerImp{
 			model.addAttribute("countryregion");
 			return "operator/add-stateprovince";
 		}else {
-			stateprovinceService.saveStateprov(stateprovince);
+			stateprovinceService.saveStateprov(stateprovince, stateprovince.getCountryregion().getCountryregionid());
 			return "redirect:/stateprovince";
 		}
 	}
@@ -131,7 +132,7 @@ public class OperatorControllerImp{
 			throw new IllegalArgumentException();
 		}
 		model.addAttribute("stateprovince", province.get());
-		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
+		model.addAttribute("countryregions", countryRegionService.findAll());
 		return "operator/update-stateprovince";
 	}
 	
@@ -141,11 +142,12 @@ public class OperatorControllerImp{
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("stateprovince", stateprovinceService.findById(id).get());
-				model.addAttribute("countryregion", stateprovinceService.findAllCountries());
+				model.addAttribute("countryregions", countryRegionService.findAll());
 				return "operator/update-stateprovince";
 			}
 			stateprovince.setStateprovinceid(id);
-			stateprovinceService.editStateproV(stateprovince);
+			stateprovinceService.editStateproV(stateprovince, stateprovince.getCountryregion().getCountryregionid());
+			model.addAttribute("stateprovince", stateprovinceService.findAll());
 		}
 		return "redirect:/stateprovince";
 	}

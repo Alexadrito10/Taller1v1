@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.person.Stateprovince;
@@ -52,6 +53,7 @@ public class AddresServiceImp implements AddressService {
 	}
 
 	@Override
+	@Transactional
 	public Address editAddres(Address addr) throws IllegalArgumentException{
 		Address aux= null;
 
