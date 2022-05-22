@@ -16,6 +16,7 @@ import com.icesi.samaca.model.sales.Salestaxrate;
 import com.icesi.samaca.repositories.StateprovinceRepository;
 import com.icesi.samaca.services.CountryregionServiceImp;
 import com.icesi.samaca.services.SalestaxrateServiceImp;
+import com.icesi.samaca.services.StateprovinceServiceImp;
 import com.icesi.samaca.validation.CountryRegionValidation;
 import com.icesi.samaca.validation.SalesTaxRateValidation;
 
@@ -24,10 +25,10 @@ public class AdminControllerImp{
 
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
-	private StateprovinceRepository stateprovinceService;
+	private StateprovinceServiceImp stateprovinceService;
 	
 	@Autowired
-	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService,StateprovinceRepository stateprovinceService) {	
+	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService,StateprovinceServiceImp stateprovinceService) {	
 	this.countryRegionService = countryregionService;
 	this.salestaxrateService = salestaxrateService;
 	this.stateprovinceService = stateprovinceService;
@@ -152,6 +153,12 @@ public class AdminControllerImp{
 		}
 		return "redirect:/salestaxrate";
 		
+	}
+	
+	@GetMapping("/stateprovince/{id}")
+	public String StateProvRefs(@PathVariable("id")Integer id, Model model) {
+		model.addAttribute("stateprovince", stateprovinceService.findByCountry(id));
+		return "admin/stateprov-refs";
 	}
 	
 }

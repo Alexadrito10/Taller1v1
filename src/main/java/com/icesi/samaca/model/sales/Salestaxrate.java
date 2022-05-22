@@ -13,10 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.icesi.samaca.model.person.Stateprovince;
+import com.icesi.samaca.validation.SalesTaxRateValidation;
 
 /**
  * The persistent class for the salestaxrate database table.
@@ -35,14 +39,18 @@ public class Salestaxrate implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@Size(min = 5, groups = {SalesTaxRateValidation.class},message = "El nombre de la tasa debe ser de almenos 5 caracteres")
 	private String name;
 
 	private Integer rowguid;
 
 	@ManyToOne
 	@JoinColumn(name = "stateprovinceid")
+	@NotNull(groups = {SalesTaxRateValidation.class},message = "El nombre de la tasa debe ser de almenos 5 caracteres")
 	private Stateprovince stateprovince;
 
+	@NotNull(groups= {SalesTaxRateValidation.class},message = "La tasa no puede ser nula ni negativa " )
+	@Min(value = 0, groups= {SalesTaxRateValidation.class},message = "La tasa no puede ser negativa")
 	private BigDecimal taxrate;
 
 	private Integer taxtype;

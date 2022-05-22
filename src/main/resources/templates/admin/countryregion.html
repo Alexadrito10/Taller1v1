@@ -29,6 +29,8 @@
 								<th>Country Region Code</th>
 								<th>Modified Date</th>
 								<th>Country Region Name</th>
+								<th> Stateprovince </th>
+								<th> Edit </th>
 								
 							</tr>
 						</thead>
@@ -38,6 +40,8 @@
 								<td th:text="${country.countryregioncode}"></td>
 								<td th:text="${country.modifieddate}"></td>
 								<td th:text="${country.name}"></td>
+								<td> <a th:href="@{/stateprovince/{id}(id=${country.countryregionid})}"
+									class="btn btn-primary"> <i class="fas fa-user-edit ml-2"> </i></a> </td>
 							
 								<td><a th:href="@{/countryregion/update/{id}(id=${country.countryregionid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

@@ -1,5 +1,6 @@
 package com.icesi.samaca.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +86,13 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 	public Iterable<Salesterritory> findAllTerritories() {
 		return salesterritoryRepo.findAll();
+	}
+	
+	public Iterable<Stateprovince> findByCountry(Integer id){
+		Countryregion country= countryregionRepository.findById(id).get();
+		List<Stateprovince> provinceList= country.getStateprovinces();
+		Iterable<Stateprovince> provinceIterable= provinceList;
+		
+		return provinceIterable;
 	}
 }

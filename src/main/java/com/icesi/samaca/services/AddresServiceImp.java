@@ -1,5 +1,6 @@
 package com.icesi.samaca.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.model.person.Address;
+import com.icesi.samaca.model.person.Countryregion;
 import com.icesi.samaca.model.person.Stateprovince;
 import com.icesi.samaca.repositories.AddressRepository;
 import com.icesi.samaca.repositories.StateprovinceRepository;
@@ -78,6 +80,13 @@ public class AddresServiceImp implements AddressService {
 	
 	public Iterable<Stateprovince> findAllStateProvinces(){
 		return staprovRepos.findAll();
+	}
+	public Iterable<Address> findByStateprov(Integer id){
+		Stateprovince stateprov= staprovRepos.findById(id).get();
+		List<Address> addressList= stateprov.getAddresses();
+		Iterable<Address> addressIterable= addressList;
+		
+		return addressIterable;
 	}
 	
 

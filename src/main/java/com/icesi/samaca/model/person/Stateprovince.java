@@ -12,8 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.icesi.samaca.validation.StateProvinceValidation;
 
 /**
  * The persistent class for the stateprovince database table.
@@ -29,17 +34,21 @@ public class Stateprovince implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STATEPROVINCE_STATEPROVINCEID_GENERATOR")
 	private Integer stateprovinceid;
 
+	@Pattern(regexp = "^[Y|N]{1}$",groups = {StateProvinceValidation.class}, message ="Must be Y or N")
 	private String isonlystateprovinceflag;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@Size( min=5 ,groups ={StateProvinceValidation.class}, message= "El nombre de estado provincia debe ser de al menos 5 digitos")
 	private String name;
 
 	private Integer rowguid;
 
+	@Size( min=5 ,max=5 ,groups ={StateProvinceValidation.class}, message= "El codigo de provincia debe ser de 6 digitos")
 	private String stateprovincecode;
 
+	@NotNull(groups = {StateProvinceValidation.class}, message ="Debe existir el territorio de ventas")
 	private Integer territoryid;
 
 	// bi-directional many-to-one association to Address
@@ -49,6 +58,7 @@ public class Stateprovince implements Serializable {
 	// bi-directional many-to-one association to Countryregion
 	@ManyToOne
 	@JoinColumn(name = "countryregioncode")
+	@NotNull(groups = {StateProvinceValidation.class}, message ="Debe existir el territorio de ventas")
 	private Countryregion countryregion;
 
 	public Stateprovince() {

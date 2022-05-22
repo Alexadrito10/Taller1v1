@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.icesi.samaca.validation.CountryRegionValidation;
 import com.icesi.samaca.validation.InfoValidation;
 
 /**
@@ -32,7 +33,7 @@ public class Countryregion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUNTRYREGION_COUNTRYREGIONCODE_GENERATOR")
 	private Integer countryregionid;
 	
-	@Size(min=1, max=4,groups= InfoValidation.class)
+	@Size(min=1, max=4,groups= {CountryRegionValidation.class}, message= "El codigo debe tener entre 1 y 4 caracteres")
 	private String countryregioncode;
 
 	public String getCountryregioncode() {
@@ -46,6 +47,7 @@ public class Countryregion implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@Size(min=5, groups ={CountryRegionValidation.class}, message= "El nombre debe tener minimo 5 caracteres")
 	private String name;
 
 	// bi-directional many-to-one association to Stateprovince

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Editar salestaxrate</title>
+<title> Update salestaxrate</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h2 class="mb-5">Editar Sales taxrate</h2>
+		<h2 class="mb-5">Update Sales taxrate</h2>
 		<div class="row">
 			<div class="col-md-6">
 				<form action="#" th:action="@{/salestaxrate/update/{id}(id=${salestaxrate.salestaxrateid})}"
@@ -38,14 +38,14 @@
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="text-danger"></span>
 						</div>
-                        
+						
                         <div class="form-group col-md-6">
-							<label for="stateprovinceid" class="col-form-label">Id del estado provincia</label> <input
-								type="text" th:field="*{stateprovinceid}" class="form-control"
-								id="stateprovinceid" placeholder="id del estado provincia"> <span
-								th:if="${#fields.hasErrors('stateprovinceid')}" th:errors="*{stateprovinceid}"
-								class="text-danger"></span>
+							<label for="stateprovince" class="col-form-label">Estado provincia</label> <select class="form-control-range"
+                                th:field="*{stateprovince}"> <option th:each="provinces: ${stateprovinces}"
+                                th:value="${provinces.stateprovinceid}" th:text="${provinces.name}"
+                                th:selected="${salestaxrate.stateprovince= provinces}"></option></select>
 						</div>
+
 						<div class="form-group col-md-6">
 							<label for="taxrate" class="col-form-label">Ratio de impuesto</label> <input
 								type="text" th:field="*{taxrate}" class="form-control"
@@ -57,7 +57,7 @@
 					<div class="row">
 						<div class="col-md-4 mt-3">
 							<input type="submit" name="action" class="btn btn-primary"
-								value="Editar Sales Taxrate">
+								value="Add Sales Taxrate">
 						</div>
 						<div class="col-md-3 mt-3">
 							<input type="reset" class="btn btn-secondary" value="Clear">

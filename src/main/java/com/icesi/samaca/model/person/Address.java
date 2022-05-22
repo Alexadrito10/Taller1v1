@@ -12,8 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.icesi.samaca.validation.AddressValidation;
+import com.icesi.samaca.validation.CountryRegionValidation;
 
 /**
  * The persistent class for the address database table.
@@ -28,16 +34,18 @@ public class Address implements Serializable {
 	@SequenceGenerator(name = "ADDRESS_ADDRESSID_GENERATOR", allocationSize = 1, sequenceName = "ADDRESS_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_ADDRESSID_GENERATOR")
 	private Integer addressid;
-
+	
+	@NotBlank( groups ={AddressValidation.class}, message= "La linea 1 de direccion no puede ser nula")
 	private String addressline1;
 
 	private String addressline2;
-
+	@Size( min=3 ,groups ={AddressValidation.class}, message= "La ciudad debe contener al menos 3 caracteres")
 	private String city;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@Size( min=6 ,max=6 ,groups ={AddressValidation.class}, message= "El codigo postal debe ser de 6 digitos")
 	private String postalcode;
 
 	private Integer rowguid;
@@ -45,6 +53,7 @@ public class Address implements Serializable {
 	private String spatiallocation;
 
 	// bi-directional many-to-one association to Stateprovince
+	@NotNull(groups = AddressValidation.class)
 	@ManyToOne
 	@JoinColumn(name = "stateprovinceid")
 	private Stateprovince stateprovince;

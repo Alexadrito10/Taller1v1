@@ -32,8 +32,6 @@
 								<th>Fecha de modificación</th>
 								<th>Id del territorio</th>
 								<th>País-Region</th>
-								<th>Address</th>>
-								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,20 +43,12 @@
 								<td th:text="${state.modifieddate}"></td>
 								<td th:text="${state.territoryid}"></td>
 								<td th:text="${state.countryregion.name}"></td>
-								<td> <a th:href="@{/address/{id}(id=${state.stateprovinceid})}"
-									class="btn btn-primary"> <i class="fas fa-user-edit ml-2"> </i></a> </td>
-								<td><a th:href="@{/stateprovince/update/{id}(id=${state.stateprovinceid})}"
-									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<p>
-					<a href="/stateprovince/add" class="btn btn-primary"><i
-						class="fas fa-user-plus ml-2"></i> Añadir Estado provincia</a>
-				</p>
-				<p>
-					<a href="/operator/"><i class="fas fa-user ml-2"></i> Go to Operator Menu</a>
+					<a href="/countryregion/"><i class="fas fa-user ml-2"></i> Go to Operator Menu</a>
 				</p>
 			</div>
 		</div>

@@ -150,4 +150,10 @@ public class OperatorControllerImp{
 		}
 		return "redirect:/stateprovince";
 	}
+	
+	@GetMapping("/address/{id}")
+	public String addressesRefs(@PathVariable("id")Integer id, Model model) {
+		model.addAttribute("address", addressService.findByStateprov(id));
+		return "operator/addresses-refs";
+	}
 }
