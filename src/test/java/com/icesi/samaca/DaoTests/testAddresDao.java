@@ -23,6 +23,8 @@ import com.icesi.samaca.dao.StateProvinceDAO;
 import com.icesi.samaca.dao.StateProvinceDaoImp;
 import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.person.Stateprovince;
+import com.icesi.samaca.model.sales.Salesorderheader;
+import com.icesi.samaca.repositories.SalesorderheaderRepository;
 
 
 
@@ -40,11 +42,24 @@ public class testAddresDao {
 	@Autowired
 	private StateProvinceDaoImp stateDaoImp;
 	
+	@Autowired
+	private SalesorderheaderRepository sOHRepo;
+	
 	
 	
 	private Address addr;
 	
 	private Stateprovince sP;
+	
+//	@Autowired
+//	public testAddresDao(AddressDaoImp addressDaoImp, StateProvinceDaoImp stateDaoImp,
+//			SalesorderheaderRepository sOHRepo) {
+//		super();
+//		this.addressDaoImp = addressDaoImp;
+//		this.stateDaoImp = stateDaoImp;
+//		this.sOHRepo = sOHRepo;
+//		
+//	}
 	
 	
 	@BeforeEach
@@ -170,22 +185,26 @@ public class testAddresDao {
 		
 		
 	}
-	//Aqui FALTAAA---------------------------------------------------AQUI FALTA-------------
+
 	@Test
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	void testGetListAddressByAtLeastTwoBySalesHeader(){
 		//addressDaoImp.save(addr);
-		addr = new Address();
-		addr.setAddressline1("Mi casita");
-		addr.setAddressline2("Pasando el parque");
-		addr.setCity("Jamundí");
-		addr.setPostalcode("COL-CALI");
-		addr.setSpatiallocation("Aqui no sé");
-		addr.setStateprovince(sP);
+		Salesorderheader s1 = new Salesorderheader();
+		Salesorderheader s2 = new Salesorderheader();
+		
+		s1.setShiptoaddress(addr);
+		s2.setShiptoaddress(addr);
+		
+		sOHRepo.save(s1);
+		sOHRepo.save(s2);
+		
+		
 		addressDaoImp.save(addr);
 		
-		List<Address> result = addressDaoImp.findByStateProv(sP.getStateprovinceid());
-		assertEquals(2,result.size());
+		List<Address> result = addressDaoImp.getListAddressByAtLeastTwoBySalesHeader();
+		assertEquals(1,result.size());
+		assertEquals("Esta no es mi casa",result.get(0).getAddressline1());
 		
 		
 		

@@ -22,12 +22,14 @@ public class StateProvinceDaoImp implements StateProvinceDAO{
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional
 	public void save(Stateprovince sP) {
 		entityManager.persist(sP);
 		
 	}
 
 	@Override
+	@Transactional
 	public void update(Stateprovince sP) {
 		entityManager.merge(sP);
 		
@@ -64,7 +66,8 @@ public class StateProvinceDaoImp implements StateProvinceDAO{
 	
 	
 	@Transactional
-	public List<Object[]> getStateprovincesWithAddressAndSales(Salesterritory salesterritory) {
+	@Override
+	public List<Object[]> findByAddressAndSales(Salesterritory salesterritory) {
 		//Aqui el parametro porque nos dice que recibe como parametro un territorio de venta,y el Exist es por la parte
 		//que dice que debe retornar los estados provincia que cumplen con tener al menos una tasa impositiva de ventas
 		

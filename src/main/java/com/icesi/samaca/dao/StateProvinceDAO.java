@@ -3,6 +3,7 @@ package com.icesi.samaca.dao;
 import java.util.List;
 
 import com.icesi.samaca.model.person.Stateprovince;
+import com.icesi.samaca.model.sales.Salesterritory;
 
 
 
@@ -15,6 +16,7 @@ public interface StateProvinceDAO {
 	public List<Stateprovince> findByCountryRegion(Integer cRId);
 	public List<Stateprovince> findByTerritory(Integer tId);
 	public List<Stateprovince> findByName(String name);
+	public List<Object[]> findByAddressAndSales(Salesterritory salesterritory);
 	
 	
 	

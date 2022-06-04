@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.icesi.samaca.model.sales.Salesorderheader;
 import com.icesi.samaca.validation.AddressValidation;
 import com.icesi.samaca.validation.CountryRegionValidation;
 
@@ -47,6 +48,9 @@ public class Address implements Serializable {
 
 	@Size( min=6 ,max=6 ,groups ={AddressValidation.class}, message= "El codigo postal debe ser de 6 digitos")
 	private String postalcode;
+	
+	@OneToMany(mappedBy = "shiptoaddress")
+	private List<Salesorderheader> salesorderheaders;
 
 	private Integer rowguid;
 

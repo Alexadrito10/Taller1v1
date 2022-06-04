@@ -1,8 +1,10 @@
 package com.icesi.samaca.DaoTests;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +17,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
+import com.icesi.samaca.dao.AddressDaoImp;
 import com.icesi.samaca.dao.CountryRegionDAO;
+import com.icesi.samaca.dao.CountryRegionDaoImp;
 import com.icesi.samaca.dao.SalesTaxRateDAO;
+import com.icesi.samaca.dao.SalesTaxRateDaoImp;
 import com.icesi.samaca.dao.StateProvinceDAO;
+import com.icesi.samaca.dao.StateProvinceDaoImp;
+import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.person.Countryregion;
 import com.icesi.samaca.model.person.Stateprovince;
 import com.icesi.samaca.model.sales.Salestaxrate;
+import com.icesi.samaca.model.sales.Salesterritory;
+import com.icesi.samaca.repositories.SalesterritoryRepository;
 
 @ExtendWith(SpringExtension.class)
 
@@ -30,17 +39,28 @@ import com.icesi.samaca.model.sales.Salestaxrate;
 public class testStateProvinceDao {
 	
 	@Autowired
-	StateProvinceDAO stPDao;
+	StateProvinceDaoImp stPDao;
 	@Autowired
-	CountryRegionDAO cRDao;
+	CountryRegionDaoImp cRDao;
 	@Autowired
-	SalesTaxRateDAO sTRDao;
+	SalesTaxRateDaoImp sTRDao;
+	
+	@Autowired
+	AddressDaoImp addrDao;
+	
+	@Autowired
+	SalesterritoryRepository stRepo;
+	
+	Salesterritory sT;
 	
 	Stateprovince sP;
 	
 	Countryregion cR;
 	
 	Salestaxrate sTR;
+	
+	Address addr;
+	
 	
 	@BeforeEach
 	void setup1(){
@@ -59,11 +79,15 @@ public class testStateProvinceDao {
 		sP.setName("Valle del Cauca");
 		sP.setStateprovincecode("VALCA");
 		
+		sT = new Salesterritory();
+		
 		sTR.setStateprovince(sP);
 		sTRDao.save(sTR);
 		//sP.setTerritoryid();
 		sP.setCountryregion(cR);
 		stPDao.save(sP);
+		
+		
 		
 		
 		
@@ -77,6 +101,25 @@ public class testStateProvinceDao {
 		stPDao.save(sP);
 		
 		assertEquals(sP,stPDao.findById(sP.getStateprovinceid()));
+		
+	}
+	@Test
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	void testUpdate() {
+		
+		stPDao.save(sP);
+		sP.setName("Antioquia");
+		sP.setStateprovincecode("ANTIO");
+		
+		stPDao.update(sP);
+		
+		assertAll(
+				() -> assertEquals(sP, stPDao.findById(sP.getStateprovinceid()) ),
+				() -> assertEquals("Antioquia",stPDao.findById(sP.getStateprovinceid()).getName()),
+				() -> assertEquals("ANTIO",stPDao.findById(sP.getStateprovinceid()).getStateprovincecode()),
+				()-> assertEquals(1,cRDao.findAll().size() )
+
+					);
 		
 	}
 	
@@ -125,8 +168,98 @@ public class testStateProvinceDao {
 	
 		
 		assertEquals(1,stPDao.findByCountryRegion(cR.getCountryregionid()).size());
+		assertEquals("Valle de alla",stPDao.findByCountryRegion(cR.getCountryregionid()).get(0).getName());
 	}
 	
+	
+	@Test
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	void testfindByTerritory() {
+		
+		sT.setName("Puerto Buenaventura");
+		
+		
+		stRepo.save(sT);
+		
+		sP.setTerritoryid(sT.getTerritoryid());
+		stPDao.save(sP);
+		
+		sP = new Stateprovince();
+		sP.setName("Boyaca");
+		sP.setStateprovincecode("BOYAC");
+		sP.setTerritoryid(sT.getTerritoryid());
+		
+		stPDao.save(sP);
+		List<Stateprovince> results = stPDao.findByTerritory(sT.getTerritoryid());
+		assertEquals(2,results.size());
+		
+	}
+	
+	@Test
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	void testfindByName() {
+		
+		stPDao.save(sP);
+		sP = new Stateprovince();
+		sP.setName("Caracas");
+		sP.setStateprovincecode("CARAC");
+		sP.setCountryregion(cR);
+		stPDao.save(sP);
+		
+		assertEquals(sP, stPDao.findByName(sP.getName()).get(0));	
+		
+	
+	}
+	
+	@Test
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	void testFindByAddressAndSales() {
+		
+		sT.setName("Puerto Buenaventura");
+		
+		
+		stRepo.save(sT);
+		
+		sP.setTerritoryid(sT.getTerritoryid());
+		
+		addr = new Address();
+		addr.setStateprovince(sP);
+		
+		addr.setStateprovince(sP);
+		addrDao.save(addr);
+		
+		stPDao.save(sP);
+		
+		
+		
+		sP = new Stateprovince();
+		sP.setName("Boyaca");
+		sP.setStateprovincecode("BOYAC");
+		
+		sT = new Salesterritory();
+		
+		sT.setName("El centro");
+		sTR.setStateprovince(sP);
+		
+		
+		
+		sP.setTerritoryid(sT.getTerritoryid());
+		
+		addr = new Address();
+		addr.setStateprovince(sP);
+		
+		addrDao.save(addr);
+		
+		sTRDao.save(sTR);
+		
+		
+		
+		stPDao.save(sP);
+		List<Object[]> results = stPDao.findByAddressAndSales(sT);
+		assertEquals(1,results.size());
+		
+	
+	}
 	
 	
 	

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.model.person.Address;
 import com.icesi.samaca.model.sales.Salestaxrate;
@@ -19,15 +20,18 @@ public class SalesTaxRateDaoImp implements SalesTaxRateDAO {
 	
 	@PersistenceContext
 	@Autowired
+
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional
 	public void save(Salestaxrate sT) {
 		// TODO Auto-generated method stub
 		entityManager.persist(sT);
 	}
 
 	@Override
+	@Transactional
 	public void update(Salestaxrate sT) {
 		
 		entityManager.merge(sT);
