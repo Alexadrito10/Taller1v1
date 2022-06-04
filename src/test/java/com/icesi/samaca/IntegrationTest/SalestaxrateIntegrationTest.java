@@ -62,7 +62,7 @@ public class SalestaxrateIntegrationTest {
 		stateProvincesTester1.setName("XiaoLover");
 		
 		stateProvRepo.save(stateProvincesTester1);
-		sTaxrateTester1.setStateprovinceid(stateProvincesTester1.getStateprovinceid());
+		sTaxrateTester1.setStateprovince(stateProvincesTester1);
 	}
 	
 	@Test

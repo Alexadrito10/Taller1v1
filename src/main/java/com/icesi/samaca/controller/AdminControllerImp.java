@@ -122,7 +122,7 @@ public class AdminControllerImp{
 			return "admin/add-salestaxrate";
 			
 		}else {
-			salestaxrateService.saveSalesTR(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
+			salestaxrateService.saveSalesTR(salestaxrate);
 			return "redirect:/salestaxrate/";
 		}
 		
@@ -149,7 +149,7 @@ public class AdminControllerImp{
 				return "admin/update-salestaxrate";
 			}
 			salestaxrate.setSalestaxrateid(id);
-			salestaxrateService.editSalesTR(salestaxrate, salestaxrate.getStateprovince().getStateprovinceid());
+			salestaxrateService.editSalesTR(salestaxrate);
 		}
 		return "redirect:/salestaxrate";
 		

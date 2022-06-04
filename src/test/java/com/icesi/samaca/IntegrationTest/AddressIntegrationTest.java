@@ -68,7 +68,7 @@ public class AddressIntegrationTest {
 
 	@Test
 	void testSaveAddress() {
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		assertNotNull(addresRepo.findById(1));
 
 		Address temp= addresRepo.findById(aux.getAddressid()).get();
@@ -82,7 +82,7 @@ public class AddressIntegrationTest {
 	@Test
 	void testSaveAllNull() {
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.saveAddress(null, null);
+			addresService.saveAddress(null);
 		});
 	}
 
@@ -90,7 +90,7 @@ public class AddressIntegrationTest {
 	void TestSaveCityWrong(){
 		try {
 			addressTester.setCity("C");
-			Address aux= addresService.saveAddress(addressTester, 1);
+			Address aux= addresService.saveAddress(addressTester);
 			Address temp= addresRepo.findById(aux.getAddressid()).get();
 			assertNull(temp);
 		} catch (IllegalArgumentException e) {
@@ -111,12 +111,12 @@ public class AddressIntegrationTest {
 	@Test
 	void TestUpdatePostalNull() {
 
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		aux.setPostalcode(null);
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 57930);
+			addresService.editAddres(aux);
 		});
 		assertEquals("123456", addresRepo.findById(1).get().getPostalcode());
 
@@ -124,24 +124,24 @@ public class AddressIntegrationTest {
 	@Test
 	void TestUpdateWrongPostalCode() {
 
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		aux.setPostalcode("111");
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 57930);
+			addresService.editAddres(aux);
 		});
 		assertEquals("123456", addresRepo.findById(1).get().getPostalcode());
 	}
 	@Test
 	void TestUpdateWrongCity() {
 
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		aux.setPostalcode("");
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 1);
+			addresService.editAddres(aux);
 		});
 		assertEquals("Cali", addresRepo.findById(1).get().getCity());
 
@@ -149,7 +149,7 @@ public class AddressIntegrationTest {
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 1);
+			addresService.editAddres(aux);
 		});
 		
 		assertEquals("Cali", addresRepo.findById(1).get().getCity());
@@ -157,12 +157,12 @@ public class AddressIntegrationTest {
 	@Test
 	void TestUpdateWrongAddressLine() {
 
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		aux.setAddressline1(null);
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 1);
+			addresService.editAddres(aux);
 		});
 		assertEquals("Direccion Test", addresRepo.findById(1).get().getAddressline1());
 		
@@ -171,7 +171,7 @@ public class AddressIntegrationTest {
 
 
 		assertThrows(IllegalArgumentException.class, () ->{
-			addresService.editAddres(aux, 1);
+			addresService.editAddres(aux);
 		});
 		assertEquals("Direccion Test", addresRepo.findById(1).get().getAddressline1());
 	}
@@ -179,11 +179,11 @@ public class AddressIntegrationTest {
 	@Test
 	void TestUpdateWell() {
 
-		Address aux= addresService.saveAddress(addressTester, 1);
+		Address aux= addresService.saveAddress(addressTester);
 		aux.setPostalcode("111111");
 
 
-		addresService.editAddres(aux, 1);
+		addresService.editAddres(aux);
 		assertEquals("111111", addresRepo.findById(1).get().getPostalcode());
 	}
 

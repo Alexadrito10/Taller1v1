@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,8 +53,8 @@ public class CountryRegionUT {
 
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
+			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
 
 			crTester1.setModifieddate(time);
 			crTester1.setName("Macaco");
@@ -160,8 +161,8 @@ public class CountryRegionUT {
 
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
+			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
 
 			crTester1.setModifieddate(time);
 			crTester1.setName("Macaco");

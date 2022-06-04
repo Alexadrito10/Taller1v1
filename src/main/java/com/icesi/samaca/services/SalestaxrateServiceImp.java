@@ -28,12 +28,12 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 
 
 	@Override
-	public Salestaxrate saveSalesTR(Salestaxrate salesTR, Integer id) throws IllegalArgumentException {
+	public Salestaxrate saveSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
 		Salestaxrate aux= null;
 		if((salesTR.getTaxrate().compareTo(BigDecimal.ZERO))>=0 &&  
 				(salesTR.getName().length()>=5))
 		{
-			Optional<Stateprovince> state= this.stateprovinceRepo.findById(id);
+			Optional<Stateprovince> state= this.stateprovinceRepo.findById(salesTR.getStateprovince().getStateprovinceid());
 			if(state.isPresent()) {
 				salesTR.setStateprovince(state.get());
 				aux= this.salesTRRepo.save(salesTR);
@@ -49,13 +49,13 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 	}
 
 	@Override
-	public Salestaxrate editSalesTR(Salestaxrate salesTR, Integer id) throws IllegalArgumentException {
+	public Salestaxrate editSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
 		Salestaxrate result = null;
 
 		if(salesTR.getSalestaxrateid()!= null){
 			Optional<Salestaxrate> stateOp= salesTRRepo.findById(salesTR.getSalestaxrateid());
 			if(stateOp.isPresent()){
-				result= saveSalesTR(salesTR, id);
+				result= saveSalesTR(salesTR);
 			}
 		}else{
 			throw new IllegalArgumentException();
