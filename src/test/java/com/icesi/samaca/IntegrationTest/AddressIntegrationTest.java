@@ -19,12 +19,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.repositories.AddressRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.AddresServiceImp;
-import com.icesi.samaca.services.AddressService;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.repositories.AddressRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.AddresServiceImp;
+import com.icesi.samaca.backend.services.AddressService;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)

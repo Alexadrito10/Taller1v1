@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.dao.CountryRegionDAO;
-import com.icesi.samaca.dao.CountryRegionDaoImp;
-import com.icesi.samaca.model.person.Countryregion;
+import com.icesi.samaca.backend.dao.CountryRegionDAO;
+import com.icesi.samaca.backend.dao.CountryRegionDaoImp;
+import com.icesi.samaca.backend.model.person.Countryregion;
 
 
 @ExtendWith(SpringExtension.class)

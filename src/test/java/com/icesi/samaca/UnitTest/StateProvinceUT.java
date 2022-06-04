@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.icesi.samaca.model.person.Countryregion;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salesterritory;
-import com.icesi.samaca.repositories.CountryregionRepository;
-import com.icesi.samaca.repositories.SalesterritoryRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.StateprovinceServiceImp;
+import com.icesi.samaca.backend.model.person.Countryregion;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salesterritory;
+import com.icesi.samaca.backend.repositories.CountryregionRepository;
+import com.icesi.samaca.backend.repositories.SalesterritoryRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 
 public class StateProvinceUT {
 	
