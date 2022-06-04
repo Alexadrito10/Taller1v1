@@ -170,6 +170,27 @@ public class testAddresDao {
 		
 		
 	}
+	//Aqui FALTAAA---------------------------------------------------AQUI FALTA-------------
+	@Test
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	void testGetListAddressByAtLeastTwoBySalesHeader(){
+		//addressDaoImp.save(addr);
+		addr = new Address();
+		addr.setAddressline1("Mi casita");
+		addr.setAddressline2("Pasando el parque");
+		addr.setCity("Jamundí");
+		addr.setPostalcode("COL-CALI");
+		addr.setSpatiallocation("Aqui no sé");
+		addr.setStateprovince(sP);
+		addressDaoImp.save(addr);
+		
+		List<Address> result = addressDaoImp.findByStateProv(sP.getStateprovinceid());
+		assertEquals(2,result.size());
+		
+		
+		
+		
+	}
 	
 	
 	

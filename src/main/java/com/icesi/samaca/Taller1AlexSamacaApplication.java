@@ -12,10 +12,13 @@ import com.icesi.samaca.repositories.UserRepository;
 
 @SpringBootApplication
 @ComponentScan("com.icesi.samaca")
+
 public class Taller1AlexSamacaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Taller1AlexSamacaApplication.class, args);
+		//Aviso que hay errores en los test porque hice un cambio del timestamp a LocalDate porque html
+		//no lo agarraba, sin embargo el programa funciona, lo unico que no he cambiado son los test.
 	}
 
 	@Bean

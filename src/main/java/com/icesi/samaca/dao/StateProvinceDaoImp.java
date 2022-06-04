@@ -46,13 +46,13 @@ public class StateProvinceDaoImp implements StateProvinceDAO{
 
 	@Override
 	public List<Stateprovince> findByCountryRegion(Integer cRId) {
-		String jpql = "Select sP from Stateprovince sP WHERE sp.countryregionid = '"+cRId+"'";
+		String jpql = "Select sP from Stateprovince sP WHERE sP.countryregion.countryregionid = '"+cRId+"'";
 		return 	entityManager.createQuery(jpql).getResultList();	
 	}
 
 	@Override
 	public List<Stateprovince> findByTerritory(Integer tId) {
-		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.name = '"+tId+"'";
+		String jpql = "SELECT sp FROM Stateprovince sp WHERE sp.territoryid = '"+tId+"'";
 		return entityManager.createQuery(jpql,Stateprovince.class).getResultList();
 	}
 
