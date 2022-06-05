@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.samaca.backend.model.person.Stateprovince;
 import com.icesi.samaca.backend.model.person.UserApp;
 import com.icesi.samaca.backend.model.person.UserType;
 import com.icesi.samaca.backend.repositories.UserRepository;
@@ -31,9 +32,9 @@ public class UserServiceImp implements UserService{
 
 	@Override
 	@Transactional
-	public UserApp update(UserApp user, long id) {
+	public UserApp update(UserApp user) {
 		UserApp aux=null;
-		Optional<UserApp> temp = this.userRepos.findById(id);
+		Optional<UserApp> temp = this.userRepos.findById(user.getId());
 		if(temp.isPresent()) {
 			aux = save(user);
 		}
@@ -51,6 +52,15 @@ public class UserServiceImp implements UserService{
 	
 	public UserType[] getTypes() {
 		return UserType.values();
+	}
+
+
+	@Override
+	public UserApp delete(long id) {
+		Optional<UserApp> result = userRepos.findById(id);
+		userRepos.delete(result.get());
+		
+		return result.get();
 	}
 	
 

@@ -32,14 +32,14 @@ public class StateprovinceServiceImp implements StateprovinceService {
 	}
 
 	@Override
-	public Stateprovince saveStateprov(Stateprovince sP, Integer countryregionId) throws IllegalArgumentException {
+	public Stateprovince saveStateprov(Stateprovince sP) throws IllegalArgumentException {
 		Stateprovince province = null;
 
 		if ((sP.getStateprovincecode().length() == 5)
 				&& (sP.getIsonlystateprovinceflag().equals("Y")
 						|| sP.getIsonlystateprovinceflag().equals("N")) && sP.getName().length() >= 5) {
 
-			Optional<Countryregion> optional = this.countryregionRepository.findById(countryregionId);
+			Optional<Countryregion> optional = this.countryregionRepository.findById(sP.getCountryregion().getCountryregionid());
 			//Optional<Salesterritory> optional2= this.salesterritoryRepo.findById(salesterritoryId);
 			if (optional.isPresent()) {
 				
@@ -57,12 +57,12 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 	@Override
 	@Transactional
-	public Stateprovince editStateproV(Stateprovince sP, Integer countryregionId) throws IllegalArgumentException {
+	public Stateprovince editStateproV(Stateprovince sP) throws IllegalArgumentException {
 		Stateprovince result = null;
 			if(sP != null && sP.getStateprovinceid()!=null) {
 				Optional<Stateprovince> checkIfExist = this.stateProvinceRepo.findById(sP.getStateprovinceid());
 					if(checkIfExist.isPresent()) {
-						result= saveStateprov(sP, countryregionId);
+						result= saveStateprov(sP);
 			}else {
 				throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 			}
@@ -94,5 +94,14 @@ public class StateprovinceServiceImp implements StateprovinceService {
 		Iterable<Stateprovince> provinceIterable= provinceList;
 		
 		return provinceIterable;
+	}
+
+	@Override
+	public Stateprovince deleteStateproV(Integer stateProvinceId) {
+		Optional<Stateprovince> result = stateProvinceRepo.findById(stateProvinceId);
+		stateProvinceRepo.delete(result.get());
+		
+		return result.get();
+		
 	}
 }

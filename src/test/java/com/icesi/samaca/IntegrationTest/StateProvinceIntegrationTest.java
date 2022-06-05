@@ -86,7 +86,7 @@ public class StateProvinceIntegrationTest {
 	
 	@Test
 	void saveStateProvince() {
-		Stateprovince aux= stateProvinceService.saveStateprov(stateprovinceTester, 12);
+		Stateprovince aux= stateProvinceService.saveStateprov(stateprovinceTester);
 		assertNotNull(aux);
 	}
 	

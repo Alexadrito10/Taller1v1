@@ -120,7 +120,7 @@ public class OperatorControllerImp{
 			model.addAttribute("countryregion");
 			return "operator/add-stateprovince";
 		}else {
-			stateprovinceService.saveStateprov(stateprovince, stateprovince.getCountryregion().getCountryregionid());
+			stateprovinceService.saveStateprov(stateprovince);
 			return "redirect:/stateprovince";
 		}
 	}
@@ -146,7 +146,7 @@ public class OperatorControllerImp{
 				return "operator/update-stateprovince";
 			}
 			stateprovince.setStateprovinceid(id);
-			stateprovinceService.editStateproV(stateprovince, stateprovince.getCountryregion().getCountryregionid());
+			stateprovinceService.editStateproV(stateprovince);
 		}
 		return "redirect:/stateprovince";
 	}

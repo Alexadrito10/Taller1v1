@@ -93,7 +93,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setStateprovincecode("AMST");
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, null);
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
@@ -107,7 +107,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setIsonlystateprovinceflag("N");
 			Assertions.assertThrows(NullPointerException.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, null);
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
@@ -125,7 +125,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setName("al");
 			Assertions.assertThrows(Exception.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, salesterritoryTester.getTerritoryid());
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
