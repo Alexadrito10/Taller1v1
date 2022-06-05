@@ -7,5 +7,6 @@ public interface StateprovinceService {
 	
 	public Stateprovince saveStateprov(Stateprovince sP, Integer countryregionId) ;
 	public Stateprovince editStateproV(Stateprovince sP, Integer countryregionId);
+	public Stateprovince deleteStateproV(Integer countryregionId);
 
 }
