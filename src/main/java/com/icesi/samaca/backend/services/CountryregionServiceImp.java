@@ -103,4 +103,13 @@ public class CountryregionServiceImp implements CountryregionService {
 		return cRRepo.findById(id);
 	}
 
+	@Override
+	public Countryregion deleteCr(Integer countryregionid) throws IllegalArgumentException {
+		Optional<Countryregion> result = cRRepo.findById(countryregionid);
+		cRRepo.delete(result.get());
+		
+		return result.get();
+		
+	}
+
 }

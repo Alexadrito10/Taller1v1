@@ -8,4 +8,5 @@ public interface SalestaxrateService {
 	
 	public Salestaxrate saveSalesTR(Salestaxrate salesTR) ;
 	public Salestaxrate editSalesTR(Salestaxrate salesTR);
+	public Salestaxrate deleteSalesTR(Integer salesTRID);
 }

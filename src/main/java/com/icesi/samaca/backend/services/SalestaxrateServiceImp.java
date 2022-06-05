@@ -75,6 +75,14 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 	public Iterable<Stateprovince> findAllStateProvinces(){
 		return stateprovinceRepo.findAll();
 	}
+
+
+	@Override
+	public Salestaxrate deleteSalesTR(Integer salesTRID) {
+		Optional<Salestaxrate> result = salesTRRepo.findById(salesTRID);
+		salesTRRepo.delete(result.get());
+		return result.get();
+	}
 	
 
 

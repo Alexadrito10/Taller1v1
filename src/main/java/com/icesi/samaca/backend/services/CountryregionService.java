@@ -8,5 +8,6 @@ public interface CountryregionService {
 		
 	public Countryregion saveCr(Countryregion cR) throws IllegalArgumentException ;
 	public Countryregion editCr(Countryregion cR) throws IllegalArgumentException;
+	public Countryregion deleteCr(Integer countryregionid) throws IllegalArgumentException;
 
 }

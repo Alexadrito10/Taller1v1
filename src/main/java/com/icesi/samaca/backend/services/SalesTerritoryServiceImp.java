@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.model.sales.Salesterritory;
 import com.icesi.samaca.backend.repositories.SalesterritoryRepository;
 
@@ -49,5 +50,13 @@ public class SalesTerritoryServiceImp implements SalesTerritoryService{
 	
 	public Optional<Salesterritory> findById(Integer id){
 		return salesTerritoryRepo.findById(id);
+	}
+
+	@Override
+	public Salesterritory deleteSalesTerritory(Integer territoryid) {
+		Optional<Salesterritory> result = salesTerritoryRepo.findById(territoryid);
+		salesTerritoryRepo.delete(result.get());
+		
+		return result.get();
 	}
 }

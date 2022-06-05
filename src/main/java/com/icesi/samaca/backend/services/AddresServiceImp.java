@@ -88,6 +88,16 @@ public class AddresServiceImp implements AddressService {
 		
 		return addressIterable;
 	}
+
+
+
+
+	@Override
+	public Address deleteAddress(Integer addressid) {
+		Optional<Address >result = addrRepos.findById(addressid);
+		addrRepos.delete(addrRepos.findById(addressid).get());
+		return result.get();
+	}
 	
 
 }

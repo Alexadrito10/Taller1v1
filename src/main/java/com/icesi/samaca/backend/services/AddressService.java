@@ -8,6 +8,7 @@ public interface AddressService {
 	
 	
 	public Address saveAddress(Address addr) ;
+	public Address deleteAddress(Integer addressid) ;
 	public Address editAddres(Address addr);
 	
 	
