@@ -8,7 +8,7 @@ public interface PersonDao {
 	
 	public void savePerson(Person person);
 	public void updatePerson(Person person);
-	public void deletePerson(Person person);
+	public void deletePerson(Integer bussinessentityid);
 	public List<Person> findAllPersons();
 	public Person findPersonById(Integer id);
 	public void deleteAllPersons();

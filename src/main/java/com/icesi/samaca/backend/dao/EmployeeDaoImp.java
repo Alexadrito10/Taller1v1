@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -48,16 +49,21 @@ public class EmployeeDaoImp implements EmployeeDao {
 		String jpql = "Select emp from Employee emp";
 		return 	entityManager.createQuery(jpql,Employee.class).getResultList();
 	}
-
+	
 	@Override
 	public Employee findEmployeeById(Integer businessentityid) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return entityManager.find(Employee.class, businessentityid);
+		
+		
 	}
 
 	@Override
 	public void deleteAllEmployee() {
-		// TODO Auto-generated method stub
+		Query query= entityManager.createQuery("DELETE FROM Employee");
+		query.executeUpdate();
+		
+		
 		
 	}
 
