@@ -102,6 +102,20 @@
         th:if="${#fields.hasErrors('sickleavehours')}" th:errors="*{sickleavehours}"
         class="text-danger"></span>
 </div>
+          <div class="form-group col-md-6">
+            <label for="currentflag" class="col-form-label">Current Flag</label> <input
+                  type="text" th:field="*{currentflag}" class="form-control" id="currentflag"
+                  placeholder="Current Flag"> <span
+                  th:if="${#fields.hasErrors('currentflag')}" th:errors="*{currentflag}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="salariedflag" class="col-form-label">Salaried Flag</label> <input
+                  type="text" th:field="*{salariedflag}" class="form-control" id="salariedflag"
+                  placeholder="Salaried Flag"> <span
+                  th:if="${#fields.hasErrors('salariedflag')}" th:errors="*{salariedflag}"
+                  class="text-danger"></span>
+          </div>
 </div>
 <div class="row">
   <div class="col-md-4 mt-3">
