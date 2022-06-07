@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.icesi.samaca.backend.model.person.Countryregion;
+
 import com.icesi.samaca.backend.model.person.Person;
 
 @Repository
@@ -34,8 +34,8 @@ public class PersonDaoImp implements PersonDao{
 	}
 
 	@Override
-	public void deletePerson(Person person) {
-		entityManager.remove(person);
+	public void deletePerson(Integer bussinessentityid) {
+		entityManager.remove(this.findPersonById(bussinessentityid));
 		
 	}
 

@@ -13,6 +13,7 @@ import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.services.CountryregionServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class CountryregionRestController {
 	
 	@Autowired

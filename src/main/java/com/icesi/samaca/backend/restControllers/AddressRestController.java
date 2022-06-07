@@ -15,6 +15,7 @@ import com.icesi.samaca.backend.model.person.Address;
 import com.icesi.samaca.backend.services.AddresServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class AddressRestController {
 	
 	@Autowired
