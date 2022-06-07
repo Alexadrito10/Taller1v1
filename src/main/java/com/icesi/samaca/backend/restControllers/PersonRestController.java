@@ -14,6 +14,7 @@ import com.icesi.samaca.backend.model.person.Person;
 import com.icesi.samaca.backend.services.PersonServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class PersonRestController  {
 	
 	@Autowired

@@ -16,6 +16,7 @@ import com.icesi.samaca.backend.model.person.Stateprovince;
 import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class StateprovinceRestController {
 	
 	@Autowired

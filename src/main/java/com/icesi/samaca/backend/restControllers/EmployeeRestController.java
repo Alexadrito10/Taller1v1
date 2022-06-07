@@ -15,6 +15,7 @@ import com.icesi.samaca.backend.model.sales.Salesterritory;
 import com.icesi.samaca.backend.services.EmployeeServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class EmployeeRestController {
 	
 	@Autowired

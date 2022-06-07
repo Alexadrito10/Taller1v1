@@ -15,6 +15,7 @@ import com.icesi.samaca.backend.model.sales.Salestaxrate;
 import com.icesi.samaca.backend.services.SalestaxrateServiceImp;
 
 @RestController
+@RequestMapping("/api")
 public class SalestaxrateRestController {
 	
 	@Autowired
