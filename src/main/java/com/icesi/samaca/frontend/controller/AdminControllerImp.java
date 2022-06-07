@@ -279,11 +279,5 @@ public class AdminControllerImp{
 		}
 		return "redirect:/person";
 	}
-	
-	
-	
-
-	
-	
-	
+		
 }

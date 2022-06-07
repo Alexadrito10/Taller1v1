@@ -2,6 +2,7 @@ package com.icesi.samaca.backend.model.person;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -40,7 +41,7 @@ public class Person implements Serializable {
 
 	private String middlename;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String namestyle;
 
@@ -137,7 +138,7 @@ public class Person implements Serializable {
 		return this.middlename;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -230,7 +231,7 @@ public class Person implements Serializable {
 		this.middlename = middlename;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
