@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.dao.SalesTaxRateDAO;
-import com.icesi.samaca.dao.StateProvinceDAO;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salestaxrate;
+import com.icesi.samaca.backend.dao.SalesTaxRateDAO;
+import com.icesi.samaca.backend.dao.StateProvinceDAO;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salestaxrate;
 
 @ExtendWith(SpringExtension.class)
 

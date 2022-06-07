@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -19,9 +21,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.model.person.Countryregion;
-import com.icesi.samaca.repositories.CountryregionRepository;
-import com.icesi.samaca.services.CountryregionServiceImp;
+import com.icesi.samaca.backend.model.person.Countryregion;
+import com.icesi.samaca.backend.repositories.CountryregionRepository;
+import com.icesi.samaca.backend.services.CountryregionServiceImp;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -54,8 +56,8 @@ public class CountryRegionIntegrationTest  {
 
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
+			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
 
 			crTester1.setModifieddate(time);
 			crTester1.setName("Macaco");

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -23,11 +24,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.repositories.AddressRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.AddresServiceImp;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.repositories.AddressRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.AddresServiceImp;
 
 @ContextConfiguration(classes= Taller1AlexSamacaApplication.class)
 @ExtendWith(MockitoExtension.class)
@@ -60,8 +61,9 @@ public class AddressUT {
 			
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
+			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
+
 			
 			addressTester1.setAddressline1("Cra 1d 1b #56-154");
 			addressTester1.setAddressline2("Cra 1d 56-20");
@@ -73,7 +75,7 @@ public class AddressUT {
 			SimpleDateFormat df1 = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1= df.parse("13-01-2022");
 			long timeLong1 = date.getTime();
-			Timestamp time1 = new Timestamp(timeLong);
+			LocalDate time1 = new java.sql.Date(date1.getTime()).toLocalDate();
 			
 			stateProvincesTester1.setStateprovinceid( new Integer(57930));
 			stateProvincesTester1.setIsonlystateprovinceflag("Y");
@@ -91,7 +93,7 @@ public class AddressUT {
 		void nullAddresCreationTest(){
 			addressTester1 = null;
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1,new Integer(57930));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 			
@@ -102,7 +104,7 @@ public class AddressUT {
 		void addresLine1isNullCreationTest() {
 			addressTester1.setAddressline1(null);
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1, new Integer(57930));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 		}
@@ -111,7 +113,7 @@ public class AddressUT {
 		void cityNameShorterCreationTest() {
 			addressTester1.setCity("Ca");;
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1, new Integer(57930));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 			
@@ -121,7 +123,7 @@ public class AddressUT {
 		void cityNameBlankCreationTest() {
 			addressTester1.setCity("    ");;
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1,new Integer(57930));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 		
@@ -132,7 +134,7 @@ public class AddressUT {
 			
 			addressTester1.setPostalcode("12");
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1, new Integer(57930));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 			
@@ -142,7 +144,7 @@ public class AddressUT {
 		void nonExistentStateCreationTest() {
 			addressTester1.setStateprovince(null);
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.saveAddress(addressTester1, new Integer(57932));
+				addresServiceImp.saveAddress(addressTester1);
 			} );
 			verify(addressRepo,times(0)).save(addressTester1);
 			
@@ -156,7 +158,7 @@ public class AddressUT {
 			when(stateProRepository.findById(new Integer(57930))).thenReturn(Optional.of(stateProvincesTester1));
 			when(addressRepo.save(addressTester1)).thenReturn(addressTester1);
 			
-			Address aux = addresServiceImp.saveAddress(addressTester1, new Integer(57930));
+			Address aux = addresServiceImp.saveAddress(addressTester1);
 			
 			assertEquals(new Integer(57930), aux.getStateprovince().getStateprovinceid());
 			
@@ -180,8 +182,8 @@ public class AddressUT {
 			
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
+			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
 			
 			addressTester1.setAddressline1("Cra 1d 1b #56-154");
 			addressTester1.setAddressline2("Cra 1d 56-20");
@@ -194,7 +196,7 @@ public class AddressUT {
 			SimpleDateFormat df1 = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1= df.parse("13-01-2022");
 			long timeLong1 = date.getTime();
-			Timestamp time1 = new Timestamp(timeLong);
+			LocalDate time1 = new java.sql.Date(date1.getTime()).toLocalDate();
 			
 			stateProvincesTester1.setStateprovinceid( new Integer(57930));
 			stateProvincesTester1.setIsonlystateprovinceflag("Y");
@@ -206,7 +208,7 @@ public class AddressUT {
 			when(stateProRepository.findById(new Integer(57930))).thenReturn(Optional.of(stateProvincesTester1));
 			when(addressRepo.save(addressTester1)).thenReturn(addressTester1);
 			
-			addresServiceImp.saveAddress(addressTester1, new Integer(57930));
+			addresServiceImp.saveAddress(addressTester1);
 			
 		}
 		@Test
@@ -215,7 +217,7 @@ public class AddressUT {
 			addressTester1.setAddressline1(null);
 			//System.out.println(addressRepo.findById(new Integer(32)));
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.editAddres(addressTester1, new Integer(57930));
+				addresServiceImp.editAddres(addressTester1);
 			} );
 			
 		}
@@ -225,7 +227,7 @@ public class AddressUT {
 			addressTester1.setCity("Ca");
 			//System.out.println(addressRepo.findById(new Integer(32)));
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.editAddres(addressTester1, new Integer(57930));
+				addresServiceImp.editAddres(addressTester1);
 			} );
 			
 		}
@@ -236,7 +238,7 @@ public class AddressUT {
 			addressTester1.setPostalcode("00");;
 			//System.out.println(addressRepo.findById(new Integer(32)));
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				addresServiceImp.editAddres(addressTester1, new Integer(57930));
+				addresServiceImp.editAddres(addressTester1);
 			} );
 			
 		}
@@ -248,7 +250,7 @@ public class AddressUT {
 			addressTester1.setPostalcode("X1A0M4");
 			
 			System.out.println(addressTester1.getStateprovince().getStateprovinceid().compareTo( stateProRepository.findById(57930).get().getStateprovinceid()));
-			Address aux = addresServiceImp.editAddres(addressTester1, new Integer(57930));
+			Address aux = addresServiceImp.editAddres(addressTester1);
 			
 			assertEquals("Cra 12 #45-30",aux.getAddressline1());
 			assertEquals("Medallo",aux.getCity());

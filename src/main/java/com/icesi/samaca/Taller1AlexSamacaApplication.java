@@ -5,9 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import com.icesi.samaca.model.person.UserApp;
-import com.icesi.samaca.model.person.UserType;
-import com.icesi.samaca.repositories.UserRepository;
+
+import com.icesi.samaca.backend.model.person.UserApp;
+import com.icesi.samaca.backend.model.person.UserType;
+import com.icesi.samaca.backend.repositories.UserRepository;
 
 
 @SpringBootApplication

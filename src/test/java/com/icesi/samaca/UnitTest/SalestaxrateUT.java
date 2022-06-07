@@ -20,13 +20,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salestaxrate;
-import com.icesi.samaca.repositories.SalestaxrateRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.SalestaxrateService;
-import com.icesi.samaca.services.SalestaxrateServiceImp;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salestaxrate;
+import com.icesi.samaca.backend.repositories.SalestaxrateRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.SalestaxrateService;
+import com.icesi.samaca.backend.services.SalestaxrateServiceImp;
 
 @ContextConfiguration(classes= Taller1AlexSamacaApplication.class)
 @ExtendWith(MockitoExtension.class)
@@ -65,7 +65,7 @@ public class SalestaxrateUT {
 			stateprovinceTester.setName("XiaoLover");
 
 			stateprovinceRepo.save(stateprovinceTester);
-			salestaxrateTester.setStateprovinceid(new Integer(57930));;
+			salestaxrateTester.setStateprovince(stateprovinceTester);;
 
 
 
@@ -97,7 +97,7 @@ public class SalestaxrateUT {
 		void nonExistStateCreationTest() {
 
 
-			salestaxrateTester.setStateprovinceid(new Integer(321));
+			salestaxrateTester.setStateprovince(null);
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
 				salestaxrateService.saveSalesTR(salestaxrateTester);
 			} );
@@ -144,7 +144,7 @@ public class SalestaxrateUT {
 			stateprovinceTester.setName("XiaoLover");
 
 			stateprovinceRepo.save(stateprovinceTester);
-			salestaxrateTester.setStateprovinceid(new Integer(57930));;
+			salestaxrateTester.setStateprovince(stateprovinceTester);;
 			
 			when(stateprovinceRepo.findById(57930)).thenReturn(Optional.of(stateprovinceTester));
 			when(salesTRRepo.save(salestaxrateTester)).thenReturn(salestaxrateTester);
@@ -178,7 +178,7 @@ public class SalestaxrateUT {
 		@Test
 		@DisplayName(" edit a saletaxrate with a nonexist stateID")
 		void editNonExistStateIdTest() {
-			salestaxrateTester.setStateprovinceid(new Integer(7));;
+			salestaxrateTester.setStateprovince(null);;
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
 				salestaxrateService.editSalesTR(salestaxrateTester);
 			} );
@@ -201,7 +201,7 @@ public class SalestaxrateUT {
 			stateprovinceTester.setName("AyatoLover");
 
 			stateprovinceRepo.save(stateprovinceTester);
-			salestaxrateTester.setStateprovinceid(new Integer(57932));
+			salestaxrateTester.setStateprovince(stateprovinceTester);
 			
 			salestaxrateService.saveSalesTR(salestaxrateTester);
 			

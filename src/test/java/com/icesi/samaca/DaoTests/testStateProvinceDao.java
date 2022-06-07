@@ -17,19 +17,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.dao.AddressDaoImp;
-import com.icesi.samaca.dao.CountryRegionDAO;
-import com.icesi.samaca.dao.CountryRegionDaoImp;
-import com.icesi.samaca.dao.SalesTaxRateDAO;
-import com.icesi.samaca.dao.SalesTaxRateDaoImp;
-import com.icesi.samaca.dao.StateProvinceDAO;
-import com.icesi.samaca.dao.StateProvinceDaoImp;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Countryregion;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salestaxrate;
-import com.icesi.samaca.model.sales.Salesterritory;
-import com.icesi.samaca.repositories.SalesterritoryRepository;
+import com.icesi.samaca.backend.dao.AddressDaoImp;
+import com.icesi.samaca.backend.dao.CountryRegionDAO;
+import com.icesi.samaca.backend.dao.CountryRegionDaoImp;
+import com.icesi.samaca.backend.dao.SalesTaxRateDAO;
+import com.icesi.samaca.backend.dao.SalesTaxRateDaoImp;
+import com.icesi.samaca.backend.dao.StateProvinceDAO;
+import com.icesi.samaca.backend.dao.StateProvinceDaoImp;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Countryregion;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salestaxrate;
+import com.icesi.samaca.backend.model.sales.Salesterritory;
+import com.icesi.samaca.backend.repositories.SalesterritoryRepository;
 
 @ExtendWith(SpringExtension.class)
 

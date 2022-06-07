@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.dao.AddressDaoImp;
-import com.icesi.samaca.dao.StateProvinceDAO;
-import com.icesi.samaca.dao.StateProvinceDaoImp;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salesorderheader;
-import com.icesi.samaca.repositories.SalesorderheaderRepository;
+import com.icesi.samaca.backend.dao.AddressDaoImp;
+import com.icesi.samaca.backend.dao.StateProvinceDAO;
+import com.icesi.samaca.backend.dao.StateProvinceDaoImp;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salesorderheader;
+import com.icesi.samaca.backend.repositories.SalesorderheaderRepository;
 
 
 

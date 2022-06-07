@@ -17,12 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.icesi.samaca.Taller1AlexSamacaApplication;
-import com.icesi.samaca.model.person.Address;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salestaxrate;
-import com.icesi.samaca.repositories.SalestaxrateRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.SalestaxrateServiceImp;
+import com.icesi.samaca.backend.model.person.Address;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salestaxrate;
+import com.icesi.samaca.backend.repositories.SalestaxrateRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.SalestaxrateServiceImp;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -62,7 +62,7 @@ public class SalestaxrateIntegrationTest {
 		stateProvincesTester1.setName("XiaoLover");
 		
 		stateProvRepo.save(stateProvincesTester1);
-		sTaxrateTester1.setStateprovinceid(stateProvincesTester1.getStateprovinceid());
+		sTaxrateTester1.setStateprovince(stateProvincesTester1);
 	}
 	
 	@Test

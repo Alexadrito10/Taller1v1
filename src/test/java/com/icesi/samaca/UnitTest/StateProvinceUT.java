@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -16,13 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.icesi.samaca.model.person.Countryregion;
-import com.icesi.samaca.model.person.Stateprovince;
-import com.icesi.samaca.model.sales.Salesterritory;
-import com.icesi.samaca.repositories.CountryregionRepository;
-import com.icesi.samaca.repositories.SalesterritoryRepository;
-import com.icesi.samaca.repositories.StateprovinceRepository;
-import com.icesi.samaca.services.StateprovinceServiceImp;
+import com.icesi.samaca.backend.model.person.Countryregion;
+import com.icesi.samaca.backend.model.person.Stateprovince;
+import com.icesi.samaca.backend.model.sales.Salesterritory;
+import com.icesi.samaca.backend.repositories.CountryregionRepository;
+import com.icesi.samaca.backend.repositories.SalesterritoryRepository;
+import com.icesi.samaca.backend.repositories.StateprovinceRepository;
+import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 
 public class StateProvinceUT {
 	
@@ -60,9 +61,8 @@ public class StateProvinceUT {
 
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			Date date= df.parse("14-03-2022");
-			long timeLong = date.getTime();
-			Timestamp time = new Timestamp(timeLong);
 			
+			LocalDate time = new java.sql.Date(date.getTime()).toLocalDate();
 			
 			crTester1.setModifieddate(time);
 			crTester1.setName("Macaco");
@@ -93,7 +93,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setStateprovincecode("AMST");
 			Assertions.assertThrows(IllegalArgumentException.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, null, null);
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
@@ -107,7 +107,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setIsonlystateprovinceflag("N");
 			Assertions.assertThrows(NullPointerException.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, null, null);
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
@@ -125,7 +125,7 @@ public class StateProvinceUT {
 			
 			stateprovinceTester.setName("al");
 			Assertions.assertThrows(Exception.class, () ->{
-				stateProvinceService.saveStateprov(stateprovinceTester, crTester1.getCountryregioncode(), salesterritoryTester.getTerritoryid());
+				stateProvinceService.saveStateprov(stateprovinceTester);
 			} );
 			
 			
