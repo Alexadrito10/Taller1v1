@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Add Employee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-5">
+  <h2 class="mb-5">Añadir Empleado</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="#" th:action="@{/employee/add}"
+            th:object="${employee}" method="post">
+        <div class="row">
+            <div class="form-group col-md-6">
+              <label for="birthdate" class="col-form-label">Fecha de nacimiento</label> <input
+              type="date" th:field="*{birthdate}" class="form-control" id="birthdate"
+              placeholder=""> <span
+              th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"
+              class="text-danger"></span>
+            </div>
+          <div class="form-group col-md-6">
+            <label for="gender" class="col-form-label">Genero</label> <input
+                  type="text" th:field="*{gender}" class="form-control" id="gender"
+                  placeholder="Genero"> <span
+                  th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="hiredate" class="col-form-label">Fecha de Contratacion</label> <input
+                  type="date" th:field="*{hiredate}" class="form-control" id="hiredate"
+                  placeholder=""> <span
+                  th:if="${#fields.hasErrors('hiredate')}" th:errors="*{hiredate}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="jobtitle" class="col-form-label">Cargo</label> <input
+                  type="text" th:field="*{jobtitle}" class="form-control" id="jobtitle"
+                  placeholder="Cargo Laboral"> <span
+                  th:if="${#fields.hasErrors('jobtitle')}" th:errors="*{jobtitle}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="loginid" class="col-form-label">ID Ingreso</label> <input
+                  type="text" th:field="*{loginid}" class="form-control" id="loginid"
+                  placeholder="Identificacion Ingreso"> <span
+                  th:if="${#fields.hasErrors('loginid')}" th:errors="*{loginid}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="maritalstatus" class="col-form-label">Estado Marital</label> <input
+                  type="text" th:field="*{maritalstatus}" class="form-control" id="maritalstatus"
+                  placeholder="Estado Marital"> <span
+                  th:if="${#fields.hasErrors('maritalstatus')}" th:errors="*{maritalstatus}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="modifieddate" class="col-form-label">Fecha de Modificación</label> <input
+                  type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
+                  placeholder=""> <span
+                  th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="nationalidnumber" class="col-form-label">Numero de Identificacion Nacional</label> <input
+                  type="text" th:field="*{nationalnumberid}" class="form-control" id="nationalidnumber"
+                  placeholder="Identificacion Nacional"> <span
+                  th:if="${#fields.hasErrors('nationalnumberid')}" th:errors="*{nationalnumberid}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="organizationnode" class="col-form-label">Organizacion</label> <input
+                  type="text" th:field="*{organizationode}" class="form-control" id="organizationnode"
+                  placeholder="Organizacion"> <span
+                  th:if="${#fields.hasErrors('organizationode')}" th:errors="*{organizationnode}"
+                  class="text-danger"></span>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="rowguid" class="col-form-label">Guia de Fila</label> <input
+                  type="number" th:field="*{rowguid}" class="form-control" id="rowguid"
+                  placeholder="Numero De Guia"> <span
+        th:if="${#fields.hasErrors('rowguid')}" th:errors="*{rowguid}"
+        class="text-danger"></span>
+</div>
+<div class="form-group col-md-6">
+  <label for="vacationhours" class="col-form-label">Horas de Vacaciones</label> <input
+        type="number" th:field="*{vacationhours}" class="form-control" id="vacationhours"
+        placeholder="Horas Vacaciones"> <span
+        th:if="${#fields.hasErrors('vacationhours')}" th:errors="*{vacationhours}"
+        class="text-danger"></span>
+</div>
+<div class="form-group col-md-6">
+  <label for="sickleavehours" class="col-form-label">Horas de Baja por Enfermedad</label> <input
+        type="number" th:field="*{sickleavehours}" class="form-control" id="sickleavehours"
+        placeholder="Horas Baja por Enfermedad"> <span
+        th:if="${#fields.hasErrors('sickleavehours')}" th:errors="*{sickleavehours}"
+        class="text-danger"></span>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-4 mt-3">
+    <input type="submit" name="action" class="btn btn-primary"
+           value="Añadir Empleado">
+  </div>
+  <div class="col-md-3 mt-3">
+    <input type="submit" name="action" class="btn btn-secondary"
+           value="Cancelar">
+  </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>
