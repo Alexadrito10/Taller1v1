@@ -24,11 +24,14 @@ import com.icesi.samaca.backend.services.SalestaxrateServiceImp;
 import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 import com.icesi.samaca.backend.validation.CountryRegionValidation;
 import com.icesi.samaca.backend.validation.SalesTaxRateValidation;
+import com.icesi.samaca.frontend.businessdelegate.BusinessDelegate;
 import com.icesi.samaca.backend.model.person.Person;
 
 @Controller
 public class AdminControllerImp{
 
+	@Autowired
+	private BusinessDelegate bDelegate;
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
 	private StateprovinceServiceImp stateprovinceService;
@@ -51,7 +54,7 @@ public class AdminControllerImp{
 	
 	@GetMapping("/countryregion")
 	public String countryregion(Model model) {
-		model.addAttribute("countryregion", countryRegionService.findAll());
+		model.addAttribute("countryregion", bDelegate.getCountries());
 		return "admin/countryregion";
 		
 	}
@@ -74,19 +77,21 @@ public class AdminControllerImp{
 			return"/admin/add-countryregion";
 			
 		}else {
-			countryRegionService.saveCr(countryregion);
+			bDelegate.addCountry(countryregion);
+//			countryRegionService.saveCr(countryregion);
 			return "redirect:/countryregion";
 		}
 	} 
 	
 	@GetMapping("/countryregion/update/{id}")
 	public String updateCountryRegion(@PathVariable("id")Integer id, Model model){
-		Optional<Countryregion> country =  countryRegionService.findById(id);
-		if(country.isEmpty()) {
+		//Optional<Countryregion> country =  countryRegionService.findById(id);
+		Countryregion country= bDelegate.findByIdCountryRegion(id);
+		if(country.equals(null)){
 			throw new IllegalArgumentException();
 		}
 		
-		model.addAttribute("countryregion", country.get());
+		model.addAttribute("countryregion", country);
 		return "admin/update-countryregion";
 	}
 	
@@ -95,11 +100,12 @@ public class AdminControllerImp{
 			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("countryregion", countryRegionService.findById(id).get());
+				model.addAttribute("countryregion", countryregion);
 				return "admin/update-countryregion";
 			}
 			countryregion.setCountryregionid(id);
-			countryRegionService.editCr(countryregion);
+			bDelegate.updateCountry(countryregion);
+//			countryRegionService.editCr(countryregion);
 		}
 		return "redirect:/countryregion";
 	}

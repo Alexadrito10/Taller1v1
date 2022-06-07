@@ -9,12 +9,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.samaca.backend.dao.CountryRegionDaoImp;
 import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.repositories.CountryregionRepository;
 
 @Service
 public class CountryregionServiceImp implements CountryregionService {
-
+	@Autowired
+	CountryRegionDaoImp cRDao;
+	
 	CountryregionRepository cRRepo;
 
 	@Autowired
@@ -30,7 +33,7 @@ public class CountryregionServiceImp implements CountryregionService {
 	@Transactional
 	public Countryregion saveCr(Countryregion cR) throws IllegalArgumentException {
 
-		Countryregion result = null;
+		//Countryregion result = null;
 
 
 
@@ -41,7 +44,7 @@ public class CountryregionServiceImp implements CountryregionService {
 //		if (!cRNotNull) {
 //			
 
-			result = this.cRRepo.save(cR);
+			this.cRDao.save(cR);
 
 
 		}
@@ -52,7 +55,7 @@ public class CountryregionServiceImp implements CountryregionService {
 
 
 
-		return result;
+		return cR;
 
 
 	}
@@ -60,7 +63,7 @@ public class CountryregionServiceImp implements CountryregionService {
 	@Override
 	@Transactional
 	public Countryregion editCr(Countryregion cR) throws IllegalArgumentException {
-		Countryregion result = null;
+		//Countryregion result = null;
 
 
 
@@ -73,12 +76,10 @@ public class CountryregionServiceImp implements CountryregionService {
 
 				Countryregion toChange = cRRepo.getById(cR.getCountryregionid());
 
-				toChange.setModifieddate(cR.getModifieddate());
-				toChange.setName(cR.getName());
-				toChange.setStateprovinces(cR.getStateprovinces());
-				cRRepo.save(toChange);
-
-				result = toChange;
+//				toChange.setModifieddate(cR.getModifieddate());
+//				toChange.setName(cR.getName());
+//				toChange.setStateprovinces(cR.getStateprovinces());
+				cRDao.update(cR);
 
 			}
 			else {
@@ -91,16 +92,16 @@ public class CountryregionServiceImp implements CountryregionService {
 			throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
 		}
 
-		return result;
+		return cR;
 	}
 	
 	public Iterable<Countryregion> findAll(){
-		return cRRepo.findAll();
+		return cRDao.findAll();
 	}
 	
 	
 	public Optional<Countryregion> findById(Integer id){
-		return cRRepo.findById(id);
+		return Optional.of(cRDao.findById(id));
 	}
 
 	@Override
