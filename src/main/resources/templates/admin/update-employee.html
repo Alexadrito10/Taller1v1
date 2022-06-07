@@ -17,13 +17,13 @@
         <div class="col-md-6">
             <form action="#" th:action="@{/employee/add}{id}(id=${employee.employeeID})}"
                   th:object="${employee}" method="post">
-                <div class="row"><div class="form-group col-md-6">
-                    <label for="businessentityID" class="col-form-label">ID Entidad Comercial</label> <select class="form-control-range"
-                    th:field="*{businessentityID}"> <option th:each="state: ${businessentityID}"
-                    th:value="${businessentity.businessentityid}" th:text="${businessentity.businessentityid}"
-                    th:selected="${employee.businessentityid=businessentity}"></option></select>
-                </div>
                 <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="businessentityID" class="col-form-label">ID Entidad Comercial</label> <select class="form-control-range"
+                         th:field="*{businessentityID}"> <option th:each="state: ${businessentityID}"
+                         th:value="${businessentity.businessentityid}" th:text="${businessentity.businessentityid}"
+                         th:selected="${employee.businessentityid=businessentity}"></option></select>
+                    </div>
                     <div class="form-group col-md-6">
                         <label for="birthdate" class="col-form-label">Fecha de nacimiento</label> <input
                             type="date" th:field="*{birthdate}" class="form-control" id="birthdate"
@@ -106,6 +106,20 @@
                             type="number" th:field="*{sickleavehours}" class="form-control" id="sickleavehours"
                             placeholder="Horas Baja por Enfermedad"> <span
                             th:if="${#fields.hasErrors('sickleavehours')}" th:errors="*{sickleavehours}"
+                            class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="currentflag" class="col-form-label">Current Flag</label> <input
+                            type="text" th:field="*{currentflag}" class="form-control" id="currentflag"
+                            placeholder="Current Flag"> <span
+                            th:if="${#fields.hasErrors('currentflag')}" th:errors="*{currentflag}"
+                            class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="salariedflag" class="col-form-label">Salaried Flag</label> <input
+                            type="text" th:field="*{salariedflag}" class="form-control" id="salariedflag"
+                            placeholder="Salaried Flag"> <span
+                            th:if="${#fields.hasErrors('salariedflag')}" th:errors="*{salariedflag}"
                             class="text-danger"></span>
                     </div>
                 </div>

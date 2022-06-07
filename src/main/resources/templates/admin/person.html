@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Person</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c45733ddee.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:switch="${person}" class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 th:case="null">No hay Personas Registradas</h2>
+            <div th:case="*">
+                <h2 class="my-5">Person</h2>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>ID Entidad Comercial </th>
+                        <th>Informacion Adicional de Contacto</th>
+                        <th>Ubicacion</th>
+                        <th>Promocion por Email</th>
+                        <th>Primer Nombre</th>
+                        <th>Segundo Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de Actualizacion</th>
+                        <th>Estilo de Nombre</th>
+                        <th>Tipo de Persona</th>
+                        <th>Numero de Guia</th>
+                        <th>Sufijo</th>
+                        <th>Titulo</th>
+                        <th> Editar </th>
+                        <th> Eliminar </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="person : ${person}">
+                        <td th:text="${person.businessentityid}"></td>
+                        <td th:text="${person.additionalcontactinfo}"></td>
+                        <td th:text="${person.demographics}"></td>
+                        <td th:text="${person.emailpromotion}"></td>
+                        <td th:text="${person.firstname}"></td>
+                        <td th:text="${person.middlename}"></td>
+                        <td th:text="${person.lastname}"></td>
+                        <td th:text="${person.modifieddate}"></td>
+                        <td th:text="${person.namestyle}"></td>
+                        <td th:text="${person.persontype}"></td>
+                        <td th:text="${person.rowguid}"></td>
+                        <td th:text="${person.suffix}"></td>
+                        <td th:text="${person.title}"></td>
+
+                        <td><a th:href="@{/person/update/{id}(id=${person.businessentityid})}"
+                               class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a></td>
+                        <td><a th:href="@{/person/{id}(id=${person.businessentityid})}"
+                               class="btn btn-primary"><i class="fa-solid fa-user-large-slash"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>
+                <a href="/person/add" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Añadir una Persona</a>
+            </p>
+            <p>
+                <a href="/admin/"><i class="fa-solid fa-user"></i> Ir al menu de administrador </a>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
