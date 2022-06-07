@@ -55,7 +55,8 @@ public class BusinessDelegate {
 	 public void deleteAddress(Integer addressid) {
 		 restTemplate.delete(URL_ADDRESS+addressid);
 	 }
-	 public Address findById(Integer addressid) {
+
+	 public Address findByIdAddress(Integer addressid) {
 		 return restTemplate.getForObject(URL_ADDRESS+addressid, Address.class);
 		 
 	 }
@@ -73,12 +74,14 @@ public class BusinessDelegate {
 	 
 	 public void updateCountry(Countryregion cr){
 		 restTemplate.put(URL_COUNTRY+cr.getCountryregionid(), cr,Countryregion.class);
-		
 	 }
 	 
 	 public void deleteCountry(Countryregion cr){
 		 restTemplate.delete(URL_COUNTRY+cr.getCountryregionid());
-		
+	 }
+
+	 public Countryregion findByIdCountryRegion(Integer countryID){
+		return restTemplate.getForObject(URL_COUNTRY+countryID, Countryregion.class);
 	 }
 
 	 //Employee
@@ -102,6 +105,10 @@ public class BusinessDelegate {
 		
 	 }
 
+	 public Employee findByIdEmployeee(Integer businessentity){
+		return restTemplate.getForObject(URL_EMPLOYEE+businessentity, Employee.class);
+	 }
+
 	 //Person
 	public List<Person> getPerson(){
 		Person[] people = restTemplate.getForObject(URL_PERSON, Person[].class);
@@ -118,6 +125,10 @@ public class BusinessDelegate {
 
 	public void deletePerson(Person p){
 		restTemplate.delete(URL_PERSON+p.getBusinessentityid());
+	}
+
+	public Person findByIdPerson(Integer businessentity){
+		return restTemplate.getForObject(URL_PERSON+businessentity, Person.class);
 	}
 
 	//Salestaxrate
@@ -138,6 +149,10 @@ public class BusinessDelegate {
 		restTemplate.delete(URL_SALESTAX+s.getSalestaxrateid());
 	}
 
+	public Salestaxrate findByIdSalesTax(Integer salesTaxRateId){
+		return restTemplate.getForObject(URL_SALESTAX+salesTaxRateId, Salestaxrate.class);
+	}
+
 	//Salesterritory
 	public List<Salesterritory> getSalesTerritory(){
 		Salesterritory[] salesterritories = restTemplate.getForObject(URL_SALESTERRITORY, Salesterritory[].class);
@@ -154,6 +169,10 @@ public class BusinessDelegate {
 
 	public void deleteSalesTeritory(Salesterritory st){
         restTemplate.delete(URL_SALESTERRITORY+st.getTerritoryid());
+	}
+
+	public Salesterritory findByIdSalesTerritory(Integer salesTerritoryId){
+		return restTemplate.getForObject(URL_SALESTERRITORY+salesTerritoryId, Salesterritory.class);
 	}
 
 	//StateProvince
@@ -174,6 +193,10 @@ public class BusinessDelegate {
 		restTemplate.delete(URL_STATEPROVINCE+sp.getStateprovinceid());
 	}
 
+	public Stateprovince findByIdStateProvince(Integer stateProvinceId){
+		return restTemplate.getForObject(URL_STATEPROVINCE+stateProvinceId, Stateprovince.class);
+	}
+
 	//User
 	public List<UserApp> getUsers(){
 		UserApp[] users = restTemplate.getForObject(URL_USERAPP, UserApp[].class);
@@ -190,5 +213,9 @@ public class BusinessDelegate {
 
 	public void deleteUser(UserApp user){
 		restTemplate.delete(URL_USERAPP+user.getId());
+	}
+
+	public UserApp findByIdUser(Integer userId){
+		return restTemplate.getForObject(URL_USERAPP+userId, UserApp.class);
 	}
 }
