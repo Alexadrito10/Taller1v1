@@ -30,7 +30,7 @@ public class PersonRestController  {
 		return personService.findPersonById(bussinessentityid);
 	}
 	
-	@PostMapping("/persons/add")
+	@PostMapping("/persons/")
 	public Person addPerson(@RequestBody Person person){
 		personService.save(person);
 		return person;

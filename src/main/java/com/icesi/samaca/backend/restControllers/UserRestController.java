@@ -32,13 +32,13 @@ public class UserRestController {
 		
 	}
 	
-	@PostMapping("/userapps/add")
+	@PostMapping("/userapps/")
 	public UserApp addUserApp(@RequestBody UserApp uA){
 		return userService.save(uA);
 		
 		
 	}
-	@DeleteMapping("/userapps/add")
+	@DeleteMapping("/userapps/{id}")
 	public UserApp addUserApp(@PathVariable("id") long id){
 		return userService.delete(id);
 		

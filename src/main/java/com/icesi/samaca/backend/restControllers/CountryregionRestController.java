@@ -1,4 +1,4 @@
-package com.icesi.samaca.backend.restControllers;
+  package com.icesi.samaca.backend.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +31,7 @@ public class CountryregionRestController {
 	
 	}
 	
-	@PostMapping("/countryregions/add")
+	@PostMapping("/countryregions/")
 	public Countryregion addCountryregion (@RequestBody Countryregion c) {
 		return countryRService.saveCr(c);
 		

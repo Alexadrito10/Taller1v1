@@ -31,7 +31,7 @@ public class SalestaxrateRestController {
 		return sTRService.findById(salestaxrateid).get();
 	}
 	
-	@PostMapping("/salestaxrates/add")
+	@PostMapping("/salestaxrates/")
 	public Salestaxrate addSalestaxrate(@RequestBody Salestaxrate s){
 		return sTRService.saveSalesTR(s);
 	}

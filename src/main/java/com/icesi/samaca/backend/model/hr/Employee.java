@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.icesi.samaca.backend.model.person.Person;
+
 /**
  * The persistent class for the employee database table.
  *
@@ -58,6 +60,8 @@ public class Employee implements Serializable {
 	private Integer sickleavehours;
 
 	private Integer vacationhours;
+	
+	private Person person;
 
 	// bi-directional many-to-one association to Employeedepartmenthistory
 	@OneToMany(mappedBy = "employee")
@@ -166,6 +170,10 @@ public class Employee implements Serializable {
 	public Integer getVacationhours() {
 		return this.vacationhours;
 	}
+	public Person getPerson() {
+		return this.person;
+	}
+	
 
 	public Employeedepartmenthistory removeEmployeedepartmenthistory(
 			Employeedepartmenthistory employeedepartmenthistory) {
@@ -259,6 +267,9 @@ public class Employee implements Serializable {
 
 	public void setVacationhours(Integer vacationhours) {
 		this.vacationhours = vacationhours;
+	}
+	public void setPerson(Person p) {
+		this.person = p;
 	}
 
 }
