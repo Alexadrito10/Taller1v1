@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
+import com.icesi.samaca.backend.model.hr.Employee;
 import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.model.sales.Salestaxrate;
 import com.icesi.samaca.backend.repositories.StateprovinceRepository;
 import com.icesi.samaca.backend.services.CountryregionServiceImp;
+import com.icesi.samaca.backend.services.EmployeeService;
+import com.icesi.samaca.backend.services.EmployeeServiceImp;
+import com.icesi.samaca.backend.services.PersonServiceImp;
 import com.icesi.samaca.backend.services.SalestaxrateServiceImp;
 import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 import com.icesi.samaca.backend.validation.CountryRegionValidation;
 import com.icesi.samaca.backend.validation.SalesTaxRateValidation;
+import com.icesi.samaca.backend.model.person.Person;
 
 @Controller
 public class AdminControllerImp{
@@ -27,12 +32,16 @@ public class AdminControllerImp{
 	private CountryregionServiceImp countryRegionService;
 	private SalestaxrateServiceImp salestaxrateService;
 	private StateprovinceServiceImp stateprovinceService;
+	private EmployeeServiceImp employeeService;
+	private PersonServiceImp personService;
 	
 	@Autowired
-	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService,StateprovinceServiceImp stateprovinceService) {	
+	public AdminControllerImp(CountryregionServiceImp countryregionService, SalestaxrateServiceImp salestaxrateService,StateprovinceServiceImp stateprovinceService,EmployeeServiceImp employeeService,PersonServiceImp personServiceImp) {	
 	this.countryRegionService = countryregionService;
 	this.salestaxrateService = salestaxrateService;
 	this.stateprovinceService = stateprovinceService;
+	this.employeeService = employeeService;
+	personService = personServiceImp;
 	}
 	
 	@GetMapping("/admin")
@@ -161,5 +170,120 @@ public class AdminControllerImp{
 		model.addAttribute("stateprovince", stateprovinceService.findByCountry(id));
 		return "admin/stateprov-refs";
 	}
+	
+	@GetMapping("/employee")
+	public String employee(Model model) {
+		model.addAttribute("employee", employeeService.findAllEmployees());
+		return "admin/employee";
+		
+	}
+
+	@GetMapping("/employee/add")
+	public String saveEmployee(Model model){
+		model.addAttribute("employee",new Employee());
+	
+		return "admin/add-employee";
+	}
+	@PostMapping("/employee/add")
+	public String saveEmployee( @ModelAttribute Employee employee
+			,BindingResult bindingResult, Model model,@RequestParam(value = "action",required = true) String action)throws Exception{
+		if(action.equals("Cancel")) {
+			return "redirect:/employee/";
+		}
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("employee", employee);
+			return"/admin/add-employee";
+			
+		}else {
+			employeeService.save(employee);
+			return "redirect:/employee";
+		}
+	} 
+	
+	@GetMapping("/employee/update/{id}")
+	public String updateEmployee(@PathVariable("id")Integer id, Model model){
+		Employee employee =  employeeService.findEmployeeById(id);
+		if(employee == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		model.addAttribute("employeee", employee);
+		return "admin/update-employee";
+	}
+	
+	@PostMapping("/employee/update/{id}")
+	public String updateEmployee(@PathVariable("id")Integer id,Employee employee,
+			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("employee", employeeService.findEmployeeById(id));
+				return "admin/update-employee";
+			}
+			employee.setBusinessentityid(id);
+			employeeService.update(employee);
+		}
+		return "redirect:/employee";
+	}
+	
+	
+	@GetMapping("/person")
+	public String Person(Model model) {
+		model.addAttribute("person", personService.findAllPersons());
+		return "admin/person";
+		
+	}
+	
+	@GetMapping("/person/add")
+	public String savePerson(Model model){
+		model.addAttribute("person", new Person());
+	
+		return "admin/add-employee";
+	}
+	
+	@PostMapping("/person/add")
+	public String savePerson( @ModelAttribute Person person
+			,BindingResult bindingResult, Model model,@RequestParam(value = "action",required = true) String action)throws Exception{
+		if(action.equals("Cancel")) {
+			return "redirect:/person/";
+		}
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("person", person);
+			return"/admin/add-person";
+			
+		}else {
+			personService.save(person);
+			return "redirect:/person";
+		}
+	}
+	@GetMapping("/person/update/{id}")
+	public String updatePerson(@PathVariable("id")Integer id, Model model){
+		Person person =  personService.findPersonById(id);
+		if(person == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		model.addAttribute("person", person);
+		return "admin/update-person";
+	}
+	
+	@PostMapping("/person/update/{id}")
+	public String updatePerson(@PathVariable("id")Integer id,Person person,
+			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
+		if(!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("employee", personService.findPersonById(id));
+				return "admin/update-person";
+			}
+			person.setBusinessentityid(id);
+			personService.update(person);
+		}
+		return "redirect:/person";
+	}
+	
+	
+	
+
+	
+	
 	
 }
