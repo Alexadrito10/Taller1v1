@@ -1,7 +1,8 @@
-package com.icesi.samaca.backend.restControllers;
+  package com.icesi.samaca.backend.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,7 +32,7 @@ public class CountryregionRestController {
 	
 	}
 	
-	@PostMapping("/countryregions/add")
+	@PostMapping("/countryregions/")
 	public Countryregion addCountryregion (@RequestBody Countryregion c) {
 		return countryRService.saveCr(c);
 		
@@ -41,8 +42,6 @@ public class CountryregionRestController {
 	@DeleteMapping("/countryregions/{id}")
 	public Countryregion deleteCountryregion (@PathVariable("id") Integer countryregionid) {
 		return countryRService.deleteCr(countryregionid);
-		
-		
 	}
 	
 
@@ -50,9 +49,11 @@ public class CountryregionRestController {
 	public Countryregion updateCountryregion (@RequestBody Countryregion c) {
 		
 		return countryRService.editCr(c);
-		
-		
-		
+	}
+	
+	@GetMapping("/countryregions/{id}")
+	public Countryregion findById(@PathVariable("id") Integer id) {
+		return countryRService.findById(id).get();
 	}
 	
 	

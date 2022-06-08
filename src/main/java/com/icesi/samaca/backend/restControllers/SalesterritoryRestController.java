@@ -30,7 +30,7 @@ public class SalesterritoryRestController {
 		return sTService.findById(salestaxrateid).get();
 	}
 	
-	@PostMapping("/salesterritories/add")
+	@PostMapping("/salesterritories/")
 	public Salesterritory addSalesterritory(@RequestBody Salesterritory sT){
 		return sTService.saveSalesTerritory(sT);
 		

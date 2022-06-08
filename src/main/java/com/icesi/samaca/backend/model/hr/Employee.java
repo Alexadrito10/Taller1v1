@@ -2,6 +2,7 @@ package com.icesi.samaca.backend.model.hr;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -9,11 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.icesi.samaca.backend.model.person.Person;
 
 /**
  * The persistent class for the employee database table.
@@ -45,7 +50,7 @@ public class Employee implements Serializable {
 
 	private String maritalstatus;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String nationalidnumber;
 
@@ -58,6 +63,8 @@ public class Employee implements Serializable {
 	private Integer sickleavehours;
 
 	private Integer vacationhours;
+	
+	private Person person;
 
 	// bi-directional many-to-one association to Employeedepartmenthistory
 	@OneToMany(mappedBy = "employee")
@@ -139,7 +146,7 @@ public class Employee implements Serializable {
 		return this.maritalstatus;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -166,6 +173,10 @@ public class Employee implements Serializable {
 	public Integer getVacationhours() {
 		return this.vacationhours;
 	}
+	public Person getPerson() {
+		return this.person;
+	}
+	
 
 	public Employeedepartmenthistory removeEmployeedepartmenthistory(
 			Employeedepartmenthistory employeedepartmenthistory) {
@@ -233,7 +244,7 @@ public class Employee implements Serializable {
 		this.maritalstatus = maritalstatus;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -259,6 +270,9 @@ public class Employee implements Serializable {
 
 	public void setVacationhours(Integer vacationhours) {
 		this.vacationhours = vacationhours;
+	}
+	public void setPerson(Person p) {
+		this.person = p;
 	}
 
 }

@@ -20,9 +20,12 @@ import com.icesi.samaca.backend.services.CountryregionServiceImp;
 import com.icesi.samaca.backend.services.StateprovinceServiceImp;
 import com.icesi.samaca.backend.validation.AddressValidation;
 import com.icesi.samaca.backend.validation.StateProvinceValidation;
+import com.icesi.samaca.frontend.businessdelegate.BusinessDelegate;
 
 @Controller
 public class OperatorControllerImp{
+	@Autowired
+	private BusinessDelegate bDelegate;
 	
 	private AddresServiceImp addressService;
 	private StateprovinceServiceImp stateprovinceService;
@@ -42,7 +45,7 @@ public class OperatorControllerImp{
 	
 	@GetMapping("/address")
 	public String address(Model model) {
-		model.addAttribute("address", addressService.findAll());
+		model.addAttribute("address", bDelegate.getAdresses());
 		
 		return "operator/address";
 	}
@@ -50,7 +53,7 @@ public class OperatorControllerImp{
 	@GetMapping("/address/add")
 	public String saveAddress(Model model){
 		model.addAttribute("address", new Address());
-		model.addAttribute("stateprovinces", addressService.findAllStateProvinces());
+		model.addAttribute("stateprovinces", bDelegate.getStateProvinces());
 		return "operator/add-address";
 	}
 	
@@ -65,19 +68,19 @@ public class OperatorControllerImp{
 			model.addAttribute("stateprovince");
 			return "/operator/add-address";
 		}else {
-			addressService.saveAddress(address);
+			bDelegate.addAddress(address);
 			return "redirect:/address/";
 		}
 	}
 	
 	@GetMapping("/address/update/{id}")
 	public String updateAddress(@PathVariable("id")Integer id, Model model){
-		Optional<Address> address= addressService.findById(id);
-		if(address.isEmpty()){
-			throw new IllegalArgumentException("No hay una dirección creada con este id");
-		}
-		model.addAttribute("address", address.get());
-		model.addAttribute("statesprovinces", addressService.findAllStateProvinces());
+		Address address= bDelegate.findByIdAddress(id);
+//		if(address!=null){
+//			throw new IllegalArgumentException("No hay una dirección creada con este id");
+//		}
+		model.addAttribute("address", address);
+		model.addAttribute("statesprovinces", bDelegate.getStateProvinces());
 		return "operator/update-address";
 	}
 	
@@ -86,26 +89,27 @@ public class OperatorControllerImp{
 			Model model, @RequestParam(value="action", required= true)String action){
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("address", addressService.findById(id).get());
-				model.addAttribute("statesprovince", addressService.findAllStateProvinces());
+				model.addAttribute("address", bDelegate.findByIdAddress(id));
+				model.addAttribute("statesprovince", bDelegate.getStateProvinces());
 				return "operator/update-address";
 			}
 			address.setAddressid(id);
-			addressService.editAddres(address);
+			bDelegate.updateAddress(address);
+			//addressService.editAddres(address);
 		}
 		return "redirect:/address/";
 	}
 	
 	@GetMapping("/stateprovince")
 	public String stateprovince(Model model){
-		model.addAttribute("stateprovince", stateprovinceService.findAll());
+		model.addAttribute("stateprovince", bDelegate.getStateProvinces());
 		return "operator/stateprovince";
 	}
 	
 	@GetMapping("/stateprovince/add")
 	public String saveStateprovince(Model model){
 		model.addAttribute("stateprovince", new Stateprovince());
-		model.addAttribute("countryregions", countryRegionService.findAll());
+		model.addAttribute("countryregions", bDelegate.getCountries());
 		return "operator/add-stateprovince";
 	}
 	
@@ -117,22 +121,24 @@ public class OperatorControllerImp{
 		}
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("stateprovince", stateprovince);
-			model.addAttribute("countryregion");
+			model.addAttribute("countryregion", bDelegate.getCountries());
 			return "operator/add-stateprovince";
 		}else {
-			stateprovinceService.saveStateprov(stateprovince);
+			this.bDelegate.addStateProvince(stateprovince);
+//			stateprovinceService.saveStateprov(stateprovince);
 			return "redirect:/stateprovince";
 		}
 	}
 
 	@GetMapping("/stateprovince/update/{id}")
 	public String updateStateProvince(@PathVariable("id")Integer id, Model model) {
-		Optional<Stateprovince> province= stateprovinceService.findById(id);
-		if(province.isEmpty()) {
+		Stateprovince province= bDelegate.findByIdStateProvince(id);
+		//Optional<Stateprovince> province= stateprovinceService.findById(id);
+		if(province.equals(null)) {
 			throw new IllegalArgumentException("No hay un estado provincia creado con este id");
 		}
-		model.addAttribute("stateprovince", province.get());
-		model.addAttribute("countryregions", stateprovinceService.findAllCountries());
+		model.addAttribute("stateprovince", province);
+		model.addAttribute("countryregions", bDelegate.getCountries());
 		return "operator/update-stateprovince";
 	}
 	
@@ -141,12 +147,13 @@ public class OperatorControllerImp{
 			Model model, @RequestParam(value="action", required= true)String action) {
 		if(!action.equals("Cancel")){
 			if(bindingResult.hasErrors()){
-				model.addAttribute("stateprovince", stateprovinceService.findById(id).get());
-				model.addAttribute("countryregion", stateprovinceService.findAllCountries());
+				model.addAttribute("stateprovince", stateprovince);
+				model.addAttribute("countryregion", bDelegate.getCountries());
 				return "operator/update-stateprovince";
 			}
 			stateprovince.setStateprovinceid(id);
-			stateprovinceService.editStateproV(stateprovince);
+			//stateprovinceService.editStateproV(stateprovince);
+			bDelegate.updateStateProvince(stateprovince);
 		}
 		return "redirect:/stateprovince";
 	}

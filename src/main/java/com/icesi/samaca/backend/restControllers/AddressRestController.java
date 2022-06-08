@@ -31,7 +31,7 @@ public class AddressRestController {
 		return addrService.findById(addressid).get();
 	}
 	
-	@PostMapping("/addresses/add")
+	@PostMapping("/addresses/")
 	public Address addAddress(@RequestBody Address a){
 		return addrService.saveAddress(a);
 		

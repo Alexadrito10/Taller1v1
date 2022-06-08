@@ -36,7 +36,7 @@ public class StateprovinceRestController {
 		
 		
 	}
-	@PostMapping("/stateprovinces/add")
+	@PostMapping("/stateprovinces/")
 	public Stateprovince addStateprovince(@RequestBody Stateprovince sP){
 		return sPService.saveStateprov(sP);
 		

@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.icesi.samaca.backend.model.sales.Salesorderheader;
 import com.icesi.samaca.backend.validation.AddressValidation;
 import com.icesi.samaca.backend.validation.CountryRegionValidation;
@@ -64,6 +65,7 @@ public class Address implements Serializable {
 
 	// bi-directional many-to-one association to Businessentityaddress
 	@OneToMany(mappedBy = "address")
+	@JsonIgnore
 	private List<Businessentityaddress> businessentityaddresses;
 
 	public Address() {

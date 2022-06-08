@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.icesi.samaca.backend.dao.StateProvinceDaoImp;
 import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.model.person.Stateprovince;
 import com.icesi.samaca.backend.model.sales.Salesterritory;
@@ -16,7 +17,9 @@ import com.icesi.samaca.backend.repositories.StateprovinceRepository;
 
 @Service
 public class StateprovinceServiceImp implements StateprovinceService {
-
+	@Autowired
+	StateProvinceDaoImp stateProvinceDao;
+	
 	StateprovinceRepository stateProvinceRepo;
 	CountryregionRepository countryregionRepository;
 	SalesterritoryRepository salesterritoryRepo;
@@ -33,7 +36,7 @@ public class StateprovinceServiceImp implements StateprovinceService {
 
 	@Override
 	public Stateprovince saveStateprov(Stateprovince sP) throws IllegalArgumentException {
-		Stateprovince province = null;
+		//Stateprovince province = null;
 
 		if ((sP.getStateprovincecode().length() == 5)
 				&& (sP.getIsonlystateprovinceflag().equals("Y")
@@ -45,39 +48,42 @@ public class StateprovinceServiceImp implements StateprovinceService {
 				
 				sP.setCountryregion(optional.get());
 
-				province = this.stateProvinceRepo.save(sP);
+				this.stateProvinceDao.save(sP);
 
-			}
+			} 
 		} else {
 			throw new IllegalArgumentException("Algo en la creaci�n sali� mal, por favor revise los parametros");
 		}
 
-		return province;
+		return sP;
 	}
 
 	@Override
 	@Transactional
 	public Stateprovince editStateproV(Stateprovince sP) throws IllegalArgumentException {
-		Stateprovince result = null;
+		//Stateprovince result = null;
 			if(sP != null && sP.getStateprovinceid()!=null) {
 				Optional<Stateprovince> checkIfExist = this.stateProvinceRepo.findById(sP.getStateprovinceid());
-					if(checkIfExist.isPresent()) {
-						result= saveStateprov(sP);
+				//Optional<Countryregion> optional = this.countryregionRepository.findById(sP.getCountryregion().getCountryregionid());
+				Stateprovince optional = stateProvinceDao.findByCountryRegion(sP.getCountryregion().getCountryregionid()).get(0);
+					if(checkIfExist.isPresent() && optional!= null) {
+						//result= saveStateprov(sP);
+						stateProvinceDao.update(sP);
 			}else {
 				throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 			}
 		}else {
 			throw new IllegalArgumentException("Algo en la edición salió mal, por favor revise los parametros");
 		}
-		return result;
+		return sP;
 	}
 
 	public Iterable<Stateprovince> findAll() {
-		return stateProvinceRepo.findAll();
+		return stateProvinceDao.findAll();
 	}
 
 	public Optional<Stateprovince> findById(Integer id) {
-		return stateProvinceRepo.findById(id);
+		return Optional.of(stateProvinceDao.findById(id));
 	}
 
 	public Iterable<Countryregion> findAllCountries() {

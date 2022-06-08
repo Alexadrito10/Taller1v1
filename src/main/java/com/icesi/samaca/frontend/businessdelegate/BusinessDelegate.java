@@ -1,6 +1,8 @@
 package com.icesi.samaca.frontend.businessdelegate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.icesi.samaca.backend.model.person.*;
@@ -8,6 +10,9 @@ import com.icesi.samaca.backend.model.sales.Salestaxrate;
 import com.icesi.samaca.backend.model.sales.Salesterritory;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,14 +24,14 @@ import lombok.Setter;
 @Component
 public class BusinessDelegate {
 	
-	private final String URL_ADDRESS = "http://localhost:8080/api/addresses/list";
-	private final String URL_COUNTRY = "http://localhost:8080/api/countryregions/list";
-	private final String URL_EMPLOYEE = "http://localhost:8080/api/employees/list";
-	private final String URL_PERSON = "http://localhost:8080/api/person/list";
-	private final String URL_SALESTAX = "http://localhost:8080/api/salestaxrate/list";
-	private final String URL_SALESTERRITORY = "http://localhost:8080/api/salesterritory/list";
-	private final String URL_STATEPROVINCE = "http://localhost:8080/api/stateprovince/list";
-	private final String URL_USERAPP = "http://localhost:8080/api/userapp/list";
+	private final String URL_ADDRESS = "http://localhost:8080/api/addresses/";
+	private final String URL_COUNTRY = "http://localhost:8080/api/countryregions/";
+	private final String URL_EMPLOYEE = "http://localhost:8080/api/employees/";
+	private final String URL_PERSON = "http://localhost:8080/api/persons/";
+	private final String URL_SALESTAX = "http://localhost:8080/api/salestaxrates/";
+	private final String URL_SALESTERRITORY = "http://localhost:8080/api/salesterritories/";
+	private final String URL_STATEPROVINCE = "http://localhost:8080/api/stateprovinces/";
+	private final String URL_USERAPP = "http://localhost:8080/api/userapps/";
 	
 	@Getter
 	@Setter
@@ -34,6 +39,11 @@ public class BusinessDelegate {
 
 	public BusinessDelegate(){
 		this.restTemplate = new RestTemplate();
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+        messageConverters.add(converter);
+        this.restTemplate.setMessageConverters(messageConverters);
 	}
 	
 	//Address
@@ -46,7 +56,7 @@ public class BusinessDelegate {
 	 public Address addAddress(Address a) {
 		 return restTemplate.postForObject(URL_ADDRESS, a, Address.class);
 	 }
-	 //falta revisar esta
+	 
 	 public void updateAddress(Address a) {
 		 restTemplate.put(URL_ADDRESS+a.getAddressid(), a, Address.class);
 		
@@ -110,7 +120,7 @@ public class BusinessDelegate {
 	 }
 
 	 //Person
-	public List<Person> getPerson(){
+	public List<Person> getPersons(){
 		Person[] people = restTemplate.getForObject(URL_PERSON, Person[].class);
 		return Arrays.asList(people);
 	}
@@ -176,7 +186,7 @@ public class BusinessDelegate {
 	}
 
 	//StateProvince
-	public List<Stateprovince> getStateProvince(){
+	public List<Stateprovince> getStateProvinces(){
 		Stateprovince[] stateprovinces = restTemplate.getForObject(URL_STATEPROVINCE, Stateprovince[].class);
 		return Arrays.asList(stateprovinces);
 	}

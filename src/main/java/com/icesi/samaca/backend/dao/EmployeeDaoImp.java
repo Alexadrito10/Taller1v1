@@ -26,7 +26,6 @@ public class EmployeeDaoImp implements EmployeeDao {
 	public void saveEmployee(Employee emp) {
 		
 		entityManager.persist(emp);
-		
 	}
 
 	@Override

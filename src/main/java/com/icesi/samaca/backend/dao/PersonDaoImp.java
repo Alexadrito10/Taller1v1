@@ -34,6 +34,7 @@ public class PersonDaoImp implements PersonDao{
 	}
 
 	@Override
+	@Transactional
 	public void deletePerson(Integer bussinessentityid) {
 		entityManager.remove(this.findPersonById(bussinessentityid));
 		

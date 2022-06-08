@@ -31,13 +31,11 @@ public class EmployeeRestController {
 		return empService.findEmployeeById(bussinesentity);
 	}
 	
-	@PostMapping("/employees/add")
-	public Employee addEmployee(@RequestBody Employee emp){
-		empService.save(emp);
-		return emp;
-		
-		
+	@PostMapping("/employees/")
+	public void addEmployee(@RequestBody Employee emp){
+		empService.save(emp);		
 	}
+	
 	@DeleteMapping("/employees/{id}")
 	public Employee deleteEmployee(@PathVariable("id") Integer bussinessentityid){
 		return empService.deleteEmployee(bussinessentityid);
