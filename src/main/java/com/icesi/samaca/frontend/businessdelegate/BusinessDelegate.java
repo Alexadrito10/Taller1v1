@@ -76,8 +76,8 @@ public class BusinessDelegate {
 		 restTemplate.put(URL_COUNTRY+cr.getCountryregionid(), cr,Countryregion.class);
 	 }
 	 
-	 public void deleteCountry(Countryregion cr){
-		 restTemplate.delete(URL_COUNTRY+cr.getCountryregionid());
+	 public void deleteCountry(Integer countryId){
+		 restTemplate.delete(URL_COUNTRY+countryId);
 	 }
 
 	 public Countryregion findByIdCountryRegion(Integer countryID){
@@ -215,7 +215,7 @@ public class BusinessDelegate {
 		restTemplate.delete(URL_USERAPP+user.getId());
 	}
 
-	public UserApp findByIdUser(Integer userId){
+	public UserApp findByIdUser(Long userId){
 		return restTemplate.getForObject(URL_USERAPP+userId, UserApp.class);
 	}
 }
