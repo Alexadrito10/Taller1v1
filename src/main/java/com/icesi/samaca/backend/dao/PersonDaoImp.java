@@ -22,14 +22,16 @@ public class PersonDaoImp implements PersonDao{
 
 	@Transactional
 	@Override
-	public void savePerson(Person person) {
+	public Person savePerson(Person person) {
 		entityManager.persist(person);
+		return person;
 		
 	}
 	@Transactional 
 	@Override
-	public void updatePerson(Person person) {
-		entityManager.merge(person);
+	public Person updatePerson(Person person) {
+		 entityManager.merge(person);
+		 return person;
 		
 	}
 

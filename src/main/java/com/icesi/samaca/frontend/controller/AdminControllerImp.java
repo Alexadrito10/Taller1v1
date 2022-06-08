@@ -215,7 +215,7 @@ public class AdminControllerImp{
 		}
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("employee", employee);
-			model.addAttribute("person", bDelegate.getPersons());
+			model.addAttribute("persons", bDelegate.getPersons());
 			
 			return"/admin/add-employee";
 		}else {
