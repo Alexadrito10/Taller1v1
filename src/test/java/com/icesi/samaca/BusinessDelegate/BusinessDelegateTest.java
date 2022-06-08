@@ -157,26 +157,30 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdCountryRegion(){
-            when(restTemplate.getForObject(URL_COUNTRY+countryregion.getCountryregionid(), Countryregion.class)).thenReturn(countryregion);
-            assertEquals(businessDelegate.findByIdCountryRegion(countryregion.getCountryregionid()).getCountryregionid(), countryregion.getCountryregionid());
+            Countryregion aux = new Countryregion();
+            aux.setCountryregionid(10);
+            when(restTemplate.getForObject(URL_COUNTRY+aux  .getCountryregionid(), Countryregion.class)).thenReturn(aux );
+            assertEquals(businessDelegate.findByIdCountryRegion(aux .getCountryregionid()).getCountryregionid(), aux    .getCountryregionid());
         }
 
-//        @Test
-//        void updateCountryRegionTest(){
-//            businessDelegate.addCountry(countryregion);
-//            countryregion.setCountryregioncode("COL_B");
-//            businessDelegate.updateCountry(countryregion);
-//
-//            verify(restTemplate).put(URL_COUNTRY, countryregion, Countryregion.class);
-//        }
-//
-//        @Test
-//        void deleteCountryRegionTest(){
-//            businessDelegate.addCountry(countryregion);
-//            businessDelegate.deleteCountry(countryregion.getCountryregionid());
-//
-//            verify(restTemplate).delete(URL_COUNTRY+countryregion.getCountryregionid());
-//        }
+        @Test
+        void updateCountryRegionTest(){
+            Countryregion aux = new Countryregion();
+            businessDelegate.addCountry(aux);
+            aux.setCountryregioncode("COL_B");
+            businessDelegate.updateCountry(aux);
+
+            verify(restTemplate).put(URL_COUNTRY+aux.getCountryregionid(), aux, Countryregion.class);
+        }
+
+        @Test
+        void deleteCountryRegionTest(){
+            Countryregion aux = new Countryregion();
+            businessDelegate.addCountry(aux);
+            businessDelegate.deleteCountry(aux.getCountryregionid());
+
+            verify(restTemplate).delete(URL_COUNTRY+aux.getCountryregionid());
+        }
     }
 
     @Nested
@@ -234,26 +238,30 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdEmployeeTest(){
-            when(restTemplate.getForObject(URL_EMPLOYEE+employee.getBusinessentityid(), Employee.class)).thenReturn(employee);
-            assertEquals(businessDelegate.findByIdEmployeee(employee.getBusinessentityid()).getBusinessentityid(), employee.getBusinessentityid());
+            Employee aux = new Employee();
+            aux.setBusinessentityid(10);
+            when(restTemplate.getForObject(URL_EMPLOYEE+aux.getBusinessentityid(), Employee.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdEmployeee(aux.getBusinessentityid()).getBusinessentityid(), aux.getBusinessentityid());
         }
 
-//        @Test
-//        void updateEmployeeTest(){
-//            businessDelegate.addEmployee(employee);
-//            employee.setVacationhours(10);
-//            businessDelegate.updateEmployee(employee);
-//
-//            verify(restTemplate).put(URL_EMPLOYEE+employee.getBusinessentityid(), employee, Employee.class);
-//        }
-//
-//        @Test
-//        void deleteEmployeeTest(){
-//            businessDelegate.addEmployee(employee);
-//            businessDelegate.deleteEmployee(employee);
-//
-//            verify(restTemplate).delete(URL_EMPLOYEE+employee.getBusinessentityid());
-//        }
+        @Test
+        void updateEmployeeTest(){
+            Employee aux = new Employee();
+            businessDelegate.addEmployee(aux);
+            aux.setVacationhours(10);
+            businessDelegate.updateEmployee(aux);
+
+            verify(restTemplate).put(URL_EMPLOYEE+aux.getBusinessentityid(), aux, Employee.class);
+        }
+
+        @Test
+        void deleteEmployeeTest(){
+            Employee aux = new Employee();
+            businessDelegate.addEmployee(aux);
+            businessDelegate.deleteEmployee(aux);
+
+            verify(restTemplate).delete(URL_EMPLOYEE+aux.getBusinessentityid());
+        }
     }
 
     @Nested
@@ -286,8 +294,10 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdPersonTest(){
-            when(restTemplate.getForObject(URL_PERSON+person.getBusinessentityid(), Person.class)).thenReturn(person);
-            assertEquals(businessDelegate.findByIdPerson(person.getBusinessentityid()).getBusinessentityid(), person.getBusinessentityid());
+            Person aux = new Person();
+            aux.setBusinessentityid(10);
+            when(restTemplate.getForObject(URL_PERSON+aux.getBusinessentityid(), Person.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdPerson(aux.getBusinessentityid()).getBusinessentityid(), aux.getBusinessentityid());
         }
 
         @Test
@@ -305,20 +315,22 @@ public class BusinessDelegateTest {
 
 //        @Test
 //        void updatePersonTest(){
-//            businessDelegate.addPerson(person);
-//            person.setTitle("judge");
-//            businessDelegate.updatePerson(person);
+//            Person aux = new Person();
+//            businessDelegate.addPerson(aux);
+//            person.setTitle("aux");
+//            businessDelegate.updatePerson(aux);
 //
-//            verify(restTemplate).put(URL_PERSON+person.getBusinessentityid(), person, Person.class);
+//            verify(restTemplate).put(URL_PERSON+person.getBusinessentityid(), aux, Person.class);
 //        }
-//
-//        @Test
-//        void deletePersonTest(){
-//            businessDelegate.addPerson(person);
-//            businessDelegate.deletePerson(person);
-//
-//            verify(restTemplate).delete(URL_PERSON+person.getBusinessentityid());
-//        }
+
+        @Test
+        void deletePersonTest(){
+            Person aux = new Person();
+            businessDelegate.addPerson(aux);
+            businessDelegate.deletePerson(aux);
+
+            verify(restTemplate).delete(URL_PERSON+aux.getBusinessentityid());
+        }
     }
 
     @Nested
@@ -349,8 +361,10 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdSalesTaxRateTest(){
-            when(restTemplate.getForObject(URL_SALESTAX+salestaxrate.getSalestaxrateid(), Salestaxrate.class)).thenReturn(salestaxrate);
-            assertEquals(businessDelegate.findByIdSalesTax(salestaxrate.getSalestaxrateid()).getSalestaxrateid(), salestaxrate.getSalestaxrateid());
+            Salestaxrate aux = new Salestaxrate();
+            aux.setSalestaxrateid(10);
+            when(restTemplate.getForObject(URL_SALESTAX+aux.getSalestaxrateid(), Salestaxrate.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdSalesTax(aux.getSalestaxrateid()).getSalestaxrateid(), aux.getSalestaxrateid());
         }
 
         @Test
@@ -363,19 +377,21 @@ public class BusinessDelegateTest {
             assertEquals(businessDelegate.addSalestaxrate(temp).getSalestaxrateid(), temp.getSalestaxrateid());
         }
 
-//        @Test
-//        void updateSalesTaxRateTest(){
-//            businessDelegate.addSalestaxrate(salestaxrate);
-//            salestaxrate.setName("RATE");
-//            businessDelegate.updateSalestaxrate(salestaxrate);
-//
-//            verify(restTemplate).put(URL_SALESTAX+salestaxrate.getSalestaxrateid(), salestaxrate, Salestaxrate.class);
-//        }
-//
+        @Test
+        void updateSalesTaxRateTest(){
+            Salestaxrate aux = new Salestaxrate();
+            businessDelegate.addSalestaxrate(aux);
+            aux.setName("RATE");
+            businessDelegate.updateSalestaxrate(aux);
+
+            verify(restTemplate).put(URL_SALESTAX+aux.getSalestaxrateid(), aux, Salestaxrate.class);
+        }
+
 //        @Test
 //        void deleteSalesTaxRateTest(){
-//            businessDelegate.addSalestaxrate(salestaxrate);
-//            businessDelegate.deleteSalestaxrate(salestaxrate);
+//            Salestaxrate aux = new Salestaxrate();
+//            businessDelegate.addSalestaxrate(aux);
+//            businessDelegate.deleteSalestaxrate(aux);
 //
 //            verify(restTemplate).delete(URL_SALESTAX+salestaxrate.getSalestaxrateid());
 //        }
@@ -411,8 +427,10 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdSalesTerritoryTest(){
-            when(restTemplate.getForObject(URL_SALESTERRITORY+salesterritory.getTerritoryid(), Salesterritory.class)).thenReturn(salesterritory);
-            assertEquals(businessDelegate.findByIdSalesTax(salesterritory.getTerritoryid()), salesterritory.getTerritoryid());
+            Salesterritory aux = new Salesterritory();
+            aux.setTerritoryid(10);
+            when(restTemplate.getForObject(URL_SALESTERRITORY+aux.getTerritoryid(), Salesterritory.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdSalesTerritory(aux.getTerritoryid()).getTerritoryid(), aux.getTerritoryid());
         }
 
         @Test
@@ -429,20 +447,22 @@ public class BusinessDelegateTest {
 
 //        @Test
 //        void updateSalesTerritoryTest(){
-//            businessDelegate.addSalesTerritory(salesterritory);
-//            salesterritory.setCountryregioncode("COUNTRY000");
-//            businessDelegate.updateSalesTerritory(salesterritory);
+//            Salesterritory aux = new Salesterritory();
+//            businessDelegate.addSalesTerritory(aux);
+//            aux.setCountryregioncode("COUNTRY000");
+//            businessDelegate.updateSalesTerritory(aux);
 //
-//            verify(restTemplate).put(URL_SALESTERRITORY+salesterritory.getTerritoryid(), Salesterritory.class);
+//            verify(restTemplate).put(URL_SALESTERRITORY+aux.getTerritoryid(), Salesterritory.class);
 //        }
-//
-//        @Test
-//        void deleteSalesTerritoryTest(){
-//            businessDelegate.addSalesTerritory(salesterritory);
-//            businessDelegate.deleteSalesTeritory(salesterritory);
-//
-//            verify(restTemplate).delete(URL_SALESTERRITORY+salesterritory.getTerritoryid());
-//        }
+
+        @Test
+        void deleteSalesTerritoryTest(){
+            Salesterritory aux = new Salesterritory();
+            businessDelegate.addSalesTerritory(aux);
+            businessDelegate.deleteSalesTeritory(aux);
+
+            verify(restTemplate).delete(URL_SALESTERRITORY+aux.getTerritoryid());
+        }
     }
 
     @Nested
@@ -473,8 +493,10 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdStateProvinceTest(){
-            when(restTemplate.getForObject(URL_STATEPROVINCE+stateprovince.getStateprovinceid(), Stateprovince.class)).thenReturn(stateprovince);
-            assertEquals(businessDelegate.findByIdSalesTax(stateprovince.getStateprovinceid()), stateprovince.getStateprovinceid());
+            Stateprovince aux = new Stateprovince();
+            aux.setStateprovinceid(10);
+            when(restTemplate.getForObject(URL_STATEPROVINCE+aux.getStateprovinceid(), Stateprovince.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdStateProvince(aux.getStateprovinceid()).getStateprovinceid(), aux.getStateprovinceid());
         }
 
         @Test
@@ -489,20 +511,22 @@ public class BusinessDelegateTest {
 
 //        @Test
 //        void updateStateProvinceTest(){
-//            businessDelegate.addStateProvince(stateprovince);
-//            stateprovince.setStateprovincecode("PROV24");
-//            businessDelegate.updateStateProvince(stateprovince);
+//            Stateprovince aux = new Stateprovince();
+//            businessDelegate.addStateProvince(aux);
+//            aux.setStateprovincecode("PROV24");
+//            businessDelegate.updateStateProvince(aux);
 //
-//            verify(restTemplate).put(URL_STATEPROVINCE+stateprovince.getStateprovinceid(), Stateprovince.class);
+//            verify(restTemplate).put(URL_STATEPROVINCE+aux.getStateprovinceid(), Stateprovince.class);
 //        }
-//
-//        @Test
-//        void deleteStateProvinceTest(){
-//            businessDelegate.addStateProvince(stateprovince);
-//            businessDelegate.deleteStateProvince(stateprovince);
-//
-//            verify(restTemplate).delete(URL_STATEPROVINCE+stateprovince.getStateprovinceid());
-//        }
+
+        @Test
+        void deleteStateProvinceTest(){
+            Stateprovince aux = new Stateprovince();
+            businessDelegate.addStateProvince(aux);
+            businessDelegate.deleteStateProvince(aux);
+
+            verify(restTemplate).delete(URL_STATEPROVINCE+aux.getStateprovinceid());
+        }
     }
 
     @Nested
@@ -533,8 +557,10 @@ public class BusinessDelegateTest {
 
         @Test
         void findByIdUserAppTest(){
-            when(restTemplate.getForObject(URL_USERAPP+userApp.getId(), UserApp.class)).thenReturn(userApp);
-            assertEquals(businessDelegate.findByIdUser(userApp.getId()), userApp.getId());
+            UserApp aux = new UserApp();
+            aux.setId(10);
+            when(restTemplate.getForObject(URL_USERAPP+aux.getId(), UserApp.class)).thenReturn(aux);
+            assertEquals(businessDelegate.findByIdUser(aux.getId()).getId(), aux.getId());
         }
 
         @Test
@@ -549,20 +575,22 @@ public class BusinessDelegateTest {
 
 //        @Test
 //        void updateUserAppTest(){
-//            businessDelegate.addUser(userApp);
-//            userApp.setPassword("COL000");
-//            businessDelegate.updateUser(userApp);
+//            UserApp aux = new UserApp();
+//            businessDelegate.addUser(aux);
+//            aux.setPassword("COL000");
+//            businessDelegate.updateUser(aux);
 //
-//            verify(restTemplate).put(URL_USERAPP+userApp.getId(), UserApp.class);
+//            verify(restTemplate).put(URL_USERAPP+aux.getId(), UserApp.class);
 //        }
-//
-//        @Test
-//        void deleteUserAppTest(){
-//            businessDelegate.addUser(userApp);
-//            businessDelegate.deleteUser(userApp);
-//
-//            verify(restTemplate).delete(URL_USERAPP+userApp.getId());
-//        }
+
+        @Test
+        void deleteUserAppTest(){
+            UserApp aux = new UserApp();
+            businessDelegate.addUser(aux);
+            businessDelegate.deleteUser(aux);
+
+            verify(restTemplate).delete(URL_USERAPP+aux.getId());
+        }
     }
 
 }
