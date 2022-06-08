@@ -2,6 +2,7 @@
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,9 +49,11 @@ public class CountryregionRestController {
 	public Countryregion updateCountryregion (@RequestBody Countryregion c) {
 		
 		return countryRService.editCr(c);
-		
-		
-		
+	}
+	
+	@GetMapping("/countryregions/{id}")
+	public Countryregion findById(@PathVariable("id") Integer id) {
+		return countryRService.findById(id).get();
 	}
 	
 	
