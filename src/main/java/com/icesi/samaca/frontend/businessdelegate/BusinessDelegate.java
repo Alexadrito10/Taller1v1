@@ -56,7 +56,7 @@ public class BusinessDelegate {
 	 public Address addAddress(Address a) {
 		 return restTemplate.postForObject(URL_ADDRESS, a, Address.class);
 	 }
-	 //falta revisar esta
+	 
 	 public void updateAddress(Address a) {
 		 restTemplate.put(URL_ADDRESS+a.getAddressid(), a, Address.class);
 		
@@ -120,7 +120,7 @@ public class BusinessDelegate {
 	 }
 
 	 //Person
-	public List<Person> getPerson(){
+	public List<Person> getPersons(){
 		Person[] people = restTemplate.getForObject(URL_PERSON, Person[].class);
 		return Arrays.asList(people);
 	}
@@ -186,7 +186,7 @@ public class BusinessDelegate {
 	}
 
 	//StateProvince
-	public List<Stateprovince> getStateProvince(){
+	public List<Stateprovince> getStateProvinces(){
 		Stateprovince[] stateprovinces = restTemplate.getForObject(URL_STATEPROVINCE, Stateprovince[].class);
 		return Arrays.asList(stateprovinces);
 	}

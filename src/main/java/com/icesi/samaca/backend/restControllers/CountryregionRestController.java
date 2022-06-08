@@ -41,8 +41,6 @@ public class CountryregionRestController {
 	@DeleteMapping("/countryregions/{id}")
 	public Countryregion deleteCountryregion (@PathVariable("id") Integer countryregionid) {
 		return countryRService.deleteCr(countryregionid);
-		
-		
 	}
 	
 

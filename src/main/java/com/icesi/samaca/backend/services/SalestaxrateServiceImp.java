@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.icesi.samaca.backend.dao.SalesTaxRateDaoImp;
 import com.icesi.samaca.backend.model.person.Stateprovince;
 import com.icesi.samaca.backend.model.sales.Salestaxrate;
 import com.icesi.samaca.backend.repositories.SalestaxrateRepository;
@@ -13,6 +14,9 @@ import com.icesi.samaca.backend.repositories.StateprovinceRepository;
 
 @Service
 public class SalestaxrateServiceImp implements SalestaxrateService{
+	
+	@Autowired
+	SalesTaxRateDaoImp sTRDao;
 
 	SalestaxrateRepository salesTRRepo;
 	StateprovinceRepository stateprovinceRepo;
@@ -29,14 +33,14 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 
 	@Override
 	public Salestaxrate saveSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
-		Salestaxrate aux= null;
+		//Salestaxrate aux= null;
 		if((salesTR.getTaxrate().compareTo(BigDecimal.ZERO))>=0 &&  
 				(salesTR.getName().length()>=5))
 		{
 			Optional<Stateprovince> state= this.stateprovinceRepo.findById(salesTR.getStateprovince().getStateprovinceid());
 			if(state.isPresent()) {
 				salesTR.setStateprovince(state.get());
-				aux= this.salesTRRepo.save(salesTR);
+				this.sTRDao.save(salesTR);
 			}
 				
 		}
@@ -45,31 +49,33 @@ public class SalestaxrateServiceImp implements SalestaxrateService{
 			throw new IllegalArgumentException();
 		}
 
-		return aux;
+		return salesTR;
 	}
 
 	@Override
 	public Salestaxrate editSalesTR(Salestaxrate salesTR) throws IllegalArgumentException {
-		Salestaxrate result = null;
+		//Salestaxrate result = null;
 
 		if(salesTR.getSalestaxrateid()!= null){
-			Optional<Salestaxrate> stateOp= salesTRRepo.findById(salesTR.getSalestaxrateid());
-			if(stateOp.isPresent()){
-				result= saveSalesTR(salesTR);
+			Salestaxrate stateOp= sTRDao.findById(salesTR.getSalestaxrateid());
+			if(stateOp != salesTR){
+				
+				sTRDao.update(salesTR);
+				
 			}
 		}else{
 			throw new IllegalArgumentException();
 		}
 
-		return result;
+		return salesTR;
 	}
 
 	public Iterable<Salestaxrate> findAll(){
-		return salesTRRepo.findAll();
+		return sTRDao.findAll();
 	}
 	
 	public Optional<Salestaxrate> findById(Integer id){
-		return salesTRRepo.findById(id);
+		return Optional.of(sTRDao.findById(id));
 	}
 	
 	public Iterable<Stateprovince> findAllStateProvinces(){

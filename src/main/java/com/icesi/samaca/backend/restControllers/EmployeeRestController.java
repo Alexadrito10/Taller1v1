@@ -32,12 +32,10 @@ public class EmployeeRestController {
 	}
 	
 	@PostMapping("/employees/")
-	public Employee addEmployee(@RequestBody Employee emp){
-		empService.save(emp);
-		return emp;
-		
-		
+	public void addEmployee(@RequestBody Employee emp){
+		empService.save(emp);		
 	}
+	
 	@DeleteMapping("/employees/{id}")
 	public Employee deleteEmployee(@PathVariable("id") Integer bussinessentityid){
 		return empService.deleteEmployee(bussinessentityid);

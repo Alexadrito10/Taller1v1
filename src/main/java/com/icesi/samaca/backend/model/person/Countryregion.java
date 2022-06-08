@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.icesi.samaca.backend.validation.CountryRegionValidation;
 import com.icesi.samaca.backend.validation.InfoValidation;
 
@@ -52,6 +53,7 @@ public class Countryregion implements Serializable {
 
 	// bi-directional many-to-one association to Stateprovince
 	@OneToMany(mappedBy = "countryregion")
+	@JsonIgnore
 	private List<Stateprovince> stateprovinces;
 
 	public Countryregion() {

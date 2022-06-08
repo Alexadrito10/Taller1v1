@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * The persistent class for the person database table.
  *
@@ -41,6 +43,7 @@ public class Person implements Serializable {
 
 	private String middlename;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
 	private String namestyle;

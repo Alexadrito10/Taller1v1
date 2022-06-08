@@ -112,7 +112,7 @@ public class AdminControllerImp{
 	
 	@GetMapping("/salestaxrate")
 	public String salestaxrate(Model model) {
-		model.addAttribute("salestaxrate", salestaxrateService.findAll());
+		model.addAttribute("salestaxrate", bDelegate.getSalestaxrate());
 		return "admin/salestaxrate";
 	}
 	
@@ -138,7 +138,7 @@ public class AdminControllerImp{
 			return "admin/add-salestaxrate";
 			
 		}else {
-			salestaxrateService.saveSalesTR(salestaxrate);
+			bDelegate.addSalestaxrate(salestaxrate);
 			return "redirect:/salestaxrate/";
 		}
 		
@@ -146,13 +146,13 @@ public class AdminControllerImp{
 	
 	@GetMapping("/salestaxrate/update/{id}")
 	public String updateSalestaxrate(@PathVariable("id")Integer id, Model model){
-		Optional<Salestaxrate> tax= salestaxrateService.findById(id);
-		if(tax.isEmpty()) {
+		Salestaxrate tax= bDelegate.findByIdSalesTax(id);
+		if(tax == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		model.addAttribute("salestaxrate", tax.get());
-		model.addAttribute("stateprovinces", salestaxrateService.findAll());
+		model.addAttribute("salestaxrate", tax);
+		model.addAttribute("stateprovinces", bDelegate.getStateProvinces());
 		return "admin/update-salestaxrate";
 	}
 	
@@ -161,11 +161,11 @@ public class AdminControllerImp{
 			Model model, @RequestParam(value="action", required= true) String action){
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()){
-				model.addAttribute("salestaxrate", salestaxrateService.findById(id).get());
+				model.addAttribute("salestaxrate", bDelegate.findByIdSalesTax(id));
 				return "admin/update-salestaxrate";
 			}
 			salestaxrate.setSalestaxrateid(id);
-			salestaxrateService.editSalesTR(salestaxrate);
+			bDelegate.updateSalestaxrate(salestaxrate);
 		}
 		return "redirect:/salestaxrate";
 		
@@ -173,13 +173,13 @@ public class AdminControllerImp{
 	
 	@GetMapping("/stateprovince/{id}")
 	public String StateProvRefs(@PathVariable("id")Integer id, Model model) {
-		model.addAttribute("stateprovince", stateprovinceService.findByCountry(id));
+		model.addAttribute("stateprovince", bDelegate.findByIdCountryRegion(id));
 		return "admin/stateprov-refs";
 	}
 	
 	@GetMapping("/employee")
 	public String employee(Model model) {
-		model.addAttribute("employee", employeeService.findAllEmployees());
+		model.addAttribute("employee", bDelegate.getEmployees());
 		return "admin/employee";
 		
 	}
@@ -187,8 +187,25 @@ public class AdminControllerImp{
 	@GetMapping("/employee/add")
 	public String saveEmployee(Model model){
 		model.addAttribute("employee",new Employee());
+		model.addAttribute("persons", bDelegate.getPersons());
 	
 		return "admin/add-employee";
+	}
+	
+	@GetMapping("/employee/delete/{id}")
+	public String deleteEmployee(@PathVariable("id")Integer id, Model model) {
+		try {
+			Employee aux  = bDelegate.findByIdEmployeee(id);
+			bDelegate.deleteEmployee(aux);
+			model.addAttribute("employees",bDelegate.getEmployees());
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/employee";
+		
 	}
 	@PostMapping("/employee/add")
 	public String saveEmployee( @ModelAttribute Employee employee
@@ -198,22 +215,23 @@ public class AdminControllerImp{
 		}
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("employee", employee);
-			return"/admin/add-employee";
+			model.addAttribute("person", bDelegate.getPersons());
 			
+			return"/admin/add-employee";
 		}else {
-			employeeService.save(employee);
+			this.bDelegate.addEmployee(employee);
 			return "redirect:/employee";
 		}
 	} 
 	
 	@GetMapping("/employee/update/{id}")
 	public String updateEmployee(@PathVariable("id")Integer id, Model model){
-		Employee employee =  employeeService.findEmployeeById(id);
+		Employee employee =  bDelegate.findByIdEmployeee(id);
 		if(employee == null) {
 			throw new IllegalArgumentException();
 		}
-		
 		model.addAttribute("employeee", employee);
+		model.addAttribute("persons", bDelegate.getPersons());
 		return "admin/update-employee";
 	}
 	
@@ -222,11 +240,12 @@ public class AdminControllerImp{
 			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("employee", employeeService.findEmployeeById(id));
+				model.addAttribute("employee", employee);
+				model.addAttribute("person", bDelegate.getPersons());
 				return "admin/update-employee";
 			}
 			employee.setBusinessentityid(id);
-			employeeService.update(employee);
+			bDelegate.updateEmployee(employee);
 		}
 		return "redirect:/employee";
 	}
@@ -234,8 +253,24 @@ public class AdminControllerImp{
 	
 	@GetMapping("/person")
 	public String Person(Model model) {
-		model.addAttribute("person", personService.findAllPersons());
+		model.addAttribute("person", bDelegate.getPersons());
 		return "admin/person";
+		
+	}
+	
+	@GetMapping("/person/delete/{id}")
+	public String deletePerson(@PathVariable("id")Integer id, Model model) {
+		try {
+			Person aux  = bDelegate.findByIdPerson(id);
+			bDelegate.deletePerson(aux);
+			model.addAttribute("persons",bDelegate.getPersons());
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/person";
 		
 	}
 	
@@ -243,7 +278,7 @@ public class AdminControllerImp{
 	public String savePerson(Model model){
 		model.addAttribute("person", new Person());
 	
-		return "admin/add-employee";
+		return "admin/add-person";
 	}
 	
 	@PostMapping("/person/add")
@@ -257,13 +292,13 @@ public class AdminControllerImp{
 			return"/admin/add-person";
 			
 		}else {
-			personService.save(person);
+			bDelegate.addPerson(person);
 			return "redirect:/person";
 		}
 	}
 	@GetMapping("/person/update/{id}")
 	public String updatePerson(@PathVariable("id")Integer id, Model model){
-		Person person =  personService.findPersonById(id);
+		Person person =  bDelegate.findByIdPerson(id);
 		if(person == null) {
 			throw new IllegalArgumentException();
 		}
@@ -277,11 +312,11 @@ public class AdminControllerImp{
 			BindingResult bindingResult, Model model, @RequestParam(value="action", required= true) String action){
 		if(!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("employee", personService.findPersonById(id));
+				model.addAttribute("person", bDelegate.findByIdPerson(id));
 				return "admin/update-person";
 			}
 			person.setBusinessentityid(id);
-			personService.update(person);
+			bDelegate.updatePerson(person);
 		}
 		return "redirect:/person";
 	}

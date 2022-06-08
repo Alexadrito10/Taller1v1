@@ -23,19 +23,14 @@
                     <tr>
                         <th>ID Entidad Comercial </th>
                         <th>Fecha de Nacimiento</th>
-                        <th>Current Flag</th>
                         <th>Genero</th>
                         <th>Fecha de Contratacion</th>
                         <th>Cargo</th>
-                        <th>ID Ingreso</th>
-                        <th>Estado Marital</th>
-                        <th>Fecha de Actualizacion</th>
                         <th>Numero de Identificacion Nacional</th>
                         <th>Organizacion</th>
-                        <th>Numero de Guia</th>
-                        <th>Salaried Flag</th>
                         <th>Horas de Baja por Enfermdad</th>
                         <th>Horas por Vacaciones</th>
+                        <th>Persona asociada</th>
                         <th> Editar </th>
                         <th> Eliminar </th>
 
@@ -45,30 +40,25 @@
                     <tr th:each="employee : ${employee}">
                         <td th:text="${employee.businessentityid}"></td>
                         <td th:text="${employee.birthdate}"></td>
-                        <td th:text="${employee.currentflag}"></td>
                         <td th:text="${employee.gender}"></td>
                         <td th:text="${employee.hiredate}"></td>
                         <td th:text="${employee.jobtitle}"></td>
-                        <td th:text="${employee.loginid}"></td>
-                        <td th:text="${employee.maritalstatus}"></td>
-                        <td th:text="${employee.modifieddate}"></td>
                         <td th:text="${employee.nationalidnumber}"></td>
                         <td th:text="${employee.organizationnode}"></td>
-                        <td th:text="${employee.rowguid}"></td>
-                        <td th:text="${employee.salariedflag}"></td>
                         <td th:text="${employee.sickleavehours}"></td>
                         <td th:text="${employee.vacationhours}"></td>
+                        <td th:text ="${employee.person.firstname}"></td>
 
-                        <td><a th:href="@{/employee/update/{id}(id=${person.businessentityid})}"
+                        <td><a th:href="@{/employee/update/{id}(id=${employee.businessentityid})}"
                                class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a></td>
-                        <td><a th:href="@{/employee/{id}(id=${person.businessentityid})}"
+                        <td><a th:href="@{/employee/delete/{id}(id=${employee.businessentityid})}"
                                class="btn btn-primary"><i class="fa-solid fa-user-large-slash"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <p>
-                <a href="/person/add" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Añadir un Empleado</a>
+                <a href="/employee/add" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Añadir un Empleado</a>
             </p>
             <p>
                 <a href="/admin/"><i class="fa-solid fa-user"></i> Ir al menu de administrador </a>

@@ -22,17 +22,12 @@
                     <thead>
                     <tr>
                         <th>ID Entidad Comercial </th>
-                        <th>Informacion Adicional de Contacto</th>
                         <th>Ubicacion</th>
-                        <th>Promocion por Email</th>
                         <th>Primer Nombre</th>
                         <th>Segundo Nombre</th>
                         <th>Apellido</th>
                         <th>Fecha de Actualizacion</th>
-                        <th>Estilo de Nombre</th>
                         <th>Tipo de Persona</th>
-                        <th>Numero de Guia</th>
-                        <th>Sufijo</th>
                         <th>Titulo</th>
                         <th> Editar </th>
                         <th> Eliminar </th>
@@ -42,22 +37,17 @@
                     <tbody>
                     <tr th:each="person : ${person}">
                         <td th:text="${person.businessentityid}"></td>
-                        <td th:text="${person.additionalcontactinfo}"></td>
                         <td th:text="${person.demographics}"></td>
-                        <td th:text="${person.emailpromotion}"></td>
                         <td th:text="${person.firstname}"></td>
                         <td th:text="${person.middlename}"></td>
                         <td th:text="${person.lastname}"></td>
                         <td th:text="${person.modifieddate}"></td>
-                        <td th:text="${person.namestyle}"></td>
                         <td th:text="${person.persontype}"></td>
-                        <td th:text="${person.rowguid}"></td>
-                        <td th:text="${person.suffix}"></td>
                         <td th:text="${person.title}"></td>
 
                         <td><a th:href="@{/person/update/{id}(id=${person.businessentityid})}"
                                class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></a></td>
-                        <td><a th:href="@{/person/{id}(id=${person.businessentityid})}"
+                        <td><a th:href="@{/person/delete/{id}(id=${person.businessentityid})}"
                                class="btn btn-primary"><i class="fa-solid fa-user-large-slash"></i></a></td>
                     </tr>
                     </tbody>

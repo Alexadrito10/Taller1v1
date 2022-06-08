@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.icesi.samaca.backend.dao.AddressDaoImp;
 import com.icesi.samaca.backend.model.person.Address;
 import com.icesi.samaca.backend.model.person.Countryregion;
 import com.icesi.samaca.backend.model.person.Stateprovince;
@@ -15,7 +16,8 @@ import com.icesi.samaca.backend.repositories.StateprovinceRepository;
 
 @Service
 public class AddresServiceImp implements AddressService {
-
+	@Autowired
+	AddressDaoImp addrDao;
 	AddressRepository addrRepos;
 	StateprovinceRepository staprovRepos;
 
@@ -40,7 +42,7 @@ public class AddresServiceImp implements AddressService {
 
 			if(stateProvinceChecker.isPresent()) {
 				addr.setStateprovince(stateProvinceChecker.get());
-				addrRepos.save(addr);
+				addrDao.save(addr);
 			}else {
 				throw new IllegalArgumentException("Hubo un error en la creacion, revise los datos");
 
@@ -57,25 +59,25 @@ public class AddresServiceImp implements AddressService {
 	@Override
 	@Transactional
 	public Address editAddres(Address addr) throws IllegalArgumentException{
-		Address aux= null;
+		//Address aux= null;
 
-				Optional<Address> stateProvinceChecker = this.addrRepos.findById(addr.getAddressid());
+				Optional<Stateprovince> stateProvinceChecker = this.staprovRepos.findById(addr.getStateprovince().getStateprovinceid());
 
 				if(stateProvinceChecker.isPresent()) {
-					aux= saveAddress(addr);
+					addrDao.update(addr);
 
 				}else {
 					throw new IllegalArgumentException("Hubo un error en la edición, revise los datos");
 				}
-		return aux;
+		return addr;
 	}
 	
 	public Optional<Address> findById(Integer id){
-		return addrRepos.findById(id);
+		return Optional.of(addrDao.findById(id));
 	}
 	
 	public Iterable<Address> findAll(){
-		return addrRepos.findAll();
+		return addrDao.findAll();
 	}
 	
 	public Iterable<Stateprovince> findAllStateProvinces(){
